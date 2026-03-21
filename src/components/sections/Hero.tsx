@@ -64,7 +64,7 @@ export default function Hero() {
           variants={fadeUp}
         >
           {[
-            { icon: "🏨️", label: "For Neighbors" },
+            { icon: "🏘️", label: "For Neighbors" },
             { icon: "🤝", label: "For Organizations" },
             { icon: "👥", label: "For Community Leaders" },
           ].map((item) => (

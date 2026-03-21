@@ -212,7 +212,7 @@ export const AUDIENCES = {
   items: [
     {
       id: "neighbors",
-      icon: "🏨️",
+      icon: "🏘️",
       title: "For Neighbors",
       subtitle:
         "Borrow, lend, help, hire, trade - use Tribes however fits your day.",
