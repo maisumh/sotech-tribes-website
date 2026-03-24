@@ -1,10 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { FOUNDING_MEMBER } from "@/lib/constants";
 
 export default function FoundingMember() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await fetch("https://services.leadconnectorhq.com/hooks/TEAVsvTerVipIS3cla4Y/webhook-trigger/tribes-waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "tribes-website-waitlist" }),
+        mode: "no-cors",
+      });
+      setSubmitted(true);
+      setEmail("");
+    } catch {
+      // Fallback: open mailto
+      window.location.href = `mailto:info@trytribes.com?subject=Tribes Waitlist&body=I'd like to join the Tribes waitlist. My email: ${email}`;
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="waitlist"
@@ -30,29 +55,31 @@ export default function FoundingMember() {
 
         <ScrollReveal delay={0.2}>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-                window.open(
-                  `mailto:hello@trytribes.com?subject=Tribes Waitlist&body=I'd like to join the Tribes waitlist. My email: ${email}`,
-                  "_blank"
-                );
-              }}
-              className="space-y-4"
-            >
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                required
-                className="w-full px-4 py-3 rounded-lg bg-white text-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-casablanca"
-              />
-              <Button type="submit" className="w-full">
-                {FOUNDING_MEMBER.cta}
-              </Button>
-            </form>
+            {submitted ? (
+              <div className="text-center py-4">
+                <p className="text-xl font-heading font-semibold text-casablanca mb-2">
+                  You&apos;re on the list!
+                </p>
+                <p className="text-white/80 text-sm">
+                  We&apos;ll be in touch with early access details soon.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-white text-ink placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-casablanca"
+                />
+                <Button type="submit" className="w-full">
+                  {submitting ? "Submitting..." : FOUNDING_MEMBER.cta}
+                </Button>
+              </form>
+            )}
           </div>
         </ScrollReveal>
       </div>

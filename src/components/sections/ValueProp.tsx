@@ -9,8 +9,8 @@ export default function ValueProp() {
           <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly mb-8">
             {VALUE_PROP.title[0]}
             <br />
-            <span className="text-casablanca">On Tribes</span>
-            {VALUE_PROP.title[1].replace("On Tribes", "")}
+            <span className="text-casablanca">On Tribes™</span>
+            {VALUE_PROP.title[1].replace("On Tribes™", "")}
           </h2>
         </ScrollReveal>
         {VALUE_PROP.paragraphs.map((text, i) => (

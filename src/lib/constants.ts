@@ -3,7 +3,7 @@ export const SITE = {
   description:
     "Tribes makes it simple to connect with neighbors, share resources and skills, and build thriving communities. Join 500+ neighbors already building their tribes.",
   url: "https://trytribes.com",
-  email: "hello@trytribes.com",
+  email: "info@trytribes.com",
 };
 
 export const BRAND = {
@@ -58,7 +58,7 @@ export const HERO = {
 };
 
 export const VALUE_PROP = {
-  title: ["On Social Media You Scroll.", "On Tribes, You Build."],
+  title: ["On Social Media You Scroll.", "On Tribes™, You Build."],
   paragraphs: [
     "A neighborhood platform where people help each other by trading skills, sharing items, and supporting one another in small, purpose-driven tribes. Unlock the value on your block — from tools to talents to everyday help.",
     "Think of it as creating micro-communities within your larger neighborhood—each with its own purpose, its own members, and its own way of helping each other thrive.",
@@ -129,32 +129,32 @@ export const FEATURES = {
   title: "Built for Real Communities",
   items: [
     {
-      icon: "Users",
+      icon: "🎯",
       title: "Tribe Creation & Management",
       text: "Create and moderate multiple tribes based on your interests and needs.",
     },
     {
-      icon: "Sparkles",
+      icon: "🤖",
       title: "Smart Matching Algorithm",
       text: "Automatic notifications when needs and offers align within your tribes.",
     },
     {
-      icon: "Layers",
+      icon: "🔗",
       title: "Multi-Tribe Participation",
       text: "Join unlimited tribes simultaneously to maximize community connections.",
     },
     {
-      icon: "MessageCircle",
+      icon: "💬",
       title: "In-App Messaging",
       text: "Secure communication for coordinating exchanges and building relationships.",
     },
     {
-      icon: "Activity",
+      icon: "📱",
       title: "Tribe Feeds & Activity",
       text: "Stay updated with what's happening across all your tribes in one place.",
     },
     {
-      icon: "Shield",
+      icon: "🛡️",
       title: "Trust & Safety",
       text: "Address verification, ratings, privacy controls, and robust reporting systems.",
     },
@@ -175,32 +175,32 @@ export const TRIBE_TYPES = {
   title: "What Kind of Tribe Will You Build?",
   items: [
     {
-      icon: "Wrench",
+      icon: "🔧",
       title: "Tool-Share Tribe",
       text: "Save money by pooling equipment and lending instead of buying.",
     },
     {
-      icon: "Heart",
+      icon: "👨‍👩‍👧‍👦",
       title: "Parent Tribe",
       text: "Share baby gear, coordinate childcare, strengthen family support.",
     },
     {
-      icon: "Repeat",
+      icon: "💼",
       title: "Skills-Swap Tribe",
       text: "Trade professional services like design, accounting, photography, repairs.",
     },
     {
-      icon: "Leaf",
+      icon: "🌱",
       title: "Sustainability Tribe",
       text: "Composting, repair cafés, zero-waste collaboration.",
     },
     {
-      icon: "Home",
+      icon: "🏘️",
       title: "Street Tribe",
       text: "Look out for packages, coordinate move ins/outs, plan block events.",
     },
     {
-      icon: "Palette",
+      icon: "🎨",
       title: "Hobby Tribe",
       text: "Connect with neighbors who share your interests: fitness, gardening, books, gaming, sports.",
     },
@@ -208,7 +208,7 @@ export const TRIBE_TYPES = {
 };
 
 export const AUDIENCES = {
-  title: "Who Tribes Serves",
+  title: "Who Tribes™ Serves",
   items: [
     {
       id: "neighbors",
@@ -342,6 +342,11 @@ export const FOOTER = {
       { label: "FAQ", href: "#faq" },
     ],
   },
-  email: "hello@trytribes.com",
-  copyright: "© 2025 Tribes — All Rights Reserved",
+  email: "info@trytribes.com",
+  copyright: "© 2025 Tribes™ — All Rights Reserved",
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/trytribes", icon: "instagram" },
+    { label: "TikTok", href: "https://www.tiktok.com/@trytribes", icon: "tiktok" },
+    { label: "Facebook", href: "https://www.facebook.com/p/Tribes-Connect-Locally-61580383774896/", icon: "facebook" },
+  ],
 };
