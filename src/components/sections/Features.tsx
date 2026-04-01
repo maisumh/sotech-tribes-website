@@ -14,7 +14,7 @@ export default function Features() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.items.map((feature, i) => (
-            <ScrollReveal key={feature.title} delay={i * 0.1}>
+            <ScrollReveal key={feature.title} delay={i * 0.1} className="h-full">
               <Card>
                 <div className="text-4xl mb-4 flex justify-center">
                   {feature.icon}

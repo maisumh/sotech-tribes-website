@@ -13,8 +13,8 @@ export default function TribeTypes() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {TRIBE_TYPES.items.map((type, i) => (
-            <ScrollReveal key={type.title} delay={i * 0.1}>
-              <div className="bg-white border-2 border-firefly rounded-xl p-8 text-center transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 group">
+            <ScrollReveal key={type.title} delay={i * 0.1} className="h-full">
+              <div className="bg-white border-2 border-firefly rounded-xl p-8 text-center transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 group h-full">
                 <div className="text-4xl mb-4 flex justify-center group-hover:scale-110 transition-transform">
                   {type.icon}
                 </div>

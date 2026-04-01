@@ -269,8 +269,8 @@ export default function NeighborsPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {useCases.map((item, i) => (
-                <ScrollReveal key={item.title} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl shadow-sm p-6 text-center h-full">
+                <ScrollReveal key={item.title} delay={i * 0.1} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 text-center h-full">
                     <div className="text-4xl mb-4">{item.icon}</div>
                     <h3 className="font-heading text-lg font-semibold text-firefly mb-2">
                       {item.title}
@@ -293,8 +293,8 @@ export default function NeighborsPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {categories.map((cat, i) => (
-                <ScrollReveal key={cat.title} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl shadow-sm p-6">
+                <ScrollReveal key={cat.title} delay={i * 0.1} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 h-full">
                     <h3 className="font-heading text-lg font-semibold text-firefly mb-4">
                       {cat.title}
                     </h3>
@@ -353,8 +353,8 @@ export default function NeighborsPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {benefits.map((item, i) => (
-                <ScrollReveal key={item.title} delay={i * 0.08}>
-                  <div className="bg-white rounded-xl shadow-sm p-6 h-full">
+                <ScrollReveal key={item.title} delay={i * 0.08} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 h-full">
                     <div className="text-3xl mb-3">{item.icon}</div>
                     <h3 className="font-heading text-lg font-semibold text-firefly mb-2">
                       {item.title}
@@ -424,8 +424,8 @@ export default function NeighborsPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {trustFeatures.map((item, i) => (
-                <ScrollReveal key={item.title} delay={i * 0.1}>
-                  <div className="flex gap-4 items-start bg-white rounded-xl shadow-sm p-6">
+                <ScrollReveal key={item.title} delay={i * 0.1} className="h-full">
+                  <div className="flex gap-4 items-start bg-white rounded-xl border border-gray-200 shadow-sm p-6 h-full">
                     <span className="text-2xl text-casablanca flex-shrink-0">
                       {item.icon}
                     </span>

@@ -14,10 +14,10 @@ export default function Audiences() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {AUDIENCES.items.map((audience, i) => (
-            <ScrollReveal key={audience.id} delay={i * 0.15}>
+            <ScrollReveal key={audience.id} delay={i * 0.15} className="h-full">
               <div
                 id={audience.id}
-                className="bg-white rounded-xl shadow-sm p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="bg-white rounded-xl shadow-sm p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md h-full flex flex-col"
               >
                 <div className="text-4xl mb-4">{audience.icon}</div>
                 <h3 className="font-heading text-xl font-semibold text-firefly mb-2">

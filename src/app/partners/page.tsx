@@ -164,8 +164,8 @@ export default function PartnersPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {partnerTypes.map((type, i) => (
-                <ScrollReveal key={type.title} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl shadow-sm p-8 h-full">
+                <ScrollReveal key={type.title} delay={i * 0.1} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full">
                     <h3 className="font-heading text-xl font-semibold text-firefly mb-1">
                       {type.title}
                     </h3>
@@ -190,8 +190,8 @@ export default function PartnersPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((study, i) => (
-                <ScrollReveal key={study.title} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl shadow-sm p-8 h-full">
+                <ScrollReveal key={study.title} delay={i * 0.1} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-3xl">{study.icon}</span>
                       <h3 className="font-heading text-lg font-semibold text-firefly">
@@ -218,8 +218,8 @@ export default function PartnersPage() {
             </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {successStories.map((story, i) => (
-                <ScrollReveal key={story.title} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl shadow-sm p-8 h-full">
+                <ScrollReveal key={story.title} delay={i * 0.1} className="h-full">
+                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-3xl">{story.icon}</span>
                       <h3 className="font-heading text-lg font-semibold text-firefly">

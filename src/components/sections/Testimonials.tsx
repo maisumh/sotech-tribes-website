@@ -13,7 +13,7 @@ export default function Testimonials() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {TESTIMONIALS.map((testimonial, i) => (
-            <ScrollReveal key={testimonial.name} delay={i * 0.15}>
+            <ScrollReveal key={testimonial.name} delay={i * 0.15} className="h-full">
               <div className="bg-white rounded-xl shadow-sm p-8 border-l-4 border-casablanca h-full flex flex-col">
                 <p className="text-gray-700 text-lg italic leading-relaxed mb-6 flex-1">
                   &ldquo;{testimonial.quote}&rdquo;
