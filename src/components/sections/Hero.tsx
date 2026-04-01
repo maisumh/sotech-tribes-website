@@ -1,19 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { HERO } from "@/lib/constants";
 import Button from "@/components/ui/Button";
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -43,52 +32,48 @@ export default function Hero() {
     <section className="pt-[calc(70px+2rem)] pb-12 md:pt-[calc(70px+4rem)] md:pb-20 bg-gradient-to-br from-gray-50 to-offwhite">
       <div className="max-w-[1200px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
-            className="text-center md:text-left"
-          >
-            <motion.h1
-              className="font-heading text-3xl md:text-5xl font-bold text-firefly leading-tight mb-6"
-              variants={fadeUp}
+          <div className="text-center md:text-left">
+            <h1
+              className="font-heading text-3xl md:text-5xl font-bold text-firefly leading-tight mb-6 animate-hero-fade-up"
+              style={{ animationDelay: "0.1s" }}
             >
               {HERO.headline.map((line, i) => (
                 <span key={i} className="block">
                   {line}
                 </span>
               ))}
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed"
-              variants={fadeUp}
+            <p
+              className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed animate-hero-fade-up"
+              style={{ animationDelay: "0.25s" }}
             >
               Tribes<sup className="text-xs align-super">™</sup> makes it simple to connect with neighbors, share resources and skills, and build thriving communities.
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start"
-              variants={fadeUp}
+            <div
+              className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start animate-hero-fade-up"
+              style={{ animationDelay: "0.4s" }}
             >
               <Button href="#final-cta" size="large">
                 {HERO.cta}
               </Button>
-            </motion.div>
+            </div>
 
-            <motion.p className="text-sm text-gray-500" variants={fadeUp}>
+            <p
+              className="text-sm text-gray-500 animate-hero-fade-up"
+              style={{ animationDelay: "0.55s" }}
+            >
               {HERO.trust.prefix}{" "}
               <span className="font-bold text-firefly">{HERO.trust.number}</span>{" "}
               {HERO.trust.suffix}
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           {/* Demo Video */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="relative rounded-2xl overflow-hidden shadow-xl"
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-xl animate-hero-fade-up"
+            style={{ animationDelay: "0.3s" }}
           >
             <video
               ref={videoRef}
@@ -109,7 +94,7 @@ export default function Hero() {
               <button
                 onClick={(e) => { e.stopPropagation(); togglePlay(); }}
                 aria-label={isPlaying ? "Pause video" : "Play video"}
-                className="flex items-center justify-center w-9 h-9 md:w-9 md:h-9 rounded-full bg-black/50 backdrop-blur-sm text-white transition-colors hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-casablanca focus-visible:outline-offset-2"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm text-white transition-colors hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-casablanca focus-visible:outline-offset-2"
               >
                 {isPlaying ? (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -125,7 +110,7 @@ export default function Hero() {
               <button
                 onClick={(e) => { e.stopPropagation(); toggleMute(); }}
                 aria-label={isMuted ? "Unmute video" : "Mute video"}
-                className="flex items-center justify-center w-9 h-9 md:w-9 md:h-9 rounded-full bg-black/50 backdrop-blur-sm text-white transition-colors hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-casablanca focus-visible:outline-offset-2"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm text-white transition-colors hover:bg-black/70 focus-visible:outline-2 focus-visible:outline-casablanca focus-visible:outline-offset-2"
               >
                 {isMuted ? (
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -142,7 +127,7 @@ export default function Hero() {
                 )}
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
