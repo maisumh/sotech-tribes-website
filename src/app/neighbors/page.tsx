@@ -303,11 +303,11 @@ export default function NeighborsPage() {
                     <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-4">
                       {cat.title}
                     </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-[600px] mx-auto">
+                    <div className="flex flex-wrap justify-center gap-3 max-w-[700px] mx-auto">
                       {cat.items.map((item) => (
                         <span
                           key={item}
-                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-firefly bg-white text-firefly text-base font-semibold transition-all duration-300 hover:bg-firefly hover:text-white hover:-translate-y-0.5"
+                          className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-firefly bg-white text-firefly text-base font-semibold transition-all duration-300 hover:bg-firefly hover:text-white hover:-translate-y-0.5 cursor-pointer"
                         >
                           {item}
                         </span>
