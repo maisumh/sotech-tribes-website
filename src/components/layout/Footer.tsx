@@ -27,7 +27,7 @@ function SocialIcon({ type }: { type: string }) {
 
 export default function Footer() {
   return (
-    <footer className="bg-firefly text-white py-8 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
+    <footer className="bg-firefly text-white py-8 pb-6">
       <div className="max-w-[1200px] mx-auto px-4 text-center">
         {/* Explore links — inline centered, no title */}
         <div className="mb-4">
