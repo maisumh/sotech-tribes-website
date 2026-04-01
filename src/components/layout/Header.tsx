@@ -85,7 +85,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden fixed top-[70px] left-0 right-0 bottom-0 bg-firefly flex flex-col pt-8 px-4 transition-transform duration-300 ${
+          className={`md:hidden fixed top-[70px] left-0 right-0 bottom-0 bg-firefly flex flex-col pt-8 px-4 pb-[env(safe-area-inset-bottom,0px)] transition-transform duration-300 ease-in-out ${
             menuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
