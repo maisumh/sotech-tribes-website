@@ -187,24 +187,24 @@ export default function PartnersPage() {
         </section>
 
         {/* Case Studies */}
-        <section className="py-16 md:py-24 bg-granny">
+        <section className="py-16 md:py-24 bg-gray-50">
           <div className="max-w-[1200px] mx-auto px-4">
             <ScrollReveal>
-              <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-white text-center mb-12">
+              <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly text-center mb-12">
                 How Communities Are Using Tribes
               </h2>
             </ScrollReveal>
-            <div className="flex flex-col gap-8 max-w-[900px] mx-auto">
+            <div className="flex flex-col gap-8">
               {caseStudies.map((study, i) => (
                 <ScrollReveal key={study.title} delay={i * 0.1}>
-                  <div className="bg-white border-2 border-firefly rounded-xl p-8 transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 group">
+                  <div className="bg-white rounded-xl shadow-sm p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <div className="flex items-center gap-4 mb-4">
-                      <span className="text-4xl group-hover:opacity-90 transition-opacity">{study.icon}</span>
-                      <h3 className="font-heading text-2xl font-bold text-firefly group-hover:text-white transition-colors">
+                      <span className="text-4xl">{study.icon}</span>
+                      <h3 className="font-heading text-2xl font-bold text-firefly">
                         {study.title}
                       </h3>
                     </div>
-                    <p className="text-gray-600 leading-relaxed group-hover:text-white/80 transition-colors">
+                    <p className="text-gray-600 leading-relaxed">
                       {study.description}
                     </p>
                   </div>
