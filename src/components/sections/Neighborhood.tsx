@@ -35,12 +35,12 @@ function AnimatedStat({
   return (
     <div
       ref={ref}
-      className="bg-white rounded-xl shadow-sm p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md h-full"
+      className="bg-white rounded-xl shadow-sm p-8 text-center transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 h-full group"
     >
-      <div className="text-3xl md:text-4xl font-bold text-firefly mb-2 tabular-nums">
+      <div className="text-3xl md:text-4xl font-bold text-firefly mb-2 tabular-nums group-hover:text-white transition-colors">
         {displayValue}
       </div>
-      <p className="text-sm text-gray-500">{label}</p>
+      <p className="text-sm text-gray-500 group-hover:text-white/80 transition-colors">{label}</p>
     </div>
   );
 }
