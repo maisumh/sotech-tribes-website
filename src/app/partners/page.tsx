@@ -157,7 +157,7 @@ export default function PartnersPage() {
         </section>
 
         {/* Partner Types */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 bg-white">
           <div className="max-w-[1200px] mx-auto px-4">
             <ScrollReveal>
               <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly text-center mb-12">
@@ -225,27 +225,25 @@ export default function PartnersPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {successStories.map((story, i) => (
                 <ScrollReveal key={story.title} delay={i * 0.1} className="h-full">
-                  <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-3xl">{story.icon}</span>
-                      <h3 className="font-heading text-lg font-semibold text-firefly">
-                        {story.title}
-                      </h3>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 mb-4">
+                  <div className="bg-white rounded-xl shadow-sm p-8 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                    <div className="text-5xl mb-4">{story.icon}</div>
+                    <h3 className="font-heading text-xl font-semibold text-firefly mb-4">
+                      {story.title}
+                    </h3>
+                    <div className="grid grid-cols-3 gap-3 mb-4">
                       {story.stats.map((stat) => (
                         <div
                           key={stat.label}
                           className="bg-gray-50 rounded-lg p-4 text-center"
                         >
-                          <p className="text-xl font-bold text-casablanca">
+                          <p className="text-2xl font-bold text-casablanca mb-1">
                             {stat.value}
                           </p>
-                          <p className="text-gray-600 text-sm">{stat.label}</p>
+                          <p className="text-gray-600 text-xs">{stat.label}</p>
                         </div>
                       ))}
                     </div>
-                    <p className="text-gray-600 text-sm italic leading-relaxed">
+                    <p className="text-gray-600 text-sm italic leading-relaxed pt-4 border-t border-gray-200">
                       {story.quote}
                     </p>
                   </div>
