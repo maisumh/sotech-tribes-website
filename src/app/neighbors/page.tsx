@@ -307,7 +307,7 @@ export default function NeighborsPage() {
                       {cat.items.map((item) => (
                         <span
                           key={item}
-                          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border-2 border-firefly bg-white text-firefly text-sm font-semibold transition-all duration-300 hover:bg-firefly hover:text-white hover:-translate-y-0.5"
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-firefly bg-white text-firefly text-base font-semibold transition-all duration-300 hover:bg-firefly hover:text-white hover:-translate-y-0.5"
                         >
                           {item}
                         </span>
