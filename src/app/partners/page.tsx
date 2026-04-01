@@ -146,7 +146,7 @@ export default function PartnersPage() {
               <ScrollReveal delay={0.2}>
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                   <img
-                    src="https://storage.googleapis.com/msgsndr/TEAVsvTerVipIS3cla4Y/media/69501f8773a5e0f6e5503108.jpeg"
+                    src="https://storage.googleapis.com/msgsndr/TEAVsvTerVipIS3cla4Y/media/69501f87ee104758ebe639bc.jpeg"
                     alt="Team celebrating partnership success with a high-five"
                     className="w-full h-full object-cover"
                   />
@@ -169,10 +169,10 @@ export default function PartnersPage() {
                 <ScrollReveal key={type.title} delay={i * 0.1} className="h-full">
                   <div className="bg-white rounded-xl shadow-sm overflow-hidden h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <div className="bg-gray-50 px-8 py-6 text-center">
-                      <h3 className="font-heading text-xl font-semibold text-firefly">
+                      <h3 className="font-heading text-2xl font-bold text-firefly">
                         {type.title}
                       </h3>
-                      <p className="text-sm text-casablanca-dark font-medium mt-1">
+                      <p className="text-base text-gray-600 mt-1">
                         {type.subtitle}
                       </p>
                     </div>
@@ -194,17 +194,17 @@ export default function PartnersPage() {
                 How Communities Are Using Tribes
               </h2>
             </ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-col gap-8 max-w-[900px] mx-auto">
               {caseStudies.map((study, i) => (
-                <ScrollReveal key={study.title} delay={i * 0.1} className="h-full">
-                  <div className="bg-white border-2 border-firefly rounded-xl p-8 h-full transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 group">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-4xl group-hover:scale-110 transition-transform">{study.icon}</span>
-                      <h3 className="font-heading text-xl font-semibold text-firefly group-hover:text-white transition-colors">
+                <ScrollReveal key={study.title} delay={i * 0.1}>
+                  <div className="bg-white border-2 border-firefly rounded-xl p-8 transition-all duration-300 hover:bg-firefly hover:-translate-y-1 hover:shadow-lg hover:shadow-firefly/25 group">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-4xl group-hover:opacity-90 transition-opacity">{study.icon}</span>
+                      <h3 className="font-heading text-2xl font-bold text-firefly group-hover:text-white transition-colors">
                         {study.title}
                       </h3>
                     </div>
-                    <p className="text-gray-600 text-sm leading-relaxed group-hover:text-white/80 transition-colors">
+                    <p className="text-gray-600 leading-relaxed group-hover:text-white/80 transition-colors">
                       {study.description}
                     </p>
                   </div>
