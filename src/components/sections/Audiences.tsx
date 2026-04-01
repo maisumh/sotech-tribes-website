@@ -24,7 +24,7 @@ export default function Audiences() {
                   {audience.title}
                 </h3>
                 <p className="text-gray-600 mb-6">{audience.subtitle}</p>
-                <ul className="space-y-2 mb-8 text-left">
+                <ul className="space-y-2 mb-8 text-left flex-1">
                   {audience.benefits.map((benefit) => (
                     <li
                       key={benefit}
@@ -37,7 +37,7 @@ export default function Audiences() {
                     </li>
                   ))}
                 </ul>
-                <Button href={`/${audience.id}`} variant="secondary" className="w-full">
+                <Button href={`/${audience.id}`} variant="secondary" className="w-full mt-auto">
                   {audience.cta}
                 </Button>
               </div>
