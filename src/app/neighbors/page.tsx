@@ -307,7 +307,7 @@ export default function NeighborsPage() {
                     <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-4">
                       {cat.title}
                     </h3>
-                    <div className="flex flex-wrap justify-center gap-3 max-w-[700px] mx-auto">
+                    <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-3 max-w-[700px] mx-auto">
                       {cat.items.map((item) => (
                         <span
                           key={item}
