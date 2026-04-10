@@ -231,7 +231,7 @@ export default async function UsersPage({
               <li key={user.id} className="border-b border-granny/15">
                 <Link
                   href={`/admin/users/${user.id}`}
-                  className="flex items-start gap-4 py-5 px-1 active:bg-firefly/[0.03] transition-colors"
+                  className="admin-lift flex items-start gap-4 py-5 px-1 active:bg-firefly/[0.03]"
                 >
                   {/* Avatar / initials circle */}
                   <div className="shrink-0 w-11 h-11 rounded-full bg-firefly/10 text-firefly flex items-center justify-center text-[12px] font-medium tabular-nums">

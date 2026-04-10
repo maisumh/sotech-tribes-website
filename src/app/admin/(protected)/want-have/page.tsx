@@ -276,7 +276,7 @@ export default async function WantHavePage({
                 <li key={row.id} className="border-b border-granny/15">
                   <Link
                     href={`/admin/want-have/${row.id}`}
-                    className="block py-5 px-1 active:bg-firefly/[0.03] transition-colors"
+                    className="admin-lift block py-5 px-1 active:bg-firefly/[0.03]"
                   >
                     <div className="flex items-start gap-3">
                       <TypePill isWant={row.is_want} />
