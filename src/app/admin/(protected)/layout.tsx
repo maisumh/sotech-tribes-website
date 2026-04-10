@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { requireAdmin } from '@/lib/auth/require-admin'
-import { Sidebar } from '@/components/admin/Sidebar'
+import { AdminShell } from '@/components/admin/shell/AdminShell'
 
 export const metadata: Metadata = {
   title: 'Tribes Admin',
@@ -15,12 +15,5 @@ export default async function ProtectedAdminLayout({
 }) {
   const user = await requireAdmin()
 
-  return (
-    <div className="min-h-screen flex bg-offwhite text-ink">
-      <Sidebar userEmail={user.email ?? user.id} />
-      <main className="flex-1 min-w-0">
-        <div className="max-w-[1280px] px-14 py-14">{children}</div>
-      </main>
-    </div>
-  )
+  return <AdminShell userEmail={user.email ?? user.id}>{children}</AdminShell>
 }

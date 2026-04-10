@@ -42,13 +42,17 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(href + '/')
 }
 
-export function Sidebar({ userEmail }: { userEmail: string }) {
+/**
+ * Dumb navigation list used inside both the desktop persistent sidebar
+ * and the mobile slide-in drawer. Knows nothing about layout.
+ */
+export function NavigationList({ userEmail }: { userEmail: string }) {
   const pathname = usePathname()
 
   return (
-    <aside className="sticky top-0 h-screen w-[240px] shrink-0 bg-firefly text-offwhite flex flex-col">
+    <div className="flex flex-col h-full">
       {/* Brand mark */}
-      <div className="px-8 pt-10 pb-14">
+      <div className="px-7 pt-8 pb-10 lg:pt-10 lg:pb-14">
         <div className="text-[10px] uppercase tracking-[0.22em] text-casablanca">
           Tribes
         </div>
@@ -57,11 +61,14 @@ export function Sidebar({ userEmail }: { userEmail: string }) {
         </div>
       </div>
 
-      {/* Nav */}
-      <nav className="flex-1 px-5 overflow-y-auto">
+      {/* Nav sections */}
+      <nav
+        aria-label="Admin navigation"
+        className="flex-1 px-4 pb-4 overflow-y-auto overscroll-contain"
+      >
         {NAV.map((section) => (
-          <div key={section.label} className="mb-9">
-            <div className="px-3 mb-3 text-[9px] uppercase tracking-[0.22em] text-offwhite/35">
+          <div key={section.label} className="mb-7">
+            <div className="px-3 mb-2.5 text-[9px] uppercase tracking-[0.22em] text-offwhite/35">
               {section.label}
             </div>
             <ul>
@@ -71,13 +78,14 @@ export function Sidebar({ userEmail }: { userEmail: string }) {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`group relative block py-[7px] pl-3 pr-3 text-[13.5px] font-light transition-colors duration-200 ${
+                      className={`group relative flex items-center min-h-[44px] pl-3 pr-3 text-[14px] font-light transition-colors duration-200 rounded-sm ${
                         active
                           ? 'text-offwhite'
-                          : 'text-offwhite/55 hover:text-offwhite'
+                          : 'text-offwhite/55 hover:text-offwhite active:bg-offwhite/5'
                       }`}
                     >
                       <span
+                        aria-hidden
                         className={`absolute left-0 top-1/2 -translate-y-1/2 h-[14px] w-[2px] bg-casablanca transition-all duration-200 ${
                           active
                             ? 'opacity-100 scale-y-100'
@@ -94,8 +102,8 @@ export function Sidebar({ userEmail }: { userEmail: string }) {
         ))}
       </nav>
 
-      {/* Sign-in info + sign out */}
-      <div className="px-8 py-7 border-t border-offwhite/10">
+      {/* Sign-in footer */}
+      <div className="px-7 py-6 border-t border-offwhite/10 shrink-0">
         <div className="text-[9px] uppercase tracking-[0.22em] text-offwhite/35 mb-1.5">
           Signed in as
         </div>
@@ -105,12 +113,12 @@ export function Sidebar({ userEmail }: { userEmail: string }) {
         <form action={signOut}>
           <button
             type="submit"
-            className="text-[11px] uppercase tracking-[0.18em] text-offwhite/50 hover:text-casablanca transition-colors duration-200"
+            className="min-h-[44px] inline-flex items-center text-[11px] uppercase tracking-[0.2em] text-offwhite/50 hover:text-casablanca active:text-casablanca transition-colors duration-200"
           >
             Sign out
           </button>
         </form>
       </div>
-    </aside>
+    </div>
   )
 }
