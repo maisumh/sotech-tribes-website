@@ -1,17 +1,20 @@
 # Tribes Website & Admin — Next.js Repository
 
 ## Project
-This repository contains two distinct surfaces that share a single codebase:
+This repository contains three distinct surfaces that share a single codebase:
 
-1. **Marketing site** (`/`, `/neighbors`, `/partners`, `/feedback`, `/mvp`) — a Next.js 15 recreation of the Tribes landing page originally built with vanilla HTML/CSS/JS on GHL. Pixel-level fidelity with the original is the goal.
-2. **Admin panel** (`/admin/*`) — an internal staff tool that replaced a legacy FlutterFlow admin in April 2026. Connects directly to the Tribes Supabase database. See [docs/admin-architecture.md](./docs/admin-architecture.md) before touching anything under `src/app/admin/` or `src/components/admin/`.
+1. **Marketing site** (`/`, `/neighbors`, `/partners`, `/feedback`, `/mvp`) — a Next.js 15 recreation of the Tribes landing page originally built with vanilla HTML/CSS/JS on GHL. Pixel-level fidelity with the original is the goal. Uses `GHLForm` iframe for waitlist capture.
+2. **Editorial surface** (`/privacy`, `/terms`, `/support`, `/home2`) — App Store submission pages (April 2026) + a redesigned home preview. Editorial aesthetic: extralight display type, asymmetric layouts, fluid `clamp()` typography, casablanca italic accents, numbered sections. No emoji icons — typographic numbered prefixes instead.
+3. **Admin panel** (`/admin/*`) — an internal staff tool that replaced a legacy FlutterFlow admin in April 2026. Connects directly to the Tribes Supabase database. See [docs/admin-architecture.md](./docs/admin-architecture.md) before touching anything under `src/app/admin/` or `src/components/admin/`.
 
 ## Stack
 - **Framework:** Next.js 15.5 (App Router, TypeScript)
 - **Styling:** Tailwind CSS 3.4 with custom colors (firefly, granny, casablanca, offwhite, ink)
 - **Animations:** CSS @keyframes for hero entrance, framer-motion ScrollReveal for scroll-triggered reveals
-- **Font:** Plus Jakarta Sans (via next/font/google) — used for both headings and body
-- **Form:** GHL iframe embed (shared `GHLForm` component) on all pages
+- **Font:** Plus Jakarta Sans (via next/font/google) — used for both headings and body. The editorial surface leans heavily into `font-extralight` (200) for display type.
+- **Forms:**
+  - Marketing pages → `GHLForm` iframe (`src/components/ui/GHLForm.tsx`)
+  - Editorial surface → custom react-hook-form + zod forms (`SupportForm`, `WaitlistForm`) posting to `/api/support` and `/api/waitlist` (both currently stubbed — see TODOs in the route handlers for SendGrid / GHL Contacts wiring)
 - **Deployment:** Vercel (auto-deploys from main branch)
 
 ## Original Reference
@@ -23,14 +26,27 @@ Always compare against the original when making visual changes.
 - **Hero animations:** Pure CSS (`animate-hero-fade-up` class in globals.css), NOT framer-motion — avoids hydration-dependent skip/stutter on mobile
 - **Scroll animations:** `ScrollReveal` component (framer-motion `whileInView`) for below-fold content
 - **Counter animations:** `useCountUp` hook in `src/hooks/useCountUp.ts` — used by Neighborhood stats and Impact metrics
-- **FAQ accordion:** `ClientFAQ` component with mutual exclusivity (one open at a time)
+- **FAQ accordion:** `ClientFAQ` component with mutual exclusivity (one open at a time). Pass `numbered` prop for the magazine-TOC variant used on editorial pages.
+- **Long-form prose:** `.legal-content` class in globals.css styles h2/h3/p/ul/li/a/strong/em inside it — used by `/privacy` and `/terms`. Spares us a typography plugin.
+- **Editorial typography:** Fluid headings use `style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}` rather than fixed Tailwind breakpoints. Scales smoothly and prevents "neighborhood." from clipping in narrow columns.
 - **iOS safe area:** body bg is `#103730` (firefly green) so iOS safe area matches footer; `#main` has white bg
 - **Section backgrounds:** Match original's class system — `section--sage` = `bg-granny`, `section--gray` = `bg-gray-50`, `section--cta` = `bg-firefly`
 
 ## Pages
+Marketing:
 - `/` — Main landing page (14 sections)
 - `/neighbors` — For Neighbors sub-page
 - `/partners` — For Partners sub-page
+
+Editorial (App Store submission + preview):
+- `/privacy` — Privacy Policy (CCPA/CPRA 2026, TDPSA, DMCA, etc.)
+- `/terms` — Terms of Service (AAA arbitration + 30-day opt-out, Apple EULA block, DMCA procedure)
+- `/support` — Support URL for App Store (contact card + 10-item numbered FAQ + contact form)
+- `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Uses custom `WaitlistForm` instead of the GHL iframe.
+
+API routes:
+- `/api/support` — contact form handler. TODO: wire to SendGrid to forward to info@trytribes.com.
+- `/api/waitlist` — waitlist signup handler. TODO: wire to GHL Contacts API (endpoint and payload shape documented in the route file).
 
 ## OG Images
 Static 1200x630 PNGs in `public/` — one per page (`og-home.png`, `og-neighbors.png`, `og-partners.png`). Generated via `scripts/generate-og.mjs` using sharp. To regenerate: `node scripts/generate-og.mjs` (all) or `node scripts/generate-og.mjs og-home` (single).
@@ -46,6 +62,37 @@ npm install
 npm run dev    # local dev server
 npm run build  # production build
 ```
+
+---
+
+## Editorial surface (April 2026+)
+
+The four pages at `/privacy`, `/terms`, `/support`, `/home2` share a single editorial design language. Before touching any of them, know:
+
+### Content rules
+- **Operator is Tribes**, a company based in Houston, Texas. SoTech Social Technologies is the dev shop, not the app operator — don't reintroduce SoTech attribution.
+- **Public contact email is `info@trytribes.com`** across every legal/support page and route handler.
+- **Terminology: "Offering" / "Seeking"** — these match the production app UI (home screen shows "What You're Offering" / "What You're Seeking"). Don't revert to "have / want" in any user-facing copy.
+- **Governing law:** Texas (defaulted in `/terms` via `GOVERNING_STATE`). There's a TODO at the top of `src/app/terms/page.tsx` flagging that Tribes' exact legal entity name and state of formation must be confirmed before App Store submission.
+
+### Design language
+- Extralight weights (`font-extralight` / 200) for display headlines
+- Casablanca italic emphasis on key words: `<em className="font-light not-italic text-casablanca">word</em>`
+- Numbered section kickers ("— SUPPORT · 001") via the shared `Kicker` helper in `src/app/home2/page.tsx`. Responsive-centered by default (center on mobile, left on md+).
+- Fluid `clamp()` heading sizes, not fixed Tailwind breakpoints
+- **No emoji icons** — anywhere. Replaced with big extralight numbered prefixes and short uppercase labels like "TRIBE", "FEATURE", "NEIGHBOR"
+- Casablanca gold 6×6 squares as corner marks on dark cards
+- Hairline borders (`border-firefly/10` to `/15`) instead of heavy dividers
+- Mobile layouts always `text-center`, desktop layouts `md:text-left` or `lg:text-left` — always widen paragraph `max-w` with `mx-auto md:mx-0` so the centering actually reads
+
+### App Store submission (unfinished)
+- **Legal entity confirmation** for Tribes (name + state) before submission — see TODO in `src/app/terms/page.tsx`
+- **DMCA agent registration** with US Copyright Office ($6, 3-year renewal) to claim safe harbor for user-uploaded photos
+- **SendGrid wiring** for `/api/support` — see TODO in the route handler
+- **GHL Contacts API wiring** for `/api/waitlist` — endpoint, auth header, and payload shape documented in the route handler
+- **ATT prompt confirmation** — a TODO in `/privacy` asks the FlutterFlow build team to confirm ATT is actually implemented on iOS before the Meta SDK disclosure sentence ships
+
+When promoting `/home2` to production, move `src/app/home2/page.tsx` to `src/app/page.tsx` (and delete the old composition-based Home that imports `<Hero />`, `<ValueProp />`, etc.). The `/home2` version pulls content from `lib/constants.ts`, so no content migration is needed.
 
 ---
 
