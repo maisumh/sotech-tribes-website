@@ -69,6 +69,84 @@ body {
 }
 
 /* ============================================================
+ * Legal / long-form content (privacy, terms, support)
+ * ============================================================ */
+
+.legal-content h2 {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #103730;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.legal-content h3 {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #103730;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.legal-content p {
+  color: #3f3f46;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.legal-content ul,
+.legal-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.legal-content ul { list-style-type: disc; }
+.legal-content ol { list-style-type: decimal; }
+
+.legal-content li {
+  color: #3f3f46;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.legal-content a {
+  color: #103730;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 150ms ease;
+}
+
+.legal-content a:hover {
+  color: #e5a63a;
+}
+
+.legal-content strong {
+  color: #103730;
+  font-weight: 600;
+}
+
+.legal-content em {
+  font-style: italic;
+}
+
+.legal-content h2:first-child,
+.legal-content h3:first-child {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .legal-content h2 { font-size: 1.75rem; }
+  .legal-content h3 { font-size: 1.25rem; }
+  .legal-content p,
+  .legal-content li { font-size: 1.0625rem; }
+}
+
+/* ============================================================
  * Admin panel animations
  * Fast, subtle, premium — designed to feel responsive, not showy.
  * Duration 200–280ms, expo-out easing, prefers-reduced-motion aware.

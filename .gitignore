@@ -34,3 +34,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright MCP scratch
+/.playwright-mcp/
+
+# local design scratch (screenshot captures and reference crops)
+/home2-*.png
+/privacy-*.png
+/terms-*.png
+/support-*.png
+/partners-communities-original.png
+/pills-original.png
+/pills-original-2.png
