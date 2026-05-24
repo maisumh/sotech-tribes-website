@@ -3,13 +3,18 @@ import { VALUE_PROP } from "@/lib/constants";
 
 export default function ValueProp() {
   return (
-    <section className="py-16 md:py-24">
+    <section id="what-is-tribes" className="py-16 md:py-24">
       <div className="max-w-[800px] mx-auto px-4 text-center">
         <ScrollReveal>
           <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly mb-8">
             {VALUE_PROP.title[0]}
             <br />
-            {VALUE_PROP.title[1]}
+            {VALUE_PROP.title[1].split("™").map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && <sup>™</sup>}
+              </span>
+            ))}
           </h2>
         </ScrollReveal>
         {VALUE_PROP.paragraphs.map((text, i) => (

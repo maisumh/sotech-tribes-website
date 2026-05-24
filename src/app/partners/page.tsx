@@ -135,7 +135,7 @@ export default function PartnersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
                 <h1 className="font-heading text-3xl md:text-5xl font-bold text-firefly leading-tight mb-6 animate-hero-fade-up" style={{ animationDelay: "0.1s" }}>
-                  <span className="block">Build Tribes&#8482;.</span>
+                  <span className="block">Build Tribes<sup>&#8482;</sup>.</span>
                   <span className="block">Activate Communities.</span>
                 </h1>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed animate-hero-fade-up" style={{ animationDelay: "0.25s" }}>

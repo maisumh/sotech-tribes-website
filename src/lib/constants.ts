@@ -344,7 +344,7 @@ export const FINAL_CTA = {
 export const FOOTER = {
   links: {
     explore: [
-      { label: "About Tribes", href: "#" },
+      { label: "About Tribes", href: "#what-is-tribes" },
       { label: "Neighbors", href: "/neighbors" },
       { label: "Partners", href: "/partners" },
       { label: "FAQ", href: "#faq" },

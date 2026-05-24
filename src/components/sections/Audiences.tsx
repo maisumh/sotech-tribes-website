@@ -8,7 +8,12 @@ export default function Audiences() {
       <div className="max-w-[1200px] mx-auto px-4">
         <ScrollReveal>
           <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly text-center mb-12">
-            {AUDIENCES.title}
+            {AUDIENCES.title.split("™").map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && <sup>™</sup>}
+              </span>
+            ))}
           </h2>
         </ScrollReveal>
 
