@@ -7,7 +7,7 @@ import { BRAND } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "v2 Plan | Tribes",
   description:
-    "The next-gen Tribes app. Phase 1 milestones, scope, pricing, and recurring retainers.",
+    "The next-gen Tribes app. Two phases, three milestones, scope, pricing, and recurring retainers.",
   robots: { index: false, follow: false },
 };
 
@@ -64,7 +64,7 @@ const MILESTONES = [
     title: "Onboarding, Match redesign, and Launch",
     weeks: "Weeks 7 to 9, around July 14 to August 3",
     summary:
-      "The flows. App onboarding, invite-to-tribe onboarding, and the match-interaction redesign. Then we deploy Phase 1 as an update to the live app.",
+      "The flows. App onboarding, invite-to-tribe onboarding, and the match-interaction redesign. Then we deploy v2 as an update to the live app.",
     features: [
       {
         name: "Refreshed app onboarding",
@@ -79,7 +79,7 @@ const MILESTONES = [
         body: "The post-match screen with clearer action surfacing. A visible 'make an offer' option. Offer history with status (proposed, countered, accepted, completed). Chat sits alongside structured actions instead of carrying all the load.",
       },
     ],
-    gate: "v2 Phase 1 live in both the App Store and the Play Store.",
+    gate: "v2 live in the App Store.",
   },
 ];
 
@@ -97,24 +97,20 @@ const PHASE_2_THEMES = [
   {
     title: "Gamification, or advanced moderation",
     body:
-      "We pick one based on what Phase 1 launch behavior tells us. Gamification means points, badges, and a super-trader tier. Moderation means tribe-level analytics, listing pin, and a basic dispute trail.",
+      "We pick one based on what v2 launch behavior tells us. Gamification means points, badges, and a super-trader tier. Moderation means tribe-level analytics, listing pin, and a basic dispute trail.",
   },
 ];
 
 const RETAINERS = [
   {
     label: "Account Management, Tier 1",
-    price: "$750",
-    cadence: "per month",
     starts: "Begins July 1",
-    desc: "Included in the F&F Operations package for the first month (June). Recurring from month two. Password resets, account issues, user questions, invite re-sends. Bounded to five to twenty F&F users. Scales to Tier 2 when we cross around fifty.",
+    desc: "Included in the F&F Operations package for the first month (June). Recurring from month two. Password resets, account issues, user questions, invite re-sends. Bounded to five to twenty F&F users. Scales to a higher tier as user count grows.",
   },
   {
     label: "Social Media, F&F phase",
-    price: "$1,500",
-    cadence: "per month",
     starts: "Begins June 1",
-    desc: "One half-day of content capture every thirty days yields more than thirty short clips. Schedules across LinkedIn, Instagram, TikTok, Shorts, Threads, and the waitlist newsletter. Steps up to a launch-ramp tier ($2,750 per month) when the seeded-tribe phase begins.",
+    desc: "One half-day of content capture every thirty days yields more than thirty short clips. Schedules across LinkedIn, Instagram, TikTok, Shorts, Threads, and the waitlist newsletter. Steps up to a launch-ramp tier when the seeded-tribe phase begins.",
   },
 ];
 
@@ -170,11 +166,12 @@ export default function UpdateV2Page() {
               className="text-lg md:text-xl text-white/80 leading-relaxed max-w-[680px] mx-auto animate-hero-fade-up"
               style={{ animationDelay: "0.15s" }}
             >
-              The whole next-gen app, delivered in two phases. Phase 1
-              is locked, priced, and broken into three milestones so
-              the investment is spread rather than a single lump bet.
-              Phase 2 picks up after launch, once we&apos;ve seen what
-              users actually do.
+              The whole next-gen app, delivered in two phases that
+              together ship in around nine weeks. Three milestones
+              spread across the two phases, each with its own price
+              and its own off-ramp. Transactions and growth come
+              after launch, once we&apos;ve seen what users actually
+              do.
             </p>
           </div>
         </section>
@@ -191,64 +188,61 @@ export default function UpdateV2Page() {
                   Two phases. Real off-ramps.
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[700px] mx-auto">
-                  Phase 1 is the build that ships in around nine weeks.
-                  Phase 2 is the build that ships after we have real
-                  user behavior to point at. Pricing the second one
-                  before that data exists doesn&apos;t serve either of
-                  us.
+                  Phase 1 is the redesign foundation. Phase 2 is the new
+                  engagement mechanics, the onboarding flows, and the
+                  launch. Together they ship in around nine weeks, with
+                  a real off-ramp after each milestone.
                 </p>
               </div>
             </ScrollReveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <ScrollReveal>
-                <div className="rounded-2xl bg-firefly text-white border border-firefly p-7 h-full">
+                <div className="rounded-2xl bg-firefly text-white border border-firefly p-7 h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-[11px] font-bold tracking-widest uppercase text-casablanca">
                       Phase 1
                     </span>
                     <span className="text-[11px] font-bold tracking-widest uppercase text-white/40">
-                      ~9 weeks, June to early August
+                      Milestone 1, ~3 weeks
                     </span>
                   </div>
                   <h3 className="font-heading text-2xl font-extrabold text-white mb-3">
-                    Redesign and Engagement
+                    Redesign
                   </h3>
                   <p className="text-sm text-white/80 leading-relaxed mb-5">
-                    A page-by-page redesign. Then Explore,
-                    Offer-from-Explore, and the Tribes structural
-                    layer. Then onboarding flows and the
-                    match-interaction redesign. Three milestones, around
-                    three weeks each.
+                    A page-by-page redesign of the existing app. Home,
+                    Feed, Profile, Settings, Notifications, Match view,
+                    and Chat all on a new visual system. Same
+                    functionality, sharper surface.
                   </p>
-                  <div className="text-xs text-white/60 font-semibold uppercase tracking-wider">
-                    Broken out below
+                  <div className="font-heading text-3xl font-extrabold text-casablanca mt-auto">
+                    $4,000
                   </div>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.1}>
-                <div className="rounded-2xl bg-white text-ink border border-gray-100 p-7 h-full">
+                <div className="rounded-2xl bg-firefly text-white border border-firefly p-7 h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-[11px] font-bold tracking-widest uppercase text-firefly/60">
+                    <span className="text-[11px] font-bold tracking-widest uppercase text-casablanca">
                       Phase 2
                     </span>
-                    <span className="text-[11px] font-bold tracking-widest uppercase text-firefly/40">
-                      Scoped after launch
+                    <span className="text-[11px] font-bold tracking-widest uppercase text-white/40">
+                      Milestones 2 and 3, ~6 weeks
                     </span>
                   </div>
-                  <h3 className="font-heading text-2xl font-extrabold text-firefly mb-3">
-                    Transactions and Growth
+                  <h3 className="font-heading text-2xl font-extrabold text-white mb-3">
+                    Engagement and Launch
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed mb-5">
-                    Cash, trade, or mix transactions via Stripe. A
-                    referral loop with both-sides rewards. Either
-                    gamification basics or advanced tribe-moderation
-                    tools, picked based on what Phase 1 behavior teaches
-                    us.
+                  <p className="text-sm text-white/80 leading-relaxed mb-5">
+                    First the new engagement mechanics: Explore,
+                    Offer-from-Explore, and the Tribes structural layer.
+                    Then the onboarding flows, the match-interaction
+                    redesign, and the deploy to the App Store.
                   </p>
-                  <div className="text-xs text-firefly/60 font-semibold uppercase tracking-wider">
-                    Quote lands around August 2026
+                  <div className="font-heading text-3xl font-extrabold text-casablanca mt-auto">
+                    $6,000
                   </div>
                 </div>
               </ScrollReveal>
@@ -262,10 +256,10 @@ export default function UpdateV2Page() {
             <ScrollReveal>
               <div className="text-center mb-14">
                 <span className="inline-block mb-3 text-xs font-bold tracking-widest uppercase text-casablanca-dark">
-                  Phase 1, Milestone Breakdown
+                  Milestone Breakdown
                 </span>
                 <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-firefly mb-4">
-                  Three milestones. Nine features.
+                  Three milestones across the two phases.
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[700px] mx-auto">
                   Each milestone has its own deliverable, its own gate,
@@ -342,15 +336,15 @@ export default function UpdateV2Page() {
                 </div>
                 <div className="relative">
                   <div className="text-[11px] font-bold tracking-widest uppercase text-casablanca mb-3">
-                    Phase 1 total
+                    v2 total
                   </div>
                   <div className="font-heading text-6xl md:text-7xl font-extrabold text-white mb-4 leading-none">
                     $10,000
                   </div>
                   <div className="text-sm text-white/70 max-w-[520px] mx-auto leading-relaxed">
-                    Broken into three milestones at $4,000, $3,000, and
-                    $3,000. Paid as each one ships and clears its gate.
-                    No single lump-sum bet.
+                    Phase 1 (Milestone 1) at $4,000. Phase 2 (Milestones
+                    2 and 3) at $6,000. Paid as each milestone ships and
+                    clears its gate. No single lump-sum bet.
                   </div>
                 </div>
               </div>
@@ -377,16 +371,16 @@ export default function UpdateV2Page() {
             <ScrollReveal>
               <div className="text-center mb-14">
                 <span className="inline-block mb-3 text-xs font-bold tracking-widest uppercase text-casablanca-dark">
-                  Phase 2, After Launch
+                  After v2 Launches
                 </span>
                 <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-firefly mb-4">
                   Transactions, growth, and one big pick.
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[700px] mx-auto">
-                  Three themes are on the table. We lock the exact
-                  feature list and the price when we scope it in August,
-                  informed by what Phase 1 launch behavior actually
-                  surfaces.
+                  Three themes are on the table once v2 is live and
+                  we&apos;ve seen what users actually do. We lock the
+                  exact feature list and the price when we scope it in
+                  August, informed by what launch behavior surfaces.
                 </p>
               </div>
             </ScrollReveal>
@@ -424,9 +418,9 @@ export default function UpdateV2Page() {
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[700px] mx-auto">
                   Separate from milestone work. These run alongside the
-                  Phase 1 build so by the time Phase 2 kicks off,
-                  there&apos;s real audience and real customer-support
-                  infrastructure already in place.
+                  v2 build so that by the time we launch, there&apos;s
+                  real audience and real customer-support infrastructure
+                  already in place.
                 </p>
               </div>
             </ScrollReveal>
@@ -435,22 +429,12 @@ export default function UpdateV2Page() {
               {RETAINERS.map((r, i) => (
                 <ScrollReveal key={r.label} delay={i * 0.1}>
                   <div className="bg-white rounded-2xl border border-gray-100 p-7 md:p-8 h-full hover:border-casablanca/40 hover:shadow-md transition-all">
-                    <div className="flex items-start justify-between gap-4 mb-4">
-                      <div className="text-[11px] font-bold tracking-widest uppercase text-casablanca-dark">
-                        {r.starts}
-                      </div>
+                    <div className="text-[11px] font-bold tracking-widest uppercase text-casablanca-dark mb-3">
+                      {r.starts}
                     </div>
-                    <h3 className="font-heading text-lg font-bold text-firefly mb-2">
+                    <h3 className="font-heading text-2xl font-extrabold text-firefly mb-4">
                       {r.label}
                     </h3>
-                    <div className="flex items-baseline gap-2 mb-5">
-                      <span className="font-heading text-5xl font-extrabold text-firefly">
-                        {r.price}
-                      </span>
-                      <span className="text-sm text-gray-500 font-medium">
-                        {r.cadence}
-                      </span>
-                    </div>
                     <p className="text-sm text-gray-600 leading-relaxed">
                       {r.desc}
                     </p>
@@ -487,9 +471,9 @@ export default function UpdateV2Page() {
                   },
                   {
                     n: "03",
-                    title: "Greenlight v2 Phase 1",
+                    title: "Greenlight v2",
                     body:
-                      "$10,000 across three milestones, around nine weeks. Begins June 1 alongside F&F. A real off-ramp at each milestone gate.",
+                      "$10,000 across two phases and three milestones, around nine weeks. Begins June 1 alongside F&F. A real off-ramp at each milestone gate.",
                   },
                 ].map((d) => (
                   <li

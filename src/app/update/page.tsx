@@ -75,7 +75,7 @@ const MARKETING_INFRA = [
   {
     title: "Publish the new custom website",
     body:
-      "The redesigned trytribes.com goes live. New look, App Store and Play Store routing, support and privacy and terms pages all aligned with the App Store submission.",
+      "The redesigned trytribes.com goes live. New look, App Store routing, support and privacy and terms pages all aligned with the App Store submission.",
   },
   {
     title: "Invitation email",
