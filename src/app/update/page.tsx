@@ -22,10 +22,10 @@ const TRACKS = [
   },
   {
     num: "02",
-    kicker: "Website and CRM",
-    title: "Marketing infrastructure",
+    kicker: "F&F",
+    title: "Marketing infrastructure for F&F",
     body:
-      "Publish the new custom website, ship the invitation email, ship the feedback form, and wire every signal into The Map so feedback, tickets, and waitlist all live in one inbox.",
+      "Everything the Friends and Family launch needs to actually reach people. The invitation email, the feedback form, and the flow that routes every response into one inbox so nothing falls on the floor.",
   },
   {
     num: "03",
