@@ -102,7 +102,23 @@ block_chat_room           — chat_rooms.blocked_by set
 unblock_chat_room         — chat_rooms.blocked_by cleared
 clear_report              — chat_rooms.reported_* cleared
 delete_chat_message       — chat_messages row hard-deleted
+
+# v2 (added when the admin gained visibility into the v2 interaction tables)
+update_v2_report_status   — v2_reports.status / admin_notes changed (+ reviewed_by/at)
+soft_delete_v2_project    — v2_projects.is_deleted = true
+restore_v2_project        — v2_projects.is_deleted = false
+feature_v2_project        — v2_projects.featured = true
+unfeature_v2_project      — v2_projects.featured = false
+block_v2_chat             — v2_chats.blocked_by set
+unblock_v2_chat           — v2_chats.blocked_by cleared
+clear_v2_chat_report      — v2_chats.reported_* cleared
+delete_v2_chat_message    — v2_chat_messages row hard-deleted (cascades reactions)
 ```
+
+Note: `admin_audit_log.action` has **no DB CHECK constraint** — the canonical
+list is enforced by convention only. Actioning a report's *target* reuses the
+existing `soft_delete_want_have` / `deactivate_user` strings (the report screen
+writes to `want_have` / `users`, so the audit row reflects the table touched).
 
 **Every admin mutation writes exactly one row.** Miss this and you lose the audit trail. The `changes` jsonb column records only the fields that actually changed, not the full row.
 
@@ -128,8 +144,24 @@ The mobile app reads from these tables. Renaming or fixing the following will br
 1. **`user_rattings` table** — the mobile app references this literal table name (typo of "ratings"). Do not rename.
 2. **`users.is_varify_email`** — typo of "verify". Do not rename. When displaying it in the admin, alias to `is_verify_email` (with the correct spelling) in the returned TypeScript type.
 3. **`chat_rooms.reported_by` is often NULL** even when a report exists — the mobile app sets `reported_reason` and `reported_at` without populating `reported_by`. The admin panel detects reports via `reported_by OR reported_reason OR reported_at` (see `src/app/admin/(protected)/chat/page.tsx` for the `.or()` filter and `[id]/page.tsx` for the `isReported` derivation). Don't rely on `reported_by` alone.
-4. **`chat_messages` has no `is_deleted` column** — message deletion is the ONE intentional hard delete in the admin (gated by a two-step confirm button and logged to the audit log). Every other delete in the admin is a soft-delete.
-5. **`projects` table (18 rows)** — dead test data, per user confirmation. Do not build a view for it.
+4. **`chat_messages` has no `is_deleted` column** — message deletion is the ONE intentional hard delete in the admin (gated by a two-step confirm button and logged to the audit log). `v2_chat_messages` is the same — its delete (in `/admin/v2-chats/[id]`) is the second intentional hard-delete, and it cascades `v2_message_reactions`.
+5. **`projects` table (18 rows)** — dead v1 test data, do not build a view for it. **Not to be confused with `v2_projects`** (the live "My Work" showcase), which the admin *does* surface at `/admin/showcase`.
+6. **v2 chat reports are dual-written.** Reporting a v2 chat from the app sets both a `v2_reports` row (`context='chat'`) AND the per-chat `v2_chats.reported_*` fields. `/admin/reports` is the master triage queue; `/admin/v2-chats` "Clear report" only resets the per-chat fields. Chat-context reports carry no chat id — the report detail resolves the conversation by the canonical participant pair (`reporter ↔ reported_user`).
+
+## v2 coverage (added after the April 2026 v1-only MVP)
+
+The admin now sees the v2 interaction tables. Three v1 tables are **shared** with v2, so existing views already cover both: `users` (v2 users), `want_have` (v2 listings), `user_rattings` (v2 ratings, now also resolving `trade_proposal_id`). The net-new v2 surfaces:
+
+| Route | Table(s) | Mutating? |
+|---|---|---|
+| `/admin/reports` | `v2_reports` (+ acts on `want_have`/`users`) | ✅ status/notes + target soft-delete/deactivate |
+| `/admin/v2-chats` | `v2_chats`, `v2_chat_messages`, `v2_message_reactions` | ✅ block/clear-report/delete-message |
+| `/admin/trades` | `trade_proposals` (+ `want_have` for baskets) | ❌ read-only |
+| `/admin/showcase` | `v2_projects` | ✅ soft-delete/restore/feature |
+| `/admin/feedback` | `v2_feedback` | ❌ read-only |
+| `/admin/v2-notifications` | `v2_notifications` | ❌ read-only |
+
+**No new RPCs** — every v2 read/write uses the service-role client directly, like the v1 views. The only schema change was three additive nullable columns on `v2_reports` (`reviewed_by`, `reviewed_at`, `admin_notes`; SQL in `tribes-app/supabase/functions/sql/v2_reports_admin_review.sql`). When v1 is decommissioned, the v1-only views (`/admin/offers`, `/admin/matches`, `/admin/chat`, `/admin/notifications`) and the "v2" label prefixes can be retired.
 
 ## File structure — where things live
 
@@ -152,14 +184,24 @@ src/
 │           │   ├── page.tsx               ← list with moderation filters
 │           │   ├── actions.ts             ← moderateWantHave (op discriminator)
 │           │   └── [id]/page.tsx          ← detail with action buttons
-│           ├── matches/page.tsx           ← read-only list
-│           ├── offers/page.tsx            ← read-only list
-│           ├── ratings/page.tsx           ← read-only list with max-rating filter
-│           ├── notifications/page.tsx     ← read-only list
-│           ├── chat/
-│           │   ├── page.tsx               ← rooms list, priority-sorted by reports
-│           │   ├── actions.ts             ← moderateChatRoom + deleteChatMessage
-│           │   └── [id]/page.tsx          ← message thread with per-message delete
+│           ├── matches/page.tsx           ← read-only list (v1)
+│           ├── offers/page.tsx            ← read-only list (v1)
+│           ├── ratings/page.tsx           ← read-only list (now resolves v2 trade_proposal_id)
+│           ├── notifications/page.tsx     ← read-only list (v1)
+│           ├── chat/                      ← v1 chat_rooms moderation
+│           │   ├── page.tsx · actions.ts · [id]/page.tsx
+│           ├── reports/                   ← v2 moderation queue (ACTIONABLE)
+│           │   ├── page.tsx               ← v2_reports, open-first + context/status filters
+│           │   ├── actions.ts             ← moderateReport (status/notes + soft-delete listing / deactivate user)
+│           │   └── [id]/page.tsx          ← target-in-context + ReportActions panel
+│           ├── v2-chats/                  ← v2 chat moderation (mirrors v1 chat)
+│           │   ├── page.tsx · actions.ts (moderateV2Chat + deleteV2ChatMessage) · [id]/page.tsx
+│           ├── trades/                    ← trade_proposals (read-only)
+│           │   ├── page.tsx · [id]/page.tsx (baskets + completion handshake)
+│           ├── showcase/                  ← v2_projects moderation
+│           │   ├── page.tsx · actions.ts (soft-delete/restore/feature) · [id]/page.tsx
+│           ├── feedback/page.tsx          ← v2_feedback (read-only)
+│           ├── v2-notifications/page.tsx  ← v2_notifications (read-only)
 │           └── activity/page.tsx          ← uses events RPC with p_admin_mode
 ├── components/admin/
 │   ├── brand/
@@ -172,9 +214,16 @@ src/
 │   │   └── UserEditForm.tsx               ← client useActionState form
 │   ├── want-have/
 │   │   └── ModerationActions.tsx          ← client useActionState action buttons
-│   └── chat/
-│       ├── ChatRoomActions.tsx            ← block/unblock/clear-report
-│       └── DeleteMessageButton.tsx        ← inline two-step confirm delete
+│   ├── chat/                              ← v1
+│   │   ├── ChatRoomActions.tsx            ← block/unblock/clear-report
+│   │   └── DeleteMessageButton.tsx        ← inline two-step confirm delete
+│   ├── reports/
+│   │   └── ReportActions.tsx              ← status/notes + contextual target actions
+│   ├── v2-chat/
+│   │   ├── V2ChatActions.tsx              ← block/unblock/clear-report (v2_chats)
+│   │   └── DeleteV2MessageButton.tsx      ← inline two-step confirm delete
+│   └── showcase/
+│       └── ShowcaseActions.tsx            ← soft-delete/restore/feature/unfeature
 └── lib/
     ├── auth/
     │   └── require-admin.ts               ← THE gate

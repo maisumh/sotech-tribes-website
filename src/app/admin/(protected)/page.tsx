@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 // Date-range presets for the dashboard.
 const RANGE_PRESETS = {
@@ -63,6 +64,33 @@ export default async function DashboardPage({
 
   const metrics = data as DashboardMetrics | null
 
+  // Tribes v2 metrics — direct counts via the service-role client (the v1
+  // analytics RPC predates the v2 tables). Open reports is an all-time backlog
+  // gauge; the rest follow the selected range like the v1 metrics.
+  const adminClient = createAdminClient()
+  const fromIso = from.toISOString()
+  const [openReportsRes, newTradesRes, completedTradesRes, newChatsRes, newFeedbackRes, newProjectsRes] =
+    await Promise.all([
+      adminClient.from('v2_reports').select('id', { count: 'exact', head: true }).eq('status', 'open'),
+      adminClient.from('trade_proposals').select('id', { count: 'exact', head: true }).gte('created_at', fromIso),
+      adminClient
+        .from('trade_proposals')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'completed')
+        .gte('updated_at', fromIso),
+      adminClient.from('v2_chats').select('id', { count: 'exact', head: true }).gte('created_at', fromIso),
+      adminClient.from('v2_feedback').select('id', { count: 'exact', head: true }).gte('created_at', fromIso),
+      adminClient.from('v2_projects').select('id', { count: 'exact', head: true }).gte('created_at', fromIso),
+    ])
+  const v2 = {
+    openReports: openReportsRes.count ?? 0,
+    newTrades: newTradesRes.count ?? 0,
+    completedTrades: completedTradesRes.count ?? 0,
+    newChats: newChatsRes.count ?? 0,
+    newFeedback: newFeedbackRes.count ?? 0,
+    newProjects: newProjectsRes.count ?? 0,
+  }
+
   return (
     <div>
       {/* Header */}
@@ -122,10 +150,29 @@ export default async function DashboardPage({
         <MetricCard label="Chats started" value={metrics?.chats_initiated} />
       </div>
 
+      {/* Tribes v2 */}
+      <div className="mt-12 lg:mt-16 mb-5 lg:mb-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-granny">
+        <span aria-hidden className="block h-px w-8 bg-granny/30" />
+        Tribes v2
+      </div>
+      <div className="admin-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-granny/25 border border-granny/25">
+        <MetricCard
+          label="Open reports"
+          value={v2.openReports}
+          href="/admin/reports"
+          alert={v2.openReports > 0}
+        />
+        <MetricCard label="New trades" value={v2.newTrades} href="/admin/trades" />
+        <MetricCard label="Trades completed" value={v2.completedTrades} accent />
+        <MetricCard label="New v2 chats" value={v2.newChats} href="/admin/v2-chats" />
+        <MetricCard label="New feedback" value={v2.newFeedback} href="/admin/feedback" />
+        <MetricCard label="Showcase posted" value={v2.newProjects} href="/admin/showcase" />
+      </div>
+
       {/* Range footer */}
       <div className="mt-8 lg:mt-10 flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-granny/80">
         <span aria-hidden className="block h-px w-8 bg-granny/30" />
-        Range: {formatRangeLabel(from, to)}
+        Range: {formatRangeLabel(from, to)} · v2 open reports are all-time
       </div>
 
       <p className="mt-12 lg:mt-16 max-w-xl text-[12px] text-granny leading-relaxed font-light">
@@ -144,25 +191,39 @@ function MetricCard({
   label,
   value,
   accent = false,
+  alert = false,
+  href,
 }: {
   label: string
   value: number | undefined
   accent?: boolean
+  alert?: boolean
+  href?: string
 }) {
   const display =
     value === undefined || value === null ? '—' : value.toLocaleString()
-  return (
-    <div className="bg-offwhite px-6 sm:px-7 py-8 sm:py-9 lg:px-8 lg:py-10">
+  const color = alert ? 'text-red-700' : accent ? 'text-casablanca-dark' : 'text-firefly'
+  const inner = (
+    <>
       <div className="text-[10px] uppercase tracking-[0.22em] text-granny mb-4 lg:mb-5">
         {label}
       </div>
-      <div
-        className={`text-[44px] sm:text-[48px] lg:text-[60px] leading-none font-extralight tabular-nums ${
-          accent ? 'text-casablanca-dark' : 'text-firefly'
-        }`}
-      >
+      <div className={`text-[44px] sm:text-[48px] lg:text-[60px] leading-none font-extralight tabular-nums ${color}`}>
         {display}
       </div>
-    </div>
+    </>
+  )
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="admin-lift block bg-offwhite px-6 sm:px-7 py-8 sm:py-9 lg:px-8 lg:py-10 hover:bg-firefly/[0.03] transition-colors"
+      >
+        {inner}
+      </Link>
+    )
+  }
+  return (
+    <div className="bg-offwhite px-6 sm:px-7 py-8 sm:py-9 lg:px-8 lg:py-10">{inner}</div>
   )
 }

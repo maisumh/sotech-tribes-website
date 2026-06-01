@@ -122,8 +122,10 @@ A mobile-responsive staff admin at `/admin/*` — separate surface from the mark
 - `user_rattings` table — typo of "ratings", load-bearing (mobile app reads that name).
 - `users.is_varify_email` — typo of "verify", load-bearing.
 - `chat_rooms.reported_by` is often NULL even when a report exists. Check `reported_by OR reported_reason OR reported_at` when detecting reports.
-- `chat_messages` has no `is_deleted` column — message deletion is the ONE intentional hard-delete in the entire admin.
-- `projects` table is dead test data — do not build UI for it.
+- `chat_messages` has no `is_deleted` column — message deletion is the ONE intentional hard-delete in the entire admin. (`v2_chat_messages` delete is the second; it cascades reactions.)
+- `projects` table is dead v1 test data — do not build UI for it. **Not** `v2_projects` (the live "My Work" showcase, surfaced at `/admin/showcase`).
+
+**v2 coverage**: the admin sees the v2 (`tribes-app/`) interaction tables — `/admin/reports` (`v2_reports` moderation queue, actionable), `/admin/v2-chats`, `/admin/trades`, `/admin/showcase`, `/admin/feedback`, `/admin/v2-notifications`. `users`/`want_have`/`user_rattings` are shared, so existing views already cover v2 users/listings/ratings. All v2 work is additive + uses the service-role client (no new RPCs). A v2 *chat* report dual-writes to both `v2_reports` (`context='chat'`, the master triage queue) and `v2_chats.reported_*`. Full spec: `docs/admin-backend-contract.md` §9–14.
 
 ### For everything else
 

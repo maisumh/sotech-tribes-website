@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { UserEditForm } from '@/components/admin/users/UserEditForm'
 
 type UserRow = {
@@ -68,6 +69,32 @@ export default async function UserDetailPage({
   }
 
   const user = profile.user
+
+  // v2 activity — direct counts via the service-role client (the v1
+  // get_user_full_profile RPC predates the v2 tables and doesn't return them).
+  const admin = createAdminClient()
+  const [bioRes, reportsAgainstRes, blockingRes, blockedByRes, tradesRes, projectsRes] =
+    await Promise.all([
+      admin.from('users').select('bio').eq('id', id).maybeSingle(),
+      admin.from('v2_reports').select('id', { count: 'exact', head: true }).eq('reported_user_id', id),
+      admin.from('v2_user_blocks').select('id', { count: 'exact', head: true }).eq('blocker_id', id),
+      admin.from('v2_user_blocks').select('id', { count: 'exact', head: true }).eq('blocked_id', id),
+      admin
+        .from('trade_proposals')
+        .select('id', { count: 'exact', head: true })
+        .or(`proposer_id.eq.${id},recipient_id.eq.${id}`),
+      admin
+        .from('v2_projects')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', id)
+        .eq('is_deleted', false),
+    ])
+  const bio = (bioRes.data as { bio: string | null } | null)?.bio ?? null
+  const reportsAgainst = reportsAgainstRes.count ?? 0
+  const blockingCount = blockingRes.count ?? 0
+  const blockedByCount = blockedByRes.count ?? 0
+  const tradesCount = tradesRes.count ?? 0
+  const projectsCount = projectsRes.count ?? 0
 
   return (
     <div className="max-w-4xl">
@@ -157,6 +184,31 @@ export default async function UserDetailPage({
         </dl>
       </section>
 
+      {/* Tribes v2 activity */}
+      <section className="mb-12 lg:mb-14">
+        <h2 className="text-[10px] uppercase tracking-[0.22em] text-granny mb-4 lg:mb-5">
+          Tribes v2
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-granny/20 border border-granny/20">
+          <V2StatCell
+            label="Reports against"
+            value={reportsAgainst}
+            href={reportsAgainst > 0 ? `/admin/reports?status=all` : undefined}
+            alert={reportsAgainst > 0}
+          />
+          <V2StatCell label="Trades" value={tradesCount} />
+          <V2StatCell label="Showcase" value={projectsCount} />
+          <V2StatCell label="Blocking" value={blockingCount} />
+          <V2StatCell label="Blocked by" value={blockedByCount} />
+        </div>
+        <div className="mt-5">
+          <dt className="text-[10px] uppercase tracking-[0.22em] text-granny mb-1.5">Bio</dt>
+          <dd className="text-ink font-light break-words whitespace-pre-wrap text-[13px]">
+            {bio || <span className="text-granny italic">—</span>}
+          </dd>
+        </div>
+      </section>
+
       {/* Wants */}
       <section className="mb-12 lg:mb-14">
         <h2 className="text-[10px] uppercase tracking-[0.22em] text-granny mb-4 lg:mb-5">
@@ -208,6 +260,39 @@ function StatCell({
       </div>
     </div>
   )
+}
+
+function V2StatCell({
+  label,
+  value,
+  href,
+  alert,
+}: {
+  label: string
+  value: number
+  href?: string
+  alert?: boolean
+}) {
+  const inner = (
+    <>
+      <div className="text-[10px] uppercase tracking-[0.22em] text-granny mb-3">{label}</div>
+      <div
+        className={`text-[28px] sm:text-[34px] font-extralight tabular-nums leading-none ${
+          alert ? 'text-red-700' : 'text-firefly'
+        }`}
+      >
+        {value.toLocaleString()}
+      </div>
+    </>
+  )
+  if (href) {
+    return (
+      <Link href={href} className="admin-lift block bg-offwhite px-5 py-6 sm:px-6 sm:py-7 hover:bg-firefly/[0.03] transition-colors">
+        {inner}
+      </Link>
+    )
+  }
+  return <div className="bg-offwhite px-5 py-6 sm:px-6 sm:py-7">{inner}</div>
 }
 
 function Badge({

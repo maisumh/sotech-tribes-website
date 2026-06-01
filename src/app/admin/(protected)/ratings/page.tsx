@@ -45,6 +45,7 @@ type RatingRow = {
   rate: number | null
   comment: string | null
   offer_id: string | null
+  trade_proposal_id: string | null
   created_at: string
 }
 
@@ -72,7 +73,7 @@ export default async function RatingsPage({
   let query = supabase
     .from('user_rattings')
     .select(
-      'id, ratting_to, ratting_by, rate, comment, offer_id, created_at',
+      'id, ratting_to, ratting_by, rate, comment, offer_id, trade_proposal_id, created_at',
       { count: 'exact' },
     )
     .order('created_at', { ascending: p.order === 'asc' })
@@ -193,6 +194,11 @@ export default async function RatingsPage({
                       &ldquo;{r.comment}&rdquo;
                     </div>
                   )}
+                  {r.trade_proposal_id && (
+                    <div className="mt-3">
+                      <TradeChip id={r.trade_proposal_id} />
+                    </div>
+                  )}
                 </li>
               )
             })}
@@ -266,6 +272,11 @@ export default async function RatingsPage({
                         </span>
                       ) : (
                         <span className="text-granny/50 italic text-[12px]">—</span>
+                      )}
+                      {r.trade_proposal_id && (
+                        <div className="mt-2">
+                          <TradeChip id={r.trade_proposal_id} />
+                        </div>
                       )}
                     </td>
                   </tr>
@@ -345,6 +356,17 @@ function UserRow({
         <UserCell user={user} />
       </div>
     </div>
+  )
+}
+
+function TradeChip({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/admin/trades/${id}`}
+      className="inline-flex items-center px-2 py-[3px] rounded-full bg-firefly/[0.06] text-firefly text-[9px] uppercase tracking-[0.15em] hover:bg-firefly/10 transition-colors"
+    >
+      v2 trade →
+    </Link>
   )
 }
 

@@ -464,3 +464,120 @@ Do not add values to these enums without coordinating with the mobile app team. 
 5. **The `user_rattings` table name stays misspelled.** Don't fix it.
 6. **`public.users.is_varify_email` stays misspelled** for the same reason.
 7. **Admin mutations must not fire FCM push notifications for MVP.** That's post-MVP scope.
+
+---
+
+# v2 Entities (added after the v1-only MVP)
+
+The admin now covers the v2 (`tribes-app/` RN+Expo) interaction tables. These are **net-new, additive** tables the legacy FlutterFlow app is unaware of. Three v1 tables are **shared** and already covered by existing views, with small additions noted below.
+
+All v2 reads/writes use the **service-role client directly** (no new RPCs). Every mutation still writes one `admin_audit_log` row.
+
+## 9. Reports (`public.v2_reports`) — ACTIONABLE moderation queue
+
+The in-app Report flow (App Store Guideline 1.2 compliance) inserts `status='open'` rows here. This is the staff moderation queue.
+
+```
+id                  uuid PK
+reporter_id         uuid NOT NULL → users.id
+reported_user_id    uuid → users.id        (profile/chat reports)
+reported_listing_id bigint → want_have.id  (listing reports; ON DELETE SET NULL)
+context             text CHECK (listing | profile | chat | other)
+reason              text NOT NULL
+status              text CHECK (open | reviewed | actioned | dismissed)
+created_at          timestamptz NOT NULL
+-- admin-only, additive (added for the admin; app never reads them):
+reviewed_by         uuid → users.id
+reviewed_at         timestamptz
+admin_notes         text
+```
+
+- **List** (`/admin/reports`): default filter `open`, newest first; status + context filters; all-time open count as backlog gauge.
+- **Detail**: target rendered in context (profile → user link; listing → want_have link + images; chat → resolved v2 chat link via the participant pair).
+- **Mutations**: set status (`mark_reviewed`/`mark_actioned`/`dismiss`/`reopen`) + `admin_notes` → audit `update_v2_report_status`. Target actions reuse `want_have` soft-delete (`soft_delete_want_have`) and `users` deactivate (`deactivate_user`).
+- **Dual-write quirk**: a `context='chat'` report also sets `v2_chats.reported_*`. This queue is the master triage; per-chat "clear report" only resets the chat fields.
+
+## 10. v2 Chats (`public.v2_chats`, `public.v2_chat_messages`, `public.v2_message_reactions`)
+
+Pair-based chat (one row per ordered pair, `CHECK user_a_id < user_b_id`). Mirrors the v1 chat moderation view.
+
+```
+v2_chats: id, user_a_id, user_b_id, last_message_at, last_message_preview,
+          last_message_sender_id, status text CHECK (in_conversation|exchanged|rejected),
+          blocked_by, blocked_at, reported_by, reported_reason, reported_at, created_at, updated_at
+v2_chat_messages: id, chat_id → v2_chats, sender_id, kind text CHECK (text|trade|system),
+          body, trade_proposal_id → trade_proposals, read_at, created_at
+v2_message_reactions: id, message_id → v2_chat_messages (ON DELETE CASCADE), chat_id, user_id, emoji, created_at
+```
+
+- **List/Detail** (`/admin/v2-chats`): priority-sort reported; thread renders by `kind` (text bubble / system pill / trade card linking `/admin/trades/[id]`); per-message reaction counts.
+- **Mutations**: `block_v2_chat`, `unblock_v2_chat`, `clear_v2_chat_report`; `delete_v2_chat_message` (hard-delete, the 2nd intentional hard delete — cascades reactions).
+
+## 11. Trades (`public.trade_proposals`) — read-only
+
+v2 trade pipeline (replaces offers/matches for new-app users).
+
+```
+id, proposer_id, recipient_id, target_want_have_id (legacy singular),
+target_want_have_ids bigint[] / offered_want_have_ids bigint[] (symmetric baskets),
+message, status text CHECK (pending|accepted|rejected|cancelled|countered|completed),
+is_help_offer, chat_id → v2_chats, proposer_completed_at, recipient_completed_at, created_at, updated_at
+```
+
+- **Detail** (`/admin/trades`): both baskets resolved to `want_have` titles (prefer arrays, fall back to singular), dual-confirm completion handshake, linked chat.
+
+## 12. Showcase (`public.v2_projects`) — "My Work" UGC moderation
+
+```
+id, user_id, title, description, images text[], category,
+source text CHECK (portfolio | trade), trade_proposal_id → trade_proposals,
+partner_user_id, featured bool, is_deleted bool, created_at, updated_at
+```
+
+- **Mutations** (`/admin/showcase`): `soft_delete_v2_project` / `restore_v2_project` / `feature_v2_project` / `unfeature_v2_project`. Soft-delete only — never hard-delete UGC. ⚠️ **Not** the dead v1 `projects` table.
+
+## 13. Feedback (`public.v2_feedback`) — read-only
+
+```
+id, user_id (nullable → anonymous), category text CHECK (general|bug|idea|praise|other),
+message NOT NULL, app_version, created_at
+```
+
+## 14. v2 Notifications (`public.v2_notifications`) — read-only
+
+```
+id, user_id, type text CHECK (trade_proposal|trade_accepted|trade_declined|trade_countered|
+                              trade_cancelled|new_message|new_match|system),
+title, body, data jsonb, read_at, created_at
+```
+
+Separate from the v1 `public.notifications` view; merge after v1 sunset.
+
+## Shared tables — v2 additions to existing views
+
+- **`users`** — also covers v2 users. Detail page (`/admin/users/[id]`) shows a "Tribes v2" panel: `bio` (read-only display), reports-against count, `v2_user_blocks` (blocking / blocked-by), trades & showcase counts. `bio` is **not** admin-editable (users self-edit in app).
+- **`want_have`** — v2 listings live here too; existing view + soft-delete already apply.
+- **`user_rattings`** — gained `trade_proposal_id uuid → trade_proposals` (v2-linked ratings, where `offer_id` is null). Ratings view surfaces a "v2 trade" chip.
+
+## v2 status values (text + CHECK, NOT Postgres enums)
+
+```
+v2_reports.status        = {open, reviewed, actioned, dismissed}
+v2_chats.status          = {in_conversation, exchanged, rejected}
+trade_proposals.status   = {pending, accepted, rejected, cancelled, countered, completed}
+v2_projects.source       = {portfolio, trade}
+v2_feedback.category     = {general, bug, idea, praise, other}
+v2_notifications.type    = {trade_proposal, trade_accepted, trade_declined, trade_countered,
+                            trade_cancelled, new_message, new_match, system}
+```
+
+These are CHECK constraints (not `CREATE TYPE` enums) and are owned by the v2 app — coordinate with the tribes-app team before changing.
+
+## v2 audit action strings (appended to the canonical list)
+
+```
+update_v2_report_status, soft_delete_v2_project, restore_v2_project,
+feature_v2_project, unfeature_v2_project, block_v2_chat, unblock_v2_chat,
+clear_v2_chat_report, delete_v2_chat_message
+```
+(`admin_audit_log.action` has no DB CHECK — the list is convention.)

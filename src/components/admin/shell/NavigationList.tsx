@@ -20,19 +20,25 @@ const NAV: NavSection[] = [
       { href: '/admin/want-have', label: 'Wants & Haves' },
       { href: '/admin/matches', label: 'Matches' },
       { href: '/admin/offers', label: 'Offers' },
+      { href: '/admin/trades', label: 'Trades' },
     ],
   },
   {
     label: 'Moderation',
     items: [
+      { href: '/admin/reports', label: 'Reports' },
       { href: '/admin/chat', label: 'Chats' },
+      { href: '/admin/v2-chats', label: 'v2 Chats' },
       { href: '/admin/ratings', label: 'Ratings' },
+      { href: '/admin/feedback', label: 'Feedback' },
+      { href: '/admin/showcase', label: 'Showcase' },
     ],
   },
   {
     label: 'System',
     items: [
       { href: '/admin/notifications', label: 'Notifications' },
+      { href: '/admin/v2-notifications', label: 'v2 Notifications' },
       { href: '/admin/activity', label: 'Activity log' },
     ],
   },
