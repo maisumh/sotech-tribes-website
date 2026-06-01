@@ -495,7 +495,7 @@ admin_notes         text
 - **List** (`/admin/reports`): default filter `open`, newest first; status + context filters; all-time open count as backlog gauge.
 - **Detail**: target rendered in context (profile → user link; listing → want_have link + images; chat → resolved v2 chat link via the participant pair).
 - **Mutations**: set status (`mark_reviewed`/`mark_actioned`/`dismiss`/`reopen`) + `admin_notes` → audit `update_v2_report_status`. Target actions reuse `want_have` soft-delete (`soft_delete_want_have`) and `users` deactivate (`deactivate_user`).
-- **Dual-write quirk**: a `context='chat'` report also sets `v2_chats.reported_*`. This queue is the master triage; per-chat "clear report" only resets the chat fields.
+- **Chat reports**: a `context='chat'` report is the master signal here. It carries no chat id — the detail page resolves the conversation from the `(reporter, reported_user)` pair → links to `/admin/v2-chats/[id]`. The legacy per-chat `v2_chats.reported_*` columns (Phase 14) are **no longer written** by the app (chat reporting was unified onto `v2_reports` in Phase 15); `/admin/v2-chats` still surfaces/clears them defensively for any pre-Phase-15 rows.
 
 ## 10. v2 Chats (`public.v2_chats`, `public.v2_chat_messages`, `public.v2_message_reactions`)
 
