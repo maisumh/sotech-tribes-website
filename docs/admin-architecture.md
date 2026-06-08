@@ -160,8 +160,9 @@ The admin now sees the v2 interaction tables. Three v1 tables are **shared** wit
 | `/admin/showcase` | `v2_projects` | ✅ soft-delete/restore/feature |
 | `/admin/feedback` | `v2_feedback` | ❌ read-only |
 | `/admin/v2-notifications` | `v2_notifications` | ❌ read-only |
+| `/admin/circles` | `circles`, `circle_members`, `circle_invites`, `circle_bans` | ❌ read-only |
 
-**No new RPCs** — every v2 read/write uses the service-role client directly, like the v1 views. The only schema change was three additive nullable columns on `v2_reports` (`reviewed_by`, `reviewed_at`, `admin_notes`; SQL in `tribes-app/supabase/functions/sql/v2_reports_admin_review.sql`). When v1 is decommissioned, the v1-only views (`/admin/offers`, `/admin/matches`, `/admin/chat`, `/admin/notifications`) and the "v2" label prefixes can be retired.
+**No new RPCs** — every v2 read/write uses the service-role client directly, like the v1 views. The only admin-side schema change was three additive nullable columns on `v2_reports` (`reviewed_by`, `reviewed_at`, `admin_notes`; SQL in `tribes-app/supabase/functions/sql/v2_reports_admin_review.sql`). (The `circles*` tables behind `/admin/circles` are created + owned by `tribes-app` — the admin only **reads** them via the service-role client; see contract §15.) When v1 is decommissioned, the v1-only views (`/admin/offers`, `/admin/matches`, `/admin/chat`, `/admin/notifications`) and the "v2" label prefixes can be retired.
 
 ## File structure — where things live
 

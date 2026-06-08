@@ -547,11 +547,29 @@ message NOT NULL, app_version, created_at
 
 ```
 id, user_id, type text CHECK (trade_proposal|trade_accepted|trade_declined|trade_countered|
-                              trade_cancelled|new_message|new_match|system),
+                              trade_cancelled|new_message|new_match|system|
+                              circle_invite|circle_request|circle_approved|
+                              circle_role_changed|circle_removed),
 title, body, data jsonb, read_at, created_at
 ```
 
-Separate from the v1 `public.notifications` view; merge after v1 sunset.
+Separate from the v1 `public.notifications` view; merge after v1 sunset. (The `circle_*` types + the `v2_notification_prefs.circles_enabled` push flag were added with Circles — see §15.)
+
+## 15. Circles (`public.circles` + members / invites / bans) — read-only moderation
+
+Invite-only sub-communities (church / school / neighborhood) in `tribes-app`. **Created + owned by the mobile app** (additive-only); the admin only **reads** them via the service-role client at `/admin/circles` (list + detail). All writes go through the app's SECURITY DEFINER RPCs — the admin performs **no** Circle mutations.
+
+```
+circles          id, name, description, type, is_discoverable, join_mode,
+                 created_by → users, member_count, is_deleted, created_at, updated_at
+circle_members   (circle_id, user_id) PK, role circle_role(owner|admin|member),
+                 status(active|pending|removed|left), invited_by, joined_at
+circle_invites   id, circle_id, code UNIQUE, created_by, role, expires_at,
+                 max_uses, use_count, revoked, created_at
+circle_bans      (circle_id, user_id) PK, banned_by, reason, created_at
+```
+
+Full schema + RPC + RLS spec lives in `tribes-app/INVARIANTS.md §18` + `tribes-app/supabase/functions/sql/v2_circle*.sql`. The `circle_role` enum is **v2-only** (not one of the shared locked enums).
 
 ## Shared tables — v2 additions to existing views
 
