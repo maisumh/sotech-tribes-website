@@ -32,6 +32,7 @@ const NAV: NavSection[] = [
       { href: '/admin/ratings', label: 'Ratings' },
       { href: '/admin/feedback', label: 'Feedback' },
       { href: '/admin/showcase', label: 'Showcase' },
+      { href: '/admin/circles', label: 'Circles' },
     ],
   },
   {
