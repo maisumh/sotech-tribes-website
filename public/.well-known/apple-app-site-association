@@ -1,4 +1,17 @@
 {
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["Y9T58UC2RG.com.app.tribes"],
+        "components": [
+          {
+            "/": "/circles/join",
+            "comment": "Circle invite — opens the join sheet in the Tribes app"
+          }
+        ]
+      }
+    ]
+  },
   "webcredentials": {
     "apps": ["Y9T58UC2RG.com.app.tribes"]
   }
