@@ -18,7 +18,13 @@ export async function signInWithGoogle(): Promise<void> {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${origin}/admin/auth/callback?next=/admin`,
+      // NO query string here. Supabase matches redirect_to against the
+      // Redirect URL allow-list, and an entry without a wildcard ('.../callback')
+      // does NOT match '.../callback?next=/admin' — so a query string makes the
+      // match fail and Supabase falls back to the project Site URL (which on this
+      // shared project is the mobile scheme `tribes://`, an unopenable URL on
+      // desktop → frozen tab). The callback already defaults `next` to '/admin'.
+      redirectTo: `${origin}/admin/auth/callback`,
       queryParams: { prompt: 'select_account' },
     },
   })
