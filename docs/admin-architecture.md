@@ -22,11 +22,13 @@ Every admin request passes through three gates. Never skip any of them.
 1. middleware.ts (src/middleware.ts)
    ├─ refreshes Supabase session cookie on every request
    └─ redirects unauthenticated /admin/* → /admin/login
+      (except /admin/login and /admin/auth/* — the OAuth callback runs
+       before a session cookie exists, so it must not be bounced)
 
 2. (protected)/layout.tsx
    ├─ calls requireAdmin() at the top of the async Server Component
    ├─ requireAdmin() verifies public.users.role = 'admin'
-   └─ redirects non-admins to / and unauthenticated users to /admin/login
+   └─ redirects non-admins to /admin/no-access, unauthenticated → /admin/login
 
 3. Every Server Action + every Route Handler + every mutation
    ├─ MUST call requireAdmin() as the first line
@@ -34,6 +36,24 @@ Every admin request passes through three gates. Never skip any of them.
 ```
 
 The middleware alone is not sufficient — a known class of Next.js middleware bypass attacks exists (CVE-2025-29927). The layout check and the in-action check are the real gates; the middleware is defense-in-depth.
+
+## Sign-in methods
+
+Two ways in, both landing on the same `users.role = 'admin'` gate (there is **no `admin_users` table** — admin = the `role` column):
+
+1. **Email + password** — the form on `/admin/login` (`signIn` Server Action → `signInWithPassword`). For admins who have a Supabase password.
+2. **Google SSO** — "Continue with Google" (`signInWithGoogle` Server Action → `signInWithOAuth`). For admins who signed up via Google and have no password (e.g. the client). Flow: button → Google → `/admin/auth/callback` (route handler) exchanges the code, then runs the same role check; admins → `/admin`, authenticated non-admins → `/admin/no-access`.
+
+An authenticated **non-admin** (either method) is **not** dumped on the marketing homepage — they land on `/admin/no-access`, a standalone page that lives **outside** the `(protected)` group (so it never calls `requireAdmin()` and can't loop). It shows their email + a sign-out button. Their session is intentionally kept (harmless: every protected leaf re-checks the role).
+
+### ⚠️ Google OAuth gotcha — the redirect MUST have no query string
+
+This Supabase project is **shared with the v1/v2 mobile apps**, and its **Site URL is `tribes://tribes.com`** (a mobile deep-link scheme). Supabase validates `redirectTo` against the **Redirect URL allow-list**; an entry without a wildcard (`https://www.trytribes.com/admin/auth/callback`) does **not** match a URL carrying a query string. If `redirectTo` fails the match, Supabase silently falls back to the Site URL → the browser is handed `tribes://…`, which a desktop browser can't open → **frozen tab** (auth actually succeeded; the session code just went somewhere unopenable). This cost an afternoon of debugging on 2026-06-15.
+
+Rules that follow:
+- `signInWithGoogle`'s `redirectTo` is `…/admin/auth/callback` with **NO query string**. Never add `?next=…` or anything else — it will re-break sign-in. The callback always redirects admins to a fixed `/admin`.
+- These exact callback URLs must be in **Supabase → Authentication → URL Configuration → Redirect URLs**: `https://www.trytribes.com/admin/auth/callback` (the live site serves on **www** — this is the one that matters), `https://trytribes.com/admin/auth/callback`, and `http://localhost:3000/admin/auth/callback`.
+- Google consent-screen branding (App name "Tribes", logo) + publishing status live in the **`tribes-a624c`** GCP project (project number **115370827237** = the OAuth client-ID prefix), **not** a SoTech project.
 
 ## Client selection — which Supabase client to use when
 
@@ -172,8 +192,11 @@ src/
 ├── app/
 │   └── admin/
 │       ├── login/
-│       │   ├── page.tsx                   ← polished split-panel login
-│       │   └── actions.ts                 ← signIn + signOut Server Actions
+│       │   ├── page.tsx                   ← split-panel login + "Continue with Google"
+│       │   └── actions.ts                 ← signIn + signOut + signInWithGoogle Server Actions
+│       ├── auth/
+│       │   └── callback/route.ts          ← Google OAuth code exchange + role gate
+│       ├── no-access/page.tsx             ← authenticated-but-not-admin dead-end (OUTSIDE (protected))
 │       └── (protected)/                   ← route group: everything inside runs requireAdmin()
 │           ├── layout.tsx                 ← calls requireAdmin(), wraps in AdminShell
 │           ├── page.tsx                   ← dashboard landing (uses analytics RPC)

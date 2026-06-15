@@ -119,7 +119,7 @@ A mobile-responsive staff admin at `/admin/*` — separate surface from the mark
 - `pnlknurdxcduhbtxdefl` — the Tribes data/auth project. All admin queries hit this one.
 - `ktboxzgxzbjajngatuho` — a separate CDN project for brand logo images, referenced in `next.config.ts`. Do not query it.
 
-**Auth gate**: three layers. `src/middleware.ts` → `(protected)/layout.tsx` calls `requireAdmin()` → every Server Action and Route Handler calls `requireAdmin()` before touching anything. Never skip any of them. The middleware alone is not sufficient (CVE-2025-29927).
+**Auth gate**: three layers. `src/middleware.ts` → `(protected)/layout.tsx` calls `requireAdmin()` → every Server Action and Route Handler calls `requireAdmin()` before touching anything. Never skip any of them. The middleware alone is not sufficient (CVE-2025-29927). **Sign-in is email/password OR Google SSO** (`signInWithGoogle` → `/admin/auth/callback`); admin access is the `users.role = 'admin'` column (no `admin_users` table), and authenticated **non-admins land on `/admin/no-access`** (not the marketing homepage). ⚠️ **The Google OAuth `redirectTo` must carry NO query string** — this Supabase project is shared with the mobile apps and its Site URL is the mobile `tribes://` scheme, so a query string makes Supabase's redirect-allow-list match fail and silently fall back to `tribes://` (unopenable on desktop → frozen tab; auth actually succeeded). Full detail + the GCP `tribes-a624c` consent-screen note in `docs/admin-architecture.md`.
 
 **Two server-side Supabase clients**, and the rule matters:
 - `createClient()` from `src/lib/supabase/server.ts` — regular client, respects RLS, carries the admin's JWT. Use for RPCs that check `auth.uid()` internally.

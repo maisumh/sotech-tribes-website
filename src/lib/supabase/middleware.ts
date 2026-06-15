@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith('/admin/login') &&
     // /admin/auth/* is the OAuth callback — the user is intentionally unauthenticated
     // here (the code hasn't been exchanged yet), so it must not be bounced to login.
-    !request.nextUrl.pathname.startsWith('/admin/auth')
+    !request.nextUrl.pathname.startsWith('/admin/auth/')
   ) {
     const url = request.nextUrl.clone()
     url.pathname = '/admin/login'
