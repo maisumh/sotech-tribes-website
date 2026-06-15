@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
-const LAST_UPDATED = "April 15, 2026";
+const LAST_UPDATED = "June 1, 2026";
 const CONTACT_EMAIL = "info@trytribes.com";
 
 export const metadata: Metadata = {
@@ -207,7 +207,7 @@ export default function PrivacyPage() {
                 <p>Tribes is operated from the United States and your information is processed here. If you access the Service from outside the US, you understand that your information will be transferred to, stored, and processed in the United States.</p>
 
                 <h2>11. Cookies and similar technologies on our website</h2>
-                <p>Our website uses a small number of essential first-party cookies needed to run the site. When we turn on analytics or advertising cookies (for example, Google Analytics or Meta Pixel, to understand how the site is used and to measure our marketing), we&rsquo;ll update this policy before they start collecting data. You can disable cookies in your browser settings, and we honor the Global Privacy Control signal as described above. The mobile app does not use web cookies.</p>
+                <p>Our website uses a small number of essential first-party cookies needed to run the site, and <strong>Google Analytics 4</strong> to understand how visitors use the site so we can improve it. Google Analytics sets first-party cookies and processes a truncated (anonymized) IP address, the pages you view, and basic device and referral information. We use this only in aggregate to measure site traffic and the performance of our marketing — not to identify you personally. You can opt out by disabling cookies in your browser, by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>, or through a Global Privacy Control signal, which we honor as described above. If we later turn on advertising cookies (for example, the Meta Pixel or Google Ads tags, to measure our advertising), we&rsquo;ll update this policy before they start collecting data. The mobile app does not use web cookies.</p>
 
                 <h2>12. Changes to this policy</h2>
                 <p>We&rsquo;ll update this page when our practices change. If the change is material, we&rsquo;ll notify you by email and inside the app at least 7 days before it takes effect. The &ldquo;Last updated&rdquo; date at the top of this page always reflects the current version.</p>

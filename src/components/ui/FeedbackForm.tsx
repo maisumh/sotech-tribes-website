@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-// Demo-only: this is a fully working React form for the client walkthrough.
-// Replace with the real GHL form submission endpoint once the GHL form exists.
+import { track } from "@/lib/analytics";
 
 interface FeedbackFormProps {
   userId?: string;
@@ -46,15 +44,20 @@ export default function FeedbackForm({
 }: FeedbackFormProps) {
   const [form, setForm] = useState<FormState>(initial);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+    if (submitError) setSubmitError(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
     const newErrors: Partial<Record<keyof FormState, string>> = {};
     if (form.easeRating === 0) newErrors.easeRating = "Pick a rating";
     if (!form.tradeMatch) newErrors.tradeMatch = "Pick one";
@@ -68,14 +71,39 @@ export default function FeedbackForm({
       return;
     }
 
-    // Demo mode: log the payload so the walkthrough audience can see what
-    // the real submission will look like, then show thank-you.
-    // eslint-disable-next-line no-console
-    console.log("[Feedback demo submission]", {
-      ...form,
-      meta: { userId, email, appVersion, source: "mvp-feedback" },
-    });
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          followUpEmail: form.followUpEmail.trim(),
+          meta: { userId, email, appVersion },
+        }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        setSubmitError(
+          data?.error ?? "Something went wrong. Please try again."
+        );
+        setSubmitting(false);
+        return;
+      }
+
+      setSubmitted(true);
+      track("form_submit", { form_name: "feedback", trade_match: form.tradeMatch });
+    } catch {
+      setSubmitError(
+        "We couldn't reach the server. Check your connection and try again."
+      );
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -108,10 +136,13 @@ export default function FeedbackForm({
           onClick={() => {
             setForm(initial);
             setSubmitted(false);
+            setSubmitting(false);
+            setSubmitError(null);
+            setErrors({});
           }}
           className="mt-6 text-sm text-firefly underline underline-offset-4 hover:text-casablanca-dark transition-colors"
         >
-          Submit another response (demo)
+          Submit another response
         </button>
       </div>
     );
@@ -278,11 +309,44 @@ export default function FeedbackForm({
 
       {/* Submit */}
       <div className="pt-4 border-t border-gray-100">
+        {submitError && (
+          <div
+            role="alert"
+            className="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700 leading-snug"
+          >
+            {submitError}
+          </div>
+        )}
         <button
           type="submit"
-          className="w-full inline-flex items-center justify-center font-bold text-firefly bg-casablanca hover:bg-casablanca-dark transition-all duration-300 px-8 py-4 rounded-lg text-lg min-h-[56px] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-casablanca/30"
+          disabled={submitting}
+          aria-busy={submitting}
+          className="w-full inline-flex items-center justify-center gap-2 font-bold text-firefly bg-casablanca hover:bg-casablanca-dark transition-all duration-300 px-8 py-4 rounded-lg text-lg min-h-[56px] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-casablanca/30 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
-          Send feedback
+          {submitting && (
+            <svg
+              className="animate-spin h-5 w-5 text-firefly"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="3"
+                opacity="0.25"
+              />
+              <path
+                d="M22 12a10 10 0 0 1-10 10"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+          )}
+          {submitting ? "Sending…" : "Send feedback"}
         </button>
         <p className="text-xs text-center text-gray-400 mt-3">
           Your responses go straight to the team. We read every one.

@@ -44,9 +44,10 @@ Editorial (App Store submission + preview):
 - `/support` — Support URL for App Store (contact card + 10-item numbered FAQ + contact form)
 - `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Uses custom `WaitlistForm` instead of the GHL iframe.
 
-API routes:
-- `/api/support` — contact form handler. TODO: wire to SendGrid to forward to info@trytribes.com.
-- `/api/waitlist` — waitlist signup handler. TODO: wire to GHL Contacts API (endpoint and payload shape documented in the route file).
+API routes (all three are still stubs — they validate + `console.log`, nothing is sent/persisted yet):
+- `/api/support` — contact form handler (`SupportForm`). TODO: wire to SendGrid to forward to info@trytribes.com.
+- `/api/waitlist` — waitlist signup handler (`WaitlistForm`, used by `/home2`). TODO: wire to GHL Contacts API (endpoint and payload shape documented in the route file).
+- `/api/feedback` — F&F feedback handler (`FeedbackForm`, used by `/feedback`). TODO: wire to a destination (email/Supabase/GHL).
 
 ## OG Images
 Static 1200x630 PNGs in `public/` — one per page (`og-home.png`, `og-neighbors.png`, `og-partners.png`). Generated via `scripts/generate-og.mjs` using sharp. To regenerate: `node scripts/generate-og.mjs` (all) or `node scripts/generate-og.mjs og-home` (single).
@@ -55,6 +56,16 @@ Static 1200x630 PNGs in `public/` — one per page (`og-home.png`, `og-neighbors
 - **Logo files:** `public/tribes-logo-white.png` (white logo for dark backgrounds), `public/tribes-logo-white.svg`
 - **Favicon:** `public/favicon.png` (sourced from `../Marketing/Tribes_Brand_Assets/:Logo/PNG/Fav Icon-2.png`)
 - **Source brand assets:** `../Marketing/Tribes_Brand_Assets/` (logos, icons in PNG and SVG)
+
+## Analytics & event tracking (June 2026+)
+- **GA4** via `@next/third-parties` — property `trytribes.com` (518241169), measurement ID `G-JDM03V14GB`. Loader is `src/components/analytics/Analytics.tsx`, mounted once in the root layout.
+- **Loads in production only** (`NODE_ENV === "production"`, which includes Vercel preview deploys) and **never on `/admin`** — so staff activity stays out of the marketing property. Dev (`next dev`) sends nothing.
+- Pageviews (initial + client-side route changes) are handled by GA4 **Enhanced Measurement** — we do not fire `page_view` manually (would double-count).
+- **Events** (`src/lib/analytics.ts` `track()` helper): `join_waitlist_click` (delegated listener on every `a[href="#final-cta"]`, with a `location` param), `waitlist_form_view` (GHL iframe scrolled into view), `outbound_click`, `generate_lead` (home2 native waitlist), `form_submit` (support + feedback). The GHL waitlist iframe is cross-origin, so the actual submit is recorded by GHL, not us — `waitlist_form_view` is the closest on-page signal.
+- To report conversions, mark `generate_lead` and `join_waitlist_click` as **Key events** in GA4 (Admin → Events) — not settable via API.
+- `NEXT_PUBLIC_GA_ID` overrides the measurement ID per-deploy (e.g. a staging stream); defaults to the live ID so it can't silently break.
+- Canonical host is the **apex** `trytribes.com` (matches `metadataBase`, `robots.ts`, `sitemap.ts`); Vercel 308-redirects www → apex.
+- `src/app/robots.ts` + `src/app/sitemap.ts` are App Router metadata routes. Robots blocks `/admin`, `/api`, and the demo/preview pages (`/home2`, `/mvp`, `/update`, `/feedback`); sitemap lists public pages only. GSC: `sc-domain:trytribes.com` (domain property, already verified — covers www + apex).
 
 ## Build & Dev
 ```
@@ -125,7 +136,7 @@ A mobile-responsive staff admin at `/admin/*` — separate surface from the mark
 - `chat_messages` has no `is_deleted` column — message deletion is the ONE intentional hard-delete in the entire admin. (`v2_chat_messages` delete is the second; it cascades reactions.)
 - `projects` table is dead v1 test data — do not build UI for it. **Not** `v2_projects` (the live "My Work" showcase, surfaced at `/admin/showcase`).
 
-**v2 coverage**: the admin sees the v2 (`tribes-app/`) interaction tables — `/admin/reports` (`v2_reports` moderation queue, actionable), `/admin/v2-chats`, `/admin/trades`, `/admin/showcase`, `/admin/feedback`, `/admin/v2-notifications`. `users`/`want_have`/`user_rattings` are shared, so existing views already cover v2 users/listings/ratings. All v2 work is additive + uses the service-role client (no new RPCs). v2 *chat* reports land in `v2_reports` (`context='chat'`) — the detail page resolves the conversation from the `(reporter, reported_user)` pair and links to `/admin/v2-chats`. (The legacy `v2_chats.reported_*` columns are no longer written by the app — surfaced defensively only.) Full spec: `docs/admin-backend-contract.md` §9–14.
+**v2 coverage**: the admin sees the v2 (`tribes-app/`) interaction tables — `/admin/reports` (`v2_reports` moderation queue, actionable), `/admin/v2-chats`, `/admin/trades`, `/admin/showcase`, `/admin/feedback`, `/admin/v2-notifications`, `/admin/circles` (read-only Circles moderation — list + members/invites/bans; the `circles*` tables are created/owned by `tribes-app`). `users`/`want_have`/`user_rattings` are shared, so existing views already cover v2 users/listings/ratings. All v2 work is additive + uses the service-role client (no new RPCs). v2 *chat* reports land in `v2_reports` (`context='chat'`) — the detail page resolves the conversation from the `(reporter, reported_user)` pair and links to `/admin/v2-chats`. (The legacy `v2_chats.reported_*` columns are no longer written by the app — surfaced defensively only.) Full spec: `docs/admin-backend-contract.md` §9–15.
 
 ### For everything else
 

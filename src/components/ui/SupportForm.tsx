@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { track } from "@/lib/analytics";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your name"),
@@ -50,6 +51,7 @@ export default function SupportForm() {
         throw new Error(body?.error ?? "Something went wrong");
       }
       setStatus("success");
+      track("form_submit", { form_name: "support", category: values.category });
       reset();
     } catch (err) {
       setStatus("error");
