@@ -27,7 +27,10 @@ export async function requireAdmin() {
     .single()
 
   if (profile?.role !== 'admin') {
-    redirect('/')
+    // Authenticated, but not staff — a real Tribes user who logged in. Show a clear
+    // "no access" page (they keep their session; the page offers a sign-out) rather
+    // than silently dumping them on the marketing homepage.
+    redirect('/admin/no-access')
   }
 
   return user
