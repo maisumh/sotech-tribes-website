@@ -26,6 +26,11 @@ type MessageRow = {
   body: string | null
   trade_proposal_id: string | null
   read_at: string | null
+  // Additive columns from tribes-app Phase 27 (edit / unsend). edited_at is
+  // set when a text message was edited; deleted_at when it was "unsent" — the
+  // body is RETAINED (kept for moderation), so we still render it, struck through.
+  edited_at: string | null
+  deleted_at: string | null
   created_at: string
 }
 
@@ -72,7 +77,7 @@ export default async function V2ChatDetailPage({
   const [messagesResult, usersResult, reactionsResult] = await Promise.all([
     supabase
       .from('v2_chat_messages')
-      .select('id, chat_id, sender_id, kind, body, trade_proposal_id, read_at, created_at')
+      .select('id, chat_id, sender_id, kind, body, trade_proposal_id, read_at, edited_at, deleted_at, created_at')
       .eq('chat_id', chat.id)
       .order('created_at', { ascending: true }),
     (async () => {
@@ -184,6 +189,16 @@ export default async function V2ChatDetailPage({
                           Trade
                         </span>
                       )}
+                      {msg.edited_at && !msg.deleted_at && (
+                        <span className="inline-flex items-center px-1.5 py-[2px] bg-granny/15 text-granny text-[9px] uppercase tracking-[0.15em]">
+                          Edited
+                        </span>
+                      )}
+                      {msg.deleted_at && (
+                        <span className="inline-flex items-center px-1.5 py-[2px] bg-red-50 text-red-700 text-[9px] uppercase tracking-[0.15em]">
+                          Unsent
+                        </span>
+                      )}
                     </div>
 
                     {msg.kind === 'trade' ? (
@@ -199,6 +214,19 @@ export default async function V2ChatDetailPage({
                           </>
                         )}
                       </div>
+                    ) : msg.deleted_at ? (
+                      // Unsent by the sender — body is retained for moderation; show
+                      // it struck through with a caption so it reads as retracted.
+                      msg.body && (
+                        <div>
+                          <p className="text-[14px] font-light leading-relaxed break-words whitespace-pre-wrap text-ink/40 line-through">
+                            {msg.body}
+                          </p>
+                          <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-granny/70">
+                            Unsent by sender · retained for moderation
+                          </p>
+                        </div>
+                      )
                     ) : (
                       msg.body && (
                         <p className={`text-[14px] font-light leading-relaxed break-words whitespace-pre-wrap ${msg.kind === 'system' ? 'text-granny italic' : 'text-ink/90'}`}>

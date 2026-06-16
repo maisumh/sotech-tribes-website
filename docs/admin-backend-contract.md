@@ -504,13 +504,15 @@ Pair-based chat (one row per ordered pair, `CHECK user_a_id < user_b_id`). Mirro
 ```
 v2_chats: id, user_a_id, user_b_id, last_message_at, last_message_preview,
           last_message_sender_id, status text CHECK (in_conversation|exchanged|rejected),
-          blocked_by, blocked_at, reported_by, reported_reason, reported_at, created_at, updated_at
+          blocked_by, blocked_at, reported_by, reported_reason, reported_at,
+          archived_by_a, archived_by_b (per-user hide; NOT moderation-relevant), created_at, updated_at
 v2_chat_messages: id, chat_id → v2_chats, sender_id, kind text CHECK (text|trade|system),
-          body, trade_proposal_id → trade_proposals, read_at, created_at
+          body, trade_proposal_id → trade_proposals, read_at,
+          edited_at, deleted_at (tribes-app Phase 27 — edit / "unsend"; body RETAINED on unsend), created_at
 v2_message_reactions: id, message_id → v2_chat_messages (ON DELETE CASCADE), chat_id, user_id, emoji, created_at
 ```
 
-- **List/Detail** (`/admin/v2-chats`): priority-sort reported; thread renders by `kind` (text bubble / system pill / trade card linking `/admin/trades/[id]`); per-message reaction counts.
+- **List/Detail** (`/admin/v2-chats`): priority-sort reported; thread renders by `kind` (text bubble / system pill / trade card linking `/admin/trades/[id]`); per-message reaction counts. A message with `edited_at` shows an **Edited** tag; one with `deleted_at` shows an **Unsent** tag and renders its retained `body` **struck-through** with a "retained for moderation" caption (the whole point of soft-unsend — the moderator still sees what was retracted). `archived_by_*` is a per-user client hide and is **not** surfaced in the admin.
 - **Mutations**: `block_v2_chat`, `unblock_v2_chat`, `clear_v2_chat_report`; `delete_v2_chat_message` (hard-delete, the 2nd intentional hard delete — cascades reactions).
 
 ## 11. Trades (`public.trade_proposals`) — read-only
