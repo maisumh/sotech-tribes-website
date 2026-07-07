@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["Y9T58UC2RG.com.app.tribes"],
+        "appIDs": ["Y9T58UC2RG.com.app.trytribes", "Y9T58UC2RG.com.app.tribes"],
         "components": [
           {
             "/": "/circles/join",
@@ -13,6 +13,6 @@
     ]
   },
   "webcredentials": {
-    "apps": ["Y9T58UC2RG.com.app.tribes"]
+    "apps": ["Y9T58UC2RG.com.app.trytribes", "Y9T58UC2RG.com.app.tribes"]
   }
 }
