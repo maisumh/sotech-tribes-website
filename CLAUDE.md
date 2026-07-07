@@ -42,6 +42,7 @@ Editorial (App Store submission + preview):
 - `/privacy` — Privacy Policy (CCPA/CPRA 2026, TDPSA, DMCA, etc.)
 - `/terms` — Terms of Service (AAA arbitration + 30-day opt-out, Apple EULA block, DMCA procedure)
 - `/support` — Support URL for App Store (contact card + 10-item numbered FAQ + contact form)
+- `/delete-account` — account/data deletion steps (added 2026-07-07; the URL is DECLARED in Google Play's Data-safety form and will be reused in Apple's App Privacy label — don't remove or rename without updating both stores)
 - `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Uses custom `WaitlistForm` instead of the GHL iframe.
 
 API routes (all three are still stubs — they validate + `console.log`, nothing is sent/persisted yet):
