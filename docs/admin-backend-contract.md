@@ -573,6 +573,28 @@ circle_bans      (circle_id, user_id) PK, banned_by, reason, created_at
 
 Full schema + RPC + RLS spec lives in `tribes-app/INVARIANTS.md §18` + `tribes-app/supabase/functions/sql/v2_circle*.sql`. The `circle_role` enum is **v2-only** (not one of the shared locked enums).
 
+## 16. Rollout gate — areas, admissions, waitlist, invites (2026-07-26)
+
+Backing tables for the staged geographic rollout. **Applied to prod; the admin UI is NOT built yet** — this section is the contract for whoever builds it. Source of truth for the DDL: `../../tribes-app/supabase/functions/sql/v2_rollout_gate.sql`; rules: `tribes-app/INVARIANTS.md` §23.
+
+| Table | Purpose |
+|---|---|
+| `v2_areas` | A named rollout area. `status = open \| waitlist \| closed`. `slug` is the **stable identifier** — the GHL tag keys on it, so treat a rename of `name` as safe and a rename of `slug` as breaking. |
+| `v2_area_zips` | `zip` (PK, `^[0-9]{5}$`) → `area_id`. One area per ZIP. |
+| `v2_access_config` | Singleton. `invite_only` is the **global master lock**; per-area status only takes effect once it's off. |
+| `v2_admissions` | One row per user: `status = admitted \| waitlisted`, plus `reason` and the area/invite that admitted them. The audit ledger. |
+| `v2_waitlist` | Leads. `user_id` is **nullable** — a null means an account-less web signup from `/api/waitlist`. |
+| `v2_invite_redemptions` | Who redeemed which invite. |
+| `invites` *(extended)* | Gained `max_uses` / `use_count` / `expires_at` / `revoked` / `circle_id` / `area_id` / `label` / `batch_id`. **`max_uses IS NULL` means UNLIMITED** (the evergreen community code), not single-use. |
+
+**Read these two views rather than assembling the joins yourself:**
+- `v2_waitlist_demand` — demand per ZIP/area, including an **`unmapped`** bucket (ZIPs people want that no area covers). This is the "which area do we open next" screen.
+- `v2_area_readiness` — per area: zip_count, residents, open_listings, waitlisted.
+
+**Mutations go through the SECURITY DEFINER RPCs, never direct writes:** `v2_set_area_status`, `v2_admit_area(area, limit, notify)`, `v2_assign_area_zips`, `v2_grant_admission`. Opening an area is deliberately **two steps** — flipping status is silent; `v2_admit_area` is what promotes waiting users and notifies. `p_limit` is load-bearing: every notification insert fires the push webhook.
+
+⚠️ **`users.admission_status` / `admission_area_id` are read-only to clients.** The migration revokes table-level UPDATE on `public.users` from `anon`/`authenticated` and re-grants it column-by-column excluding those two. **Never restore a blanket `grant update on public.users`** — a column-level revoke is a no-op under a table-level grant, which is how the gate was bypassable in the first draft.
+
 ## Shared tables — v2 additions to existing views
 
 - **`users`** — also covers v2 users. Detail page (`/admin/users/[id]`) shows a "Tribes v2" panel: `bio` (read-only display), reports-against count, `v2_user_blocks` (blocking / blocked-by), trades & showcase counts. `bio` is **not** admin-editable (users self-edit in app).
