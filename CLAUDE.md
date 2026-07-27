@@ -14,7 +14,7 @@ This repository contains three distinct surfaces that share a single codebase:
 - **Font:** Plus Jakarta Sans (via next/font/google) — used for both headings and body. The editorial surface leans heavily into `font-extralight` (200) for display type.
 - **Forms:**
   - Marketing pages → `GHLForm` iframe (`src/components/ui/GHLForm.tsx`)
-  - Editorial surface → custom react-hook-form + zod forms (`SupportForm`, `WaitlistForm`) posting to `/api/support` and `/api/waitlist` (both currently stubbed — see TODOs in the route handlers for SendGrid / GHL Contacts wiring)
+  - Editorial surface → custom react-hook-form + zod forms (`SupportForm`, `WaitlistForm`) posting to `/api/support` (still stubbed) and `/api/waitlist` (wired to Supabase + GHL — see the API routes section below)
 - **Deployment:** Vercel (auto-deploys from main branch)
 
 ## Original Reference
@@ -45,10 +45,25 @@ Editorial (App Store submission + preview):
 - `/delete-account` — account/data deletion steps (added 2026-07-07; the URL is DECLARED in Google Play's Data-safety form and will be reused in Apple's App Privacy label — don't remove or rename without updating both stores)
 - `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Uses custom `WaitlistForm` instead of the GHL iframe.
 
-API routes (all three are still stubs — they validate + `console.log`, nothing is sent/persisted yet):
-- `/api/support` — contact form handler (`SupportForm`). TODO: wire to SendGrid to forward to info@trytribes.com.
-- `/api/waitlist` — waitlist signup handler (`WaitlistForm`, used by `/home2`). TODO: wire to GHL Contacts API (endpoint and payload shape documented in the route file).
-- `/api/feedback` — F&F feedback handler (`FeedbackForm`, used by `/feedback`). TODO: wire to a destination (email/Supabase/GHL).
+API routes:
+- `/api/support` — contact form handler (`SupportForm`). **Still a stub** (validates + `console.log`). TODO: wire to a sender to forward to info@trytribes.com.
+- `/api/waitlist` — waitlist signup handler (`WaitlistForm`, used by `/home2`). **WIRED (2026-07-27).** Writes `v2_join_waitlist` in Supabase (source of truth, insert-only, ANON key — the RPC is granted to `anon` so no service role is needed; don't "upgrade" it to `createAdminClient()`), then mirrors the lead into GoHighLevel via `src/lib/ghl.ts`. The GHL step is **fail-open**: a CRM outage logs a warning and still returns `ok`, because the row is already safe in Supabase. Needs `TRIBES_GHL_PIT` + `TRIBES_GHL_LOCATION_ID` in the environment — see the ⚠️ in `.env.example` about why those names are namespaced.
+- `/api/feedback` — the **web** F&F feedback handler (`FeedbackForm`, used by the noindexed `/feedback` page). Forwards to a GHL inbound webhook, but `GHL_FEEDBACK_WEBHOOK_URL` is unset in Vercel production, so it fail-opens and submissions from that page are discarded. Low impact — the page is `disallow`ed in `robots.ts` and was an F&F-wave artifact.
+  ⚠️ **This is NOT the in-app feedback path and must not be confused with it.** Feedback from the mobile app goes `tribes-app/app/feedback.tsx` → `useSubmitFeedback` → `supabase.from('v2_feedback')` → surfaced at `/admin/feedback`. That path works and never touches GHL. If the web form is worth keeping at all, the consistent fix is to have it write to `v2_feedback` too, so all feedback lands in one place — not to wire up a second destination.
+
+### GoHighLevel contact sync (`src/lib/ghl.ts`)
+
+**Leads live in GHL; users live in Supabase.** This module only ever writes *leads* — waitlist signups and invite recipients — never the authenticated user base. Someone crosses that boundary when the rollout gate admits them.
+
+Division of labour: **code owns the data and the targeting; GHL owns the message and the send.** We upsert a contact with tags; a GHL workflow triggers on a tag and mails from `news.trytribes.com`. That keeps segmentation versioned in this repo while the copy stays editable without a deploy.
+
+Tags are the trigger contract — renaming one silently stops an automation with no error anywhere:
+- `waitlist` — every waitlist lead (the "you're on the list" trigger)
+- `zip:77531` — exact ZIP
+- `area:brazoria-gmz` — rollout area, or `area:unmapped`. **Always the `area_slug` returned by the RPC, never a slugified `area_name`** (the display name is editable; the slug is not).
+- `role:neighbor` — what they said they're here for
+
+ZIP goes to the standard `postalCode` field, **not** the location's `contact.zip_code` custom field — that one is NUMERICAL and would mangle leading-zero ZIPs (02134 → 2134).
 
 ## OG Images
 Static 1200x630 PNGs in `public/` — one per page (`og-home.png`, `og-neighbors.png`, `og-partners.png`). Generated via `scripts/generate-og.mjs` using sharp. To regenerate: `node scripts/generate-og.mjs` (all) or `node scripts/generate-og.mjs og-home` (single).
@@ -101,7 +116,7 @@ The four pages at `/privacy`, `/terms`, `/support`, `/home2` share a single edit
 - **Legal entity confirmation** for Tribes (name + state) before submission — see TODO in `src/app/terms/page.tsx`
 - **DMCA agent registration** with US Copyright Office ($6, 3-year renewal) to claim safe harbor for user-uploaded photos
 - **SendGrid wiring** for `/api/support` — see TODO in the route handler
-- **GHL Contacts API wiring** for `/api/waitlist` — endpoint, auth header, and payload shape documented in the route handler
+- ~~**GHL Contacts API wiring** for `/api/waitlist`~~ — done 2026-07-27; needs `TRIBES_GHL_*` env vars set in Vercel to actually mirror to the CRM
 - **ATT prompt confirmation** — a TODO in `/privacy` asks the FlutterFlow build team to confirm ATT is actually implemented on iOS before the Meta SDK disclosure sentence ships
 
 When promoting `/home2` to production, move `src/app/home2/page.tsx` to `src/app/page.tsx` (and delete the old composition-based Home that imports `<Hero />`, `<ValueProp />`, etc.). The `/home2` version pulls content from `lib/constants.ts`, so no content migration is needed.
