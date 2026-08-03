@@ -89,6 +89,7 @@ export default async function RolloutPage() {
 
   const totalWaitlisted = demand.reduce((n, d) => n + d.waitlist_total, 0)
   const unmappedDemand = demand.filter((d) => d.area_status === 'unmapped')
+  const unmappedPeople = unmappedDemand.reduce((n, d) => n + d.waitlist_total, 0)
   const openAreas = areas.filter((a) => a.status === 'open').length
 
   const loadError = cfgRes.error || areasRes.error || demandRes.error
@@ -203,11 +204,12 @@ export default async function RolloutPage() {
         {unmappedDemand.length > 0 && (
           <div className="mb-5 border-l-2 border-casablanca bg-casablanca/5 px-4 py-3 text-[12px] text-ink font-light">
             <strong className="font-medium">
-              {unmappedDemand.reduce((n, d) => n + d.waitlist_total, 0)} people
+              {unmappedPeople} {unmappedPeople === 1 ? 'person' : 'people'}
             </strong>{' '}
-            are waiting in {unmappedDemand.length} ZIP{unmappedDemand.length === 1 ? '' : 's'} that
-            belong to no area. They can never be admitted by geography until those ZIPs are mapped
-            to one.
+            {unmappedPeople === 1 ? 'is' : 'are'} waiting in {unmappedDemand.length} ZIP
+            {unmappedDemand.length === 1 ? '' : 's'} that{' '}
+            {unmappedDemand.length === 1 ? 'belongs' : 'belong'} to no area. They can never be
+            admitted by geography until those ZIPs are mapped to one.
           </div>
         )}
 
