@@ -272,10 +272,26 @@ export default async function RolloutPage() {
         )}
       </section>
 
-      <p className="mt-10 pt-6 border-t border-granny/15 text-[11px] text-granny font-light italic max-w-3xl">
-        Invites: {invitesRes.count ?? 0} minted. Opening an area is two steps — set it OPEN (silent),
-        then admit the people waiting on it. Every action here is written to the admin audit log.
-      </p>
+      <div className="mt-10 pt-6 border-t border-granny/15 flex flex-wrap items-baseline justify-between gap-3">
+        <p className="text-[11px] text-granny font-light italic max-w-2xl">
+          Opening an area is two steps — set it OPEN (silent), then admit the people waiting on it.
+          Every action here is written to the admin audit log.
+        </p>
+        <Link
+          href="/admin/rollout/invites"
+          className="admin-lift text-[11px] uppercase tracking-[0.15em] text-firefly hover:text-ink transition-colors whitespace-nowrap"
+        >
+          {invitesRes.count ?? 0} invite code{(invitesRes.count ?? 0) === 1 ? '' : 's'} →
+        </Link>
+      </div>
+
+      {cfg?.invite_only && (invitesRes.count ?? 0) === 0 && (
+        <div className="mt-5 border-l-2 border-casablanca bg-casablanca/5 px-4 py-3 text-[12px] text-ink font-light max-w-3xl">
+          The master lock is on and <strong className="font-medium">no invite codes exist</strong>,
+          so nobody new can get in at all — every signup lands on the waitlist. Mint a code or open
+          an area.
+        </div>
+      )}
     </div>
   )
 }

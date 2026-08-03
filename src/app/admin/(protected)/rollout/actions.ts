@@ -371,3 +371,155 @@ export async function setMasterLock(
       : 'Master lock OFF. Geography is now live: anyone in an OPEN area is admitted on signup.',
   )
 }
+
+// ---------------------------------------------------------------------------
+// 6. Invites — mint / revoke
+// ---------------------------------------------------------------------------
+
+const MintSchema = z.object({
+  code: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(4, 'Codes must be at least 4 characters.')
+    .max(40)
+    .regex(/^[A-Z0-9-]+$/, 'Use letters, numbers and hyphens only.'),
+  label: z.string().trim().max(120).optional(),
+  /**
+   * Blank means a FINITE single use, not unlimited. `max_uses IS NULL` in the DB
+   * means unlimited, and defaulting a blank field to that is how a shared
+   * congregation code gets minted by accident — so "unlimited" must be ticked
+   * on purpose. See INVARIANTS §23 / the contradicting-semantics bug in
+   * `docs/v2/geo-gating-rollout-plan.md`.
+   */
+  unlimited: z.boolean().optional().default(false),
+  maxUses: z.coerce.number().int().min(1).max(100000).optional(),
+  expiresInDays: z.coerce.number().int().min(1).max(365).optional(),
+})
+
+/**
+ * Mint an invite code.
+ *
+ * Direct insert rather than an RPC: `invites` predates the rollout gate (it is
+ * the v1 F&F table) and has no minting function. Service role only, audited.
+ */
+export async function mintInvite(
+  _prev: RolloutActionState,
+  formData: FormData,
+): Promise<RolloutActionState> {
+  const adminUser = await requireAdmin()
+
+  const parsed = MintSchema.safeParse({
+    code: formData.get('code'),
+    label: formData.get('label') || undefined,
+    unlimited: formData.get('unlimited') === 'on' || formData.get('unlimited') === 'true',
+    maxUses: formData.get('maxUses') || undefined,
+    expiresInDays: formData.get('expiresInDays') || undefined,
+  })
+  if (!parsed.success) {
+    return ERR(parsed.error.issues[0]?.message ?? 'Invalid input.')
+  }
+  const { code, label, unlimited, maxUses, expiresInDays } = parsed.data
+
+  // null = unlimited (the locked semantic). Anything else is a hard cap.
+  const max_uses = unlimited ? null : (maxUses ?? 1)
+
+  const expires_at = expiresInDays
+    ? new Date(Date.now() + expiresInDays * 86_400_000).toISOString()
+    : null
+
+  const supabase = createAdminClient()
+
+  const { data: existing } = await supabase
+    .from('invites')
+    .select('id')
+    .eq('code', code)
+    .maybeSingle()
+  if (existing) return ERR(`Code ${code} already exists.`)
+
+  const { error } = await supabase.from('invites').insert({
+    code,
+    label: label ?? null,
+    max_uses,
+    expires_at,
+    status: 'pending',
+    revoked: false,
+    invited_by: adminUser.id,
+  })
+  if (error) return ERR(error.message)
+
+  await supabase.from('admin_audit_log').insert({
+    admin_id: adminUser.id,
+    action: 'mint_invite',
+    target_table: 'invites',
+    target_id: code,
+    changes: {
+      max_uses: { from: null, to: max_uses },
+      expires_at: { from: null, to: expires_at },
+      label: { from: null, to: label ?? null },
+    },
+  })
+
+  revalidatePath('/admin/rollout/invites')
+  revalidatePath('/admin/rollout')
+  return OK(
+    max_uses === null
+      ? `${code} minted — UNLIMITED uses. Anyone with this code gets in until you revoke it.`
+      : `${code} minted — ${max_uses} use${max_uses === 1 ? '' : 's'}.`,
+  )
+}
+
+const RevokeSchema = z.object({
+  code: z.string().trim().min(1),
+  op: z.enum(['revoke', 'restore']),
+})
+
+/**
+ * Revoke (or un-revoke) a code. `v2_resolve_admission` checks `not revoked`, so
+ * this takes effect on the next signup attempt — it does NOT retract anyone
+ * already admitted by it, which is correct: admission is monotonic.
+ */
+export async function setInviteRevoked(
+  _prev: RolloutActionState,
+  formData: FormData,
+): Promise<RolloutActionState> {
+  const adminUser = await requireAdmin()
+
+  const parsed = RevokeSchema.safeParse({
+    code: formData.get('code'),
+    op: formData.get('op'),
+  })
+  if (!parsed.success) return ERR('Invalid input.')
+  const { code, op } = parsed.data
+  const revoked = op === 'revoke'
+
+  const supabase = createAdminClient()
+  const { data: before } = await supabase
+    .from('invites')
+    .select('code, revoked')
+    .eq('code', code)
+    .maybeSingle()
+  if (!before) return ERR('Code not found.')
+  if (before.revoked === revoked) {
+    return { status: 'idle', message: `Already ${revoked ? 'revoked' : 'active'}.` }
+  }
+
+  const { error } = await supabase.from('invites').update({ revoked }).eq('code', code)
+  if (error) return ERR(error.message)
+
+  await supabase.from('admin_audit_log').insert({
+    admin_id: adminUser.id,
+    action: revoked ? 'revoke_invite' : 'restore_invite',
+    target_table: 'invites',
+    target_id: code,
+    changes: { revoked: { from: before.revoked, to: revoked } },
+  })
+
+  revalidatePath('/admin/rollout/invites')
+  revalidatePath('/admin/rollout')
+  return OK(
+    revoked
+      ? `${code} revoked. Nobody new can redeem it; anyone already admitted stays admitted.`
+      : `${code} is active again.`,
+  )
+}

@@ -142,6 +142,9 @@ admit_area                — v2_admit_area ran; records admitted count, notify,
 assign_area_zips          — v2_area_zips mapped to an area
 grant_admission           — one user manually admitted
 set_invite_only           — v2_access_config.invite_only flipped (the master lock)
+mint_invite               — invite code created (records max_uses, expiry, label)
+revoke_invite             — invites.revoked = true
+restore_invite            — invites.revoked = false
 ```
 
 Note: `admin_audit_log.action` has **no DB CHECK constraint** — the canonical

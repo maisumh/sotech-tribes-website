@@ -18,6 +18,7 @@ const SECTION_TITLES: Array<[string, string]> = [
   ['/admin/feedback', 'Feedback'],
   ['/admin/showcase', 'Showcase'],
   ['/admin/rollout/waitlist', 'Waitlist leads'],
+  ['/admin/rollout/invites', 'Invite codes'],
   ['/admin/rollout', 'Rollout'],
   ['/admin/v2-notifications', 'v2 Notifications'],
   ['/admin/notifications', 'Notifications'],
