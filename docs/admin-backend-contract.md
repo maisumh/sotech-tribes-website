@@ -575,7 +575,11 @@ Full schema + RPC + RLS spec lives in `tribes-app/INVARIANTS.md §18` + `tribes-
 
 ## 16. Rollout gate — areas, admissions, waitlist, invites (2026-07-26)
 
-Backing tables for the staged geographic rollout. **Applied to prod; the admin UI is NOT built yet** — this section is the contract for whoever builds it. Source of truth for the DDL: `../../tribes-app/supabase/functions/sql/v2_rollout_gate.sql`; rules: `tribes-app/INVARIANTS.md` §23.
+Backing tables for the staged geographic rollout. **Applied to prod; admin UI built 2026-08-03 at `/admin/rollout`** (control room + `[areaId]` detail + `waitlist` leads). Source of truth for the DDL: `../../tribes-app/supabase/functions/sql/v2_rollout_gate.sql`; rules: `tribes-app/INVARIANTS.md` §23.
+
+⚠️ **These four RPCs need `createAdminClient()`, NOT `createClient()` — the opposite of the usual rule.** They are `SECURITY DEFINER` but do **no internal role check**; they are protected purely by GRANT (`revoke all … from public, anon, authenticated`, never re-granted), so only the service role can execute them. Calling them with the cookie-session client fails on permission. **`requireAdmin()` is therefore the only authorization gate on them** — and they must never be granted to `authenticated`, which would let any logged-in user open an area and admit themselves.
+
+⚠️ **`v2_admit_area` silently consumes account-less web leads.** It flips every `user_id IS NULL` lead in the area to `status='notified'` and returns their addresses in `web_lead_emails` **without sending anything**. Drop that return value and those people are unreachable forever — they never appear as `waiting` again. `/admin/rollout/[areaId]` surfaces the list in a copyable box for exactly this reason; any other caller must do the same.
 
 | Table | Purpose |
 |---|---|

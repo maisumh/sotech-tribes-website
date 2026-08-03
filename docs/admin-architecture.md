@@ -69,6 +69,7 @@ Two server-side clients live in `src/lib/supabase/`:
 |---|---|
 | Calling `requireAdmin()` itself (reads the user's role) | `createClient()` |
 | Calling a `SECURITY DEFINER` RPC that checks `auth.uid()` internally (e.g., `get_admin_dashboard_analytics`, `get_user_full_profile`, `get_user_events_with_summary`) | **`createClient()`** — because the RPC needs the caller's JWT to verify admin role internally |
+| Calling a `SECURITY DEFINER` RPC that does **NOT** check role internally and is protected by GRANT alone (the rollout-gate operator RPCs: `v2_set_area_status`, `v2_admit_area`, `v2_assign_area_zips`, `v2_grant_admission`) | **`createAdminClient()`** — they are revoked from `anon`/`authenticated` and never re-granted, so only the service role can execute them. `requireAdmin()` is the sole authorization gate; never grant them to `authenticated`. |
 | Direct table reads where the admin needs to see all rows (e.g., listing users including admins) | `createAdminClient()` |
 | All direct table writes (role updates, soft-deletes, audit log inserts, chat moderation) | `createAdminClient()` |
 
@@ -133,6 +134,14 @@ block_v2_chat             — v2_chats.blocked_by set
 unblock_v2_chat           — v2_chats.blocked_by cleared
 clear_v2_chat_report      — v2_chats.reported_* cleared
 delete_v2_chat_message    — v2_chat_messages row hard-deleted (cascades reactions)
+
+# rollout gate (added 2026-08-03 with /admin/rollout)
+set_area_status           — v2_areas.status changed (silent; admits nobody)
+admit_area                — v2_admit_area ran; records admitted count, notify, limit,
+                            and how many account-less web leads were marked notified
+assign_area_zips          — v2_area_zips mapped to an area
+grant_admission           — one user manually admitted
+set_invite_only           — v2_access_config.invite_only flipped (the master lock)
 ```
 
 Note: `admin_audit_log.action` has **no DB CHECK constraint** — the canonical

@@ -38,6 +38,7 @@ const NAV: NavSection[] = [
   {
     label: 'System',
     items: [
+      { href: '/admin/rollout', label: 'Rollout' },
       { href: '/admin/notifications', label: 'Notifications' },
       { href: '/admin/v2-notifications', label: 'v2 Notifications' },
       { href: '/admin/activity', label: 'Activity log' },
