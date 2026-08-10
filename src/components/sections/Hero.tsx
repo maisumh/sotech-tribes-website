@@ -64,8 +64,7 @@ export default function Hero() {
               className="text-sm text-gray-500 animate-hero-fade-up"
               style={{ animationDelay: "0.55s" }}
             >
-              {HERO.trust.prefix}{" "}
-              <span className="font-bold text-firefly">{HERO.trust.number}</span>{" "}
+              <span className="font-bold text-firefly">{HERO.trust.emphasis}</span>{" "}
               {HERO.trust.suffix}
             </p>
           </div>

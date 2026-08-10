@@ -1,7 +1,7 @@
 export const SITE = {
   title: "Tribes™ | Share Resources & Build Community With Your Neighbors",
   description:
-    "Tribes makes it simple to connect with neighbors, share resources and skills, and build thriving communities. Join 500+ neighbors already building their tribes.",
+    "Tribes is an app-first neighborhood platform for sharing resources and skills, now launching by invitation in select Houston ZIP codes centered on Montrose.",
   url: "https://trytribes.com",
   email: "info@trytribes.com",
 };
@@ -50,10 +50,8 @@ export const HERO = {
     "Tribes makes it simple to connect with neighbors, share resources and skills, and build thriving communities.",
   cta: "Join the Waitlist",
   trust: {
-    prefix: "Join",
-    number: "500+",
-    suffix:
-      "neighbors already building their tribes. Launching Spring 2026 — early access opening soon.",
+    emphasis: "Invitation-only",
+    suffix: "in select Houston ZIP codes, beginning with Montrose.",
   },
 };
 
@@ -253,26 +251,25 @@ export const IMPACT = {
   title: "Stronger Tribes. Stronger Neighborhoods.",
   paragraphs: [
     "Tribes isn't just about borrowing a drill or finding a babysitter (though it's great for that too). It's about rebuilding the social fabric of our neighborhoods. When you know your tribes, you know who to call when you need help. You know who can call you. You build resilience, reduce waste, and create the connected community you actually want to live in.",
-    "We're starting in neighborhoods across America and expanding community by community, tribe by tribe.",
+    "Tribes is launching by invitation in select Houston ZIP codes, centered on the Montrose pilot area. Access will expand community by community as each local network grows.",
   ],
   metrics: [
-    { value: "500+", target: 500, suffix: "+", label: "Neighbors Connected" },
-    { value: "50+", target: 50, suffix: "+", label: "Tribes Forming" },
-    { value: "Spring 2026", target: null, suffix: "", label: "Launch Date" },
+    { value: "Invitation-only", target: null, suffix: "", label: "Current access" },
+    { value: "Montrose", target: null, suffix: "", label: "Pilot area" },
+    { value: "Select Houston ZIPs", target: null, suffix: "", label: "Initial rollout" },
   ],
 };
 
 export const FOUNDING_MEMBER = {
-  title:
-    "Become a Founding Member — Shape your neighborhood's tribes from day one.",
+  title: "Help bring Tribes to your Houston neighborhood.",
   benefits: [
-    "Early access",
-    "Founding badge",
-    "Priority onboarding",
-    "Special launch features",
-    "Ability to create first tribes",
+    "Invitation-only launch",
+    "Montrose-centered pilot area",
+    "Access limited to select Houston ZIP codes",
+    "App-first neighborhood experience",
+    "Waitlist available as the rollout expands",
   ],
-  cta: "Secure Founding Access",
+  cta: "Join the Waitlist",
 };
 
 export const TESTIMONIALS = [
@@ -306,8 +303,9 @@ export const FAQ_ITEMS = [
       "Tribes is built for small, high-trust communities — not massive social feeds.",
   },
   {
-    question: "When does Tribes launch?",
-    answer: "Spring 2026. Founding Member access available now.",
+    question: "Where is Tribes launching?",
+    answer:
+      "Tribes is launching by invitation in select Houston ZIP codes, centered on the Montrose pilot area.",
   },
   {
     question: "Can I join tribes outside my immediate neighborhood?",
@@ -319,26 +317,20 @@ export const FAQ_ITEMS = [
       "Only people in your neighborhood or your tribe, depending on settings.",
   },
   {
-    question: "Is there a cost?",
-    answer:
-      "Free for individuals; optional paid tiers for organizations and leaders.",
-  },
-  {
     question: 'Can my organization create an "official" tribe?',
     answer:
       "Yes — HOAs, nonprofits, faith groups, and community leaders can create branded tribes.",
   },
   {
-    question: "How do I get early access?",
+    question: "How can I join?",
     answer:
-      "Join the waitlist today! We're onboarding users in waves leading up to our Spring 2026 launch. The first 100 members get Founding Member status with exclusive benefits, early access, and the ability to shape the platform with their feedback.",
+      "Access is currently invitation-only. If you do not have an invitation, join the waitlist and share your ZIP code so the Tribes team can understand demand as the Houston rollout expands.",
   },
 ];
 
 export const FINAL_CTA = {
-  prefix: "Join",
-  number: "500+",
-  suffix: "neighbors already preparing for launch.",
+  emphasis: "Invitation-only",
+  suffix: "in select Houston ZIP codes, beginning with Montrose.",
 };
 
 export const FOOTER = {
