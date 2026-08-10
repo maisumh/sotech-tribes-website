@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  */
 export default function LayoutAuditPage() {
   return (<>
-      <Home />
       <LayoutAuditReport />
+      <Home />
     </>);
 }
