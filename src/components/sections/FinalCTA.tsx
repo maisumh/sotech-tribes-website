@@ -12,9 +12,8 @@ export default function FinalCTA() {
 
         <ScrollReveal delay={0.1}>
           <p className="text-lg mt-8">
-            {FINAL_CTA.prefix}{" "}
             <span className="font-bold text-casablanca">
-              {FINAL_CTA.number}
+              {FINAL_CTA.emphasis}
             </span>{" "}
             {FINAL_CTA.suffix}
           </p>
