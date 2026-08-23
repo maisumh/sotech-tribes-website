@@ -58,9 +58,27 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4">
-          <p className="text-granny text-sm">
-            {FOOTER.copyright}
-          </p>
+          <div className="text-center sm:text-left">
+            <p className="text-granny text-sm">
+              {FOOTER.copyright}
+            </p>
+            {/*
+              Build credit. `rel="noopener"` only, deliberately NOT `noreferrer` -- that
+              strips the Referer header and makes the click unattributable in SoTech's
+              analytics. No `nofollow`; the link is meant to pass equity. Rationale:
+              sotech-website-template CLAUDE.md, "Build Credit".
+            */}
+            <p className="text-granny text-sm">
+              <a
+                href="https://thesocialtech.net"
+                target="_blank"
+                rel="noopener"
+                className="hover:text-white transition-colors"
+              >
+                Website by SoTech
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-4">
             {FOOTER.social.map((item) => (
               <a
