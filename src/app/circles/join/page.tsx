@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Join a Circle — Tribes",
+  title: "Join a Circle | Tribes",
   description:
     "You've been invited to a Circle on Tribes. Open this link on your phone with the Tribes app installed.",
   robots: { index: false, follow: false },
@@ -34,7 +34,7 @@ export default async function CircleJoinFallback({
       />
 
       <p className="mb-4 text-xs uppercase tracking-[0.25em] text-white/60">
-        — Tribes · Circles
+        · Tribes · Circles
       </p>
 
       <h1
@@ -66,7 +66,7 @@ export default async function CircleJoinFallback({
 
       <p className="max-w-md text-sm font-light text-white/60">
         Don&rsquo;t have the app yet? Tribes is currently in invite-only early
-        access — ask the neighbor who invited you, or write to{" "}
+        access. Ask the neighbor who invited you, or write to{" "}
         <a
           href="mailto:info@trytribes.com"
           className="text-casablanca underline-offset-4 hover:underline"

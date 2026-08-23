@@ -8,7 +8,7 @@ import { BRAND } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "MVP Launch Plan | Tribes",
   description:
-    "The friends-and-family launch plan for Tribes — invite, onboard, use, feedback, iterate.",
+    "The friends-and-family launch plan for Tribes: invite, onboard, use, feedback, iterate.",
   robots: { index: false, follow: false },
 };
 
@@ -17,37 +17,37 @@ const LOOP_STAGES = [
     num: "01",
     title: "Invite",
     body:
-      "We don't blast invites all at once. We start with the first 5 people — verifying sign-ups work, haves and wants can be created, chat flows end-to-end. Once a wave is healthy, we expand: 5 → 15 → 50 → 150 → scaling toward ~500. Each wave only goes out after the last one is proven stable. Supabase gates access — only invitees can get in.",
+      "We don't blast invites all at once. We start with the first 5 people, verifying sign-ups work, haves and wants can be created, chat flows end-to-end. Once a wave is healthy, we expand: 5 → 15 → 50 → 150 → scaling toward ~500. Each wave only goes out after the last one is proven stable. Supabase gates access: only invitees can get in.",
   },
   {
     num: "02",
     title: "Onboard",
     body:
-      "First-run screen sets expectations: this is early, things will break, your voice matters. A 60-second quickstart walks new users through Have, Want, Match — the core loop.",
+      "First-run screen sets expectations: this is early, things will break, your voice matters. A 60-second quickstart walks new users through Have, Want, Match: the core loop.",
   },
   {
     num: "03",
     title: "Use",
     body:
-      "Users explore the app on their own terms. A persistent Share Feedback entry point lives in the menu — always one tap away, never in the way.",
+      "Users explore the app on their own terms. A persistent Share Feedback entry point lives in the menu, always one tap away, never in the way.",
   },
   {
     num: "04",
     title: "Feedback",
     body:
-      "8 structured questions (about 3 minutes to complete). Hidden fields tie every submission to the user. The first 20 users get a 15-minute call offer — that's where the deepest insight lives.",
+      "8 structured questions (about 3 minutes to complete). Hidden fields tie every submission to the user. The first 20 users get a 15-minute call offer, where the deepest insight lives.",
   },
   {
     num: "05",
     title: "Iterate",
     body:
-      "Weekly synthesis: read every piece of feedback, tag themes, shape the backlog. Ship improvements every 1–2 weeks — whenever they're ready, not forced into a fixed slot. Every 2 weeks we close the loop with a 'You said, we did' update to keep invited users engaged.",
+      "Weekly synthesis: read every piece of feedback, tag themes, shape the backlog. Ship improvements every 1-2 weeks, whenever they're ready, not forced into a fixed slot. Every 2 weeks we close the loop with a 'You said, we did' update to keep invited users engaged.",
   },
 ];
 
 const FEEDBACK_QUESTIONS = [
   { q: "In your own words, what is Tribes?", type: "Open text" },
-  { q: "How easy was it to get started?", type: "1–5 rating" },
+  { q: "How easy was it to get started?", type: "1-5 rating" },
   { q: "Did you find something you'd actually trade?", type: "Yes / Maybe / No" },
   { q: "What's one thing that confused you?", type: "Open text" },
   { q: "What's one thing you'd want next?", type: "Open text" },
@@ -70,11 +70,11 @@ const METRICS = [
   {
     label: "Referral intent",
     target: "≥ 40% 'Yes'",
-    desc: "% of respondents who'd invite a neighbor — the real NPS at this stage.",
+    desc: "% of respondents who'd invite a neighbor. The real NPS at this stage.",
   },
   {
     label: "Weekly ship count",
-    target: "2–3 / week",
+    target: "2-3 / week",
     desc: "Items from feedback that land in the next ship cycle.",
   },
 ];
@@ -86,33 +86,33 @@ const TIMELINE = [
     items: [
       "Finalize contact list, customize Supabase email template",
       "Wire in-app feedback entry point, build GHL feedback form",
-      "Send invites to the first 5 users — closest friends and most patient testers",
+      "Send invites to the first 5 users: closest friends and most patient testers",
       "Verify the full loop end-to-end: sign-up, create a have, create a want, chat with a match, submit feedback",
     ],
   },
   {
-    week: "Weeks 2–3",
+    week: "Weeks 2-3",
     title: "Wave 2 (+15) → Wave 3 (+50)",
     items: [
       "Only expand after Wave 1 is healthy (no blocker bugs, no broken flows)",
       "Send Wave 2 (15 more users), monitor for new issues surfaced at higher volume",
       "Send Wave 3 (50 more users) once Wave 2 is stable",
-      "Offer 15-minute calls to first 20 respondents — this is where real insight lives",
+      "Offer 15-minute calls to first 20 respondents, where the real insight lives",
       "First synthesis session: tag themes, queue backlog items",
     ],
   },
   {
-    week: "Weeks 4–5",
+    week: "Weeks 4-5",
     title: "Wave 4 (+150) & iterate",
     items: [
-      "Ship improvements from Waves 1–3 feedback (1–2 week cycle each)",
+      "Ship improvements from Waves 1-3 feedback (1-2 week cycle each)",
       "Larger batch of 150 users goes out",
       "First 'You said, we did' update to all invited users",
       "Follow-up nudges to non-responders from earlier waves",
     ],
   },
   {
-    week: "Weeks 6–8",
+    week: "Weeks 6-8",
     title: "Scale toward ~500 & decide",
     items: [
       "Remaining invite waves sent in scaled batches until we reach our target",
@@ -169,7 +169,7 @@ export default function MVPPage() {
               style={{ animationDelay: "0.15s" }}
             >
               The Tribes MVP starts with five. Then fifteen. Then fifty.
-              We expand in waves — verifying every flow at every step — until
+              We expand in waves, verifying every flow at every step, until
               we reach our target of ~500 early users. This page is the plan:
               how we invite them, how we capture what they think, and how we
               turn that into shipped improvements.
@@ -190,7 +190,7 @@ export default function MVPPage() {
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[640px] mx-auto">
                   Not everyone in your contacts belongs in Wave 1. Four signals
-                  for picking the first 5 — then 15, then 50.
+                  for picking the first 5, then 15, then 50.
                 </p>
               </div>
             </ScrollReveal>
@@ -205,7 +205,7 @@ export default function MVPPage() {
                 {
                   title: "Patient with rough edges",
                   body:
-                    "Early builds glitch, copy is half-baked, a screen or two will break. Good Wave 1 users expect that — they're here to help, not to review.",
+                    "Early builds glitch, copy is half-baked, a screen or two will break. Good Wave 1 users expect that. They're here to help, not to review.",
                 },
                 {
                   title: "Has a real use case",
@@ -215,7 +215,7 @@ export default function MVPPage() {
                 {
                   title: "Within matching range",
                   body:
-                    "Close enough geographically that a Have in one person's list could plausibly match a Want in another's. One Wave 1 user in another city tests sign-up — not the product.",
+                    "Close enough geographically that a Have in one person's list could plausibly match a Want in another's. One Wave 1 user in another city tests sign-up, not the product.",
                 },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 0.1}>
@@ -237,7 +237,7 @@ export default function MVPPage() {
                   </span>
                   people who only reply when they have time, anyone outside
                   matching range, and anyone you&apos;d feel awkward nudging
-                  twice. They&apos;re great for later waves — not Wave 1.
+                  twice. They&apos;re great for later waves, not Wave 1.
                 </div>
               </div>
             </ScrollReveal>
@@ -304,7 +304,7 @@ export default function MVPPage() {
                 </h2>
                 <p className="text-lg text-white/75 max-w-[640px] mx-auto">
                   Sent through Supabase as a branded magic link. One-time per
-                  email — taps open the app, install the app, and sign the
+                  email. Taps open the app, install the app, and sign the
                   user in all in one flow.
                 </p>
               </div>
@@ -376,7 +376,7 @@ export default function MVPPage() {
                     </div>
                     <p className="text-xs text-gray-400 italic mt-2 text-center">
                       (A short video of the founder explaining what Tribes is
-                      and why feedback matters — to be recorded and embedded
+                      and why feedback matters, to be recorded and embedded
                       here as a next step.)
                     </p>
                   </div>
@@ -384,15 +384,15 @@ export default function MVPPage() {
                   <p>
                     <strong className="text-firefly">What is it?</strong> A
                     way for neighbors to share what they have and find what
-                    they need — without money changing hands. The tools in
+                    they need, without money changing hands. The tools in
                     your garage, the ladder you use twice a year, the
-                    stroller your kids outgrew — all matched with a neighbor
+                    stroller your kids outgrew, all matched with a neighbor
                     nearby who'd put them to use.
                   </p>
                   <p>
                     You're getting this invite because your voice matters to
                     us. The Tribes you see today is <em>early</em>. Rough
-                    edges included. That's the point — we want to build it
+                    edges included. That's the point. We want to build it
                     with you, not ship it at you.
                   </p>
                   <p className="text-firefly font-bold pt-2">
@@ -407,7 +407,7 @@ export default function MVPPage() {
                       <span className="font-bold text-casablanca-dark">2.</span>
                       <span>
                         Tap <strong>Share Feedback</strong> and tell us what
-                        you think — even "I don't get it" is gold.
+                        you think. Even "I don't get it" is gold.
                       </span>
                     </li>
                     <li className="flex gap-3">
@@ -430,7 +430,7 @@ export default function MVPPage() {
                     Thank you for being part of the first tribe.
                     <br />
                     <span className="text-firefly font-bold">
-                      — The Tribes Team
+                      The Tribes Team
                     </span>
                   </p>
                 </div>
@@ -494,22 +494,22 @@ export default function MVPPage() {
                     {
                       title: "Structured, but short",
                       body:
-                        "Mix of quant (1–5 ratings) and qual (one-sentence answers). Starts easy, ends open. Designed so users don't bail at question 3.",
+                        "Mix of quant (1-5 ratings) and qual (one-sentence answers). Starts easy, ends open. Designed so users don't bail at question 3.",
                     },
                     {
                       title: "Tied to the user",
                       body:
-                        "Hidden fields pre-fill the Supabase user ID and app version on every submission. We know exactly who said what — and can reach back out.",
+                        "Hidden fields pre-fill the Supabase user ID and app version on every submission. We know exactly who said what, and can reach back out.",
                     },
                     {
                       title: "Lands in our existing CRM",
                       body:
-                        "Every response flows into GHL tagged source=mvp-feedback. No new tool to learn, no data migration — just a filtered view in the same dashboard we already use.",
+                        "Every response flows into GHL tagged source=mvp-feedback. No new tool to learn, no data migration, just a filtered view in the same dashboard we already use.",
                     },
                     {
                       title: "Iterate without shipping",
                       body:
-                        "Because the form is a web URL (not native), we can add, remove, or reword questions anytime — without a new TestFlight build.",
+                        "Because the form is a web URL (not native), we can add, remove, or reword questions anytime, without a new TestFlight build.",
                     },
                   ].map((item, i) => (
                     <div key={item.title} className="flex gap-4">
@@ -546,7 +546,7 @@ export default function MVPPage() {
                   Ship when it&apos;s ready.
                 </h2>
                 <p className="text-lg text-gray-600 max-w-[640px] mx-auto">
-                  The feedback loop only works if it closes — but closing it
+                  The feedback loop only works if it closes, but closing it
                   well matters more than closing it fast. Here&apos;s the
                   rhythm.
                 </p>
@@ -564,10 +564,10 @@ export default function MVPPage() {
                   accent: "text-casablanca",
                 },
                 {
-                  cadence: "Every 1–2 weeks",
+                  cadence: "Every 1-2 weeks",
                   title: "Ship",
                   body:
-                    "Push improvements when they're actually ready — not forced into a weekend. Each cycle is a real dev sprint, tested and stable before it goes out.",
+                    "Push improvements when they're actually ready, not forced into a weekend. Each cycle is a real dev sprint, tested and stable before it goes out.",
                   color: "bg-casablanca text-firefly",
                   accent: "text-firefly",
                 },
@@ -728,7 +728,7 @@ export default function MVPPage() {
           </a>
         </p>
         <p className="text-white/40 text-xs">
-          MVP Launch Plan — internal client walkthrough
+          MVP Launch Plan · internal client walkthrough
         </p>
       </footer>
     </div>

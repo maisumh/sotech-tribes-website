@@ -14,14 +14,13 @@ import {
   TRIBE_TYPES,
   AUDIENCES,
   IMPACT,
-  FOUNDING_MEMBER,
   TESTIMONIALS,
   FAQ_ITEMS,
 } from "@/lib/constants";
 import HeroVideo from "./HeroVideo";
 
 export const metadata: Metadata = {
-  title: "Tribes™ — Editorial Preview | Home v2",
+  title: "Tribes™ | Editorial Preview, Home v2",
   description:
     "An editorial redesign of the Tribes home page. Same content, elevated typography and layout.",
   robots: { index: false, follow: false },
@@ -107,7 +106,7 @@ export default function Home2() {
                     fontSize: "clamp(1rem, 1.35vw, 1.375rem)",
                   }}
                 >
-                  A hyperlocal app where neighbors list what they&rsquo;re <em className="text-firefly not-italic font-semibold">Offering</em> and what they&rsquo;re <em className="text-firefly not-italic font-semibold">Seeking</em>. We match the two. No money, no feeds — just a two-way trade with people nearby.
+                  A hyperlocal app where neighbors list what they&rsquo;re <em className="text-firefly not-italic font-semibold">Offering</em> and what they&rsquo;re <em className="text-firefly not-italic font-semibold">Seeking</em>. We match the two. No money, no feeds, just a two-way trade with people nearby.
                 </p>
 
                 <div
@@ -115,7 +114,7 @@ export default function Home2() {
                   style={{ animationDelay: "0.45s" }}
                 >
                   <a
-                    href="#final-cta"
+                    href="#get-the-app"
                     className="group inline-flex items-center justify-center gap-3 bg-firefly text-white font-semibold px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] transition-all hover:bg-firefly-light hover:shadow-xl hover:shadow-firefly/20 hover:-translate-y-0.5"
                   >
                     Join the waitlist
@@ -205,7 +204,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <div className="bg-firefly h-full p-8 md:p-10">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")}
                     </div>
                     <div className="font-heading text-5xl md:text-6xl lg:text-7xl font-extralight leading-none tracking-[-0.03em] mb-6">
                       {stat.value}
@@ -471,7 +470,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <div className="border border-firefly/10 p-8 md:p-10 bg-offwhite relative">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")}
                     </div>
                     <div className="font-heading text-4xl md:text-5xl lg:text-6xl font-extralight text-firefly leading-none tracking-[-0.03em] mb-6">
                       {m.value}
@@ -481,42 +480,6 @@ export default function Home2() {
                 </ScrollReveal>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ──────────────────────────── FOUNDING MEMBER ──────────────────────────── */}
-        <section className="py-24 md:py-32">
-          <div className="max-w-[1000px] mx-auto px-6 md:px-10 lg:px-12">
-            <ScrollReveal>
-              <div className="relative bg-firefly text-white p-10 md:p-16 rounded-[3px] shadow-[0_40px_80px_-20px_rgba(16,55,48,0.4)] text-center md:text-left">
-                <span aria-hidden="true" className="absolute -top-3 left-10 w-6 h-6 bg-casablanca" />
-                <span aria-hidden="true" className="absolute -bottom-3 right-10 w-6 h-6 bg-casablanca/60" />
-                <Kicker label="Founding member" num="010" tone="dark" />
-                <h2
-                  className="font-heading font-extralight leading-[1.04] tracking-[-0.02em] mb-12"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
-                >
-                  Shape your neighborhood&rsquo;s tribes <em className="font-light not-italic text-casablanca">from day one.</em>
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-12 max-w-xl mx-auto md:mx-0 md:max-w-none">
-                  {FOUNDING_MEMBER.benefits.map((b, i) => (
-                    <div key={b} className="flex items-start gap-4 text-white/85 text-left">
-                      <span className="text-casablanca font-semibold text-sm pt-0.5 tabular-nums">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span>{b}</span>
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="#final-cta"
-                  className="group inline-flex items-center gap-3 bg-casablanca text-firefly font-semibold px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-casablanca/30"
-                >
-                  {FOUNDING_MEMBER.cta}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </ScrollReveal>
           </div>
         </section>
 
@@ -539,7 +502,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <figure className="h-full flex flex-col border-t border-firefly/20 pt-8">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
                     </div>
                     <span
                       aria-hidden="true"
@@ -592,7 +555,7 @@ export default function Home2() {
 
         {/* ──────────────────────────── FINAL CTA ──────────────────────────── */}
         <section
-          id="final-cta"
+          id="get-the-app"
           className="relative py-24 md:py-32 bg-firefly text-white overflow-hidden"
         >
           <div

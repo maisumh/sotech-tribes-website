@@ -234,7 +234,7 @@ export default function FeedbackForm({
       <div>
         <Label num={5}>What&apos;s one thing you&apos;d want next?</Label>
         <p className="text-xs text-gray-500 mb-2 ml-8">
-          Feature, fix, or vibe — anything goes.
+          Feature, fix, or vibe. Anything goes.
         </p>
         <textarea
           value={form.wantNext}
@@ -255,8 +255,8 @@ export default function FeedbackForm({
           value={form.referral}
           onChange={(v) => update("referral", v as Referral)}
           options={[
-            { value: "yes", label: "Yes — already thinking of who" },
-            { value: "maybe", label: "Maybe — I'd need to be able to pitch it" },
+            { value: "yes", label: "Yes, already thinking of who" },
+            { value: "maybe", label: "Maybe, if I could pitch it" },
             { value: "no", label: "Not yet" },
           ]}
         />
@@ -273,7 +273,7 @@ export default function FeedbackForm({
           value={form.followUp}
           onChange={(v) => update("followUp", v as FollowUp)}
           options={[
-            { value: "yes", label: "Yes — happy to chat" },
+            { value: "yes", label: "Yes, happy to chat" },
             { value: "no", label: "Not this time" },
           ]}
         />
@@ -296,7 +296,7 @@ export default function FeedbackForm({
       <div>
         <Label num={8}>Anything else we should hear?</Label>
         <p className="text-xs text-gray-500 mb-2 ml-8">
-          Vent, dream, complain — this is your space.
+          Vent, dream, complain. This is your space.
         </p>
         <textarea
           value={form.otherNotes}

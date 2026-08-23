@@ -56,13 +56,13 @@ export default function TermsPage() {
               className="text-lg md:text-xl text-gray-600 leading-[1.6] max-w-xl mb-6 animate-hero-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              The agreement between you and Tribes. Worth reading — especially the section on arbitration and disputes.
+              The agreement between you and Tribes. Worth reading, especially the section on arbitration and disputes.
             </p>
             <p
               className="text-xs uppercase tracking-[0.25em] text-firefly/50 animate-hero-fade-up"
               style={{ animationDelay: "0.35s" }}
             >
-              — Last updated {LAST_UPDATED}
+              · Last updated {LAST_UPDATED}
             </p>
           </div>
         </section>
@@ -145,7 +145,7 @@ export default function TermsPage() {
                 <p>We may remove listings, suspend your account, or report you to the authorities if you try to.</p>
 
                 <h2>8. Trades, exchanges, and meeting in person</h2>
-                <p>Tribes gives you tools to find each other. Everything that happens <em>after</em> a match — your conversation, your agreement, your exchange — is between you and the other person.</p>
+                <p>Tribes gives you tools to find each other. Everything that happens <em>after</em> a match, including your conversation, your agreement, and your exchange, is between you and the other person.</p>
                 <p><strong>We do not verify the identity, background, or character of Tribes users.</strong> We don&rsquo;t inspect or guarantee the condition, safety, or legality of items or services. We don&rsquo;t broker trades or hold anything in escrow, and we aren&rsquo;t responsible for whether a trade completes the way you expected.</p>
                 <p>Please trade responsibly. We strongly recommend that you:</p>
                 <ul>
@@ -155,13 +155,13 @@ export default function TermsPage() {
                   <li>Walk away from anything that feels off, and report it in the app.</li>
                   <li>Never share financial information, government IDs, or passwords.</li>
                 </ul>
-                <p>You use the Service &mdash; including any in-person meeting &mdash; at your own risk.</p>
+                <p>You use the Service, including any in-person meeting, at your own risk.</p>
 
                 <h2>9. Ratings and reputation</h2>
                 <p>After a trade you can rate the other person. Ratings are opinions and we don&rsquo;t endorse them. We may remove ratings that are fake, abusive, or posted in bad faith, and we may suspend accounts that try to manipulate the rating system.</p>
 
                 <h2>10. Reporting and moderation</h2>
-                <p>If you see a listing, message, or profile that breaks these Terms, use the in-app report tool. We&rsquo;ll review reports and take action where appropriate — including warnings, removing content, suspending accounts, and banning users in serious cases. We try to be fair and consistent, but we may act without notice when safety or legal compliance requires it.</p>
+                <p>If you see a listing, message, or profile that breaks these Terms, use the in-app report tool. We&rsquo;ll review reports and take action where appropriate, including warnings, removing content, suspending accounts, and banning users in serious cases. We try to be fair and consistent, but we may act without notice when safety or legal compliance requires it.</p>
 
                 <h2>11. Copyright (DMCA)</h2>
                 <p>We respect copyright. If you believe content on Tribes infringes your copyright, please send a notice to our designated agent that includes: (a) your physical or electronic signature; (b) identification of the copyrighted work you claim has been infringed; (c) identification of the material you want removed, with enough detail for us to find it; (d) your contact information; (e) a statement that you have a good-faith belief that the use isn&rsquo;t authorized by the copyright owner, its agent, or the law; and (f) a statement, under penalty of perjury, that the information in your notice is accurate and that you are the owner or authorized to act on the owner&rsquo;s behalf.</p>
@@ -171,7 +171,7 @@ export default function TermsPage() {
                 <p>We may terminate the accounts of repeat infringers. If you believe content was removed in error, you can send a counter-notice to the same email.</p>
 
                 <h2>12. Suspension and termination</h2>
-                <p>We may suspend or terminate your access to the Service at any time if you violate these Terms, put other users at risk, or use the Service in a way that exposes us to legal liability. You can delete your account at any time from inside the app. Sections that by their nature should survive termination will survive — including the licenses you&rsquo;ve granted, disclaimers, limitations of liability, indemnification, and dispute resolution.</p>
+                <p>We may suspend or terminate your access to the Service at any time if you violate these Terms, put other users at risk, or use the Service in a way that exposes us to legal liability. You can delete your account at any time from inside the app. Sections that by their nature should survive termination will survive, including the licenses you&rsquo;ve granted, disclaimers, limitations of liability, indemnification, and dispute resolution.</p>
 
                 <h2>13. Apple App Store additional terms</h2>
                 <p>If you downloaded Tribes from the Apple App Store, these terms also apply:</p>
@@ -216,7 +216,7 @@ export default function TermsPage() {
 
                 <h3>Binding individual arbitration</h3>
                 <p>
-                  If we can&rsquo;t resolve it, you and Tribes agree that any dispute arising out of or relating to these Terms or the Service will be resolved by <strong>binding individual arbitration</strong> administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules. The arbitrator — not a court — will decide all issues, except that either party may bring an individual action in small-claims court if it qualifies. Arbitration will take place in the county where you live, or remotely by phone or video, at your option. The Federal Arbitration Act governs the interpretation and enforcement of this section.
+                  If we can&rsquo;t resolve it, you and Tribes agree that any dispute arising out of or relating to these Terms or the Service will be resolved by <strong>binding individual arbitration</strong> administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules. The arbitrator, not a court, will decide all issues, except that either party may bring an individual action in small-claims court if it qualifies. Arbitration will take place in the county where you live, or remotely by phone or video, at your option. The Federal Arbitration Act governs the interpretation and enforcement of this section.
                 </p>
 
                 <h3>No class actions</h3>

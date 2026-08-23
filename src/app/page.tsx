@@ -10,7 +10,6 @@ import OurPeople from "@/components/sections/OurPeople";
 import TribeTypes from "@/components/sections/TribeTypes";
 import Audiences from "@/components/sections/Audiences";
 import Impact from "@/components/sections/Impact";
-import FoundingMember from "@/components/sections/FoundingMember";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -30,7 +29,6 @@ export default function Home() {
         <TribeTypes />
         <Audiences />
         <Impact />
-        <FoundingMember />
         <Testimonials />
         <FAQ />
         <FinalCTA />

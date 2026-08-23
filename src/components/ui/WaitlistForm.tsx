@@ -26,9 +26,28 @@ const roleOptions: Array<{ value: FormValues["role"]; label: string }> = [
 
 export default function WaitlistForm({
   variant = "dark",
+  defaultRole = "neighbor",
+  formName = "waitlist",
+  submitLabel = "Notify me",
+  submittingLabel = "Sending...",
+  successKicker = "You're on the map",
+  successHeading = "Thanks, we've got your spot.",
+  successBody = "We'll email you the moment Tribes opens near you. In the meantime the app is free to download, so you can set up your profile and be ready.",
 }: {
   /** "dark" sits on white card; "light" sits on firefly section */
   variant?: "dark" | "light";
+  /** Pre-selects the role pill — "partner" on the organisations page. */
+  defaultRole?: "neighbor" | "partner" | "both";
+  /** Travels with the GA4 generate_lead event so sources stay distinguishable. */
+  formName?: string;
+  /** Submit label. Defaults to the area-alert wording, not "join the waitlist" —
+   *  the app is public, so nothing here is a queue to get into. */
+  submitLabel?: string;
+  submittingLabel?: string;
+  /** Success-state copy. */
+  successKicker?: string;
+  successHeading?: string;
+  successBody?: string;
 }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
@@ -42,7 +61,7 @@ export default function WaitlistForm({
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { role: "neighbor" },
+    defaultValues: { role: defaultRole },
   });
 
   const currentRole = watch("role");
@@ -61,7 +80,7 @@ export default function WaitlistForm({
         throw new Error(body?.error ?? "Something went wrong");
       }
       setStatus("success");
-      track("generate_lead", { form_name: "waitlist_home2", role: values.role });
+      track("generate_lead", { form_name: formName, role: values.role });
       reset();
     } catch (err) {
       setStatus("error");
@@ -91,13 +110,13 @@ export default function WaitlistForm({
           ✓
         </div>
         <div className="text-xs uppercase tracking-[0.35em] text-casablanca mb-3">
-          You&rsquo;re on the list
+          {successKicker}
         </div>
         <h3 className="font-heading text-3xl md:text-4xl font-extralight mb-4 leading-tight">
-          Welcome to the tribe.
+          {successHeading}
         </h3>
         <p className={`${successMuted} max-w-md mx-auto leading-relaxed`}>
-          We&rsquo;ll reach out when Tribes opens in your area. Keep an eye on your inbox.
+          {successBody}
         </p>
         <button
           type="button"
@@ -199,7 +218,7 @@ export default function WaitlistForm({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pt-4">
         <p className={`text-xs leading-relaxed max-w-md ${isLight ? "text-white/60" : "text-gray-500"}`}>
-          By joining, you agree to our{" "}
+          By submitting, you agree to our{" "}
           <a href="/privacy" className={`${isLight ? "text-white" : "text-firefly"} underline underline-offset-2 decoration-casablanca/50 hover:decoration-casablanca`}>
             Privacy Policy
           </a>
@@ -210,7 +229,7 @@ export default function WaitlistForm({
           disabled={status === "submitting"}
           className="group relative inline-flex items-center justify-center gap-3 bg-casablanca text-firefly font-semibold px-10 py-4 rounded-full min-h-[52px] text-sm uppercase tracking-[0.2em] transition-all hover:bg-casablanca-dark hover:shadow-xl hover:shadow-casablanca/30 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none whitespace-nowrap"
         >
-          <span>{status === "submitting" ? "Joining..." : "Join the waitlist"}</span>
+          <span>{status === "submitting" ? submittingLabel : submitLabel}</span>
           <span
             aria-hidden="true"
             className="inline-block transition-transform group-hover:translate-x-1"

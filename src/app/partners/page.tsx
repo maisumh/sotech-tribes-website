@@ -3,13 +3,13 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Button from "@/components/ui/Button";
-import GHLForm from "@/components/ui/GHLForm";
+import WaitlistForm from "@/components/ui/WaitlistForm";
 import ClientFAQ from "@/components/ui/ClientFAQ";
 
 export const metadata: Metadata = {
-  title: "For Partners | Launch & Manage Community Tribes | Tribes™",
+  title: "For Partners | Bring Your Community onto Tribes | Tribes™",
   description:
-    "Launch branded tribes, activate your members, and scale real community impact.",
+    "Bring your street, congregation, school or club onto Tribes as a Circle. Give your members a practical reason to help each other.",
   openGraph: {
     images: [{ url: "/og-partners.png", width: 1200, height: 630 }],
   },
@@ -23,19 +23,19 @@ const partnerTypes = [
     title: "Community Leaders",
     subtitle: "HOA presidents, block captains, neighborhood associations",
     description:
-      "Launch and manage official tribes for your neighborhood. Organize members, create interest-based sub-tribes, and track community engagement with powerful admin tools and analytics.",
+      "Bring your neighborhood into a private Circle, invite your members, and give them a practical reason to help each other: borrowing, lending, and trading skills instead of just posting about it.",
   },
   {
     title: "Organizations",
     subtitle: "Churches, nonprofits, sustainability groups, community centers",
     description:
-      "Create tribes that align with your mission and give members practical ways to live your values. Facilitate mutual support, resource sharing, and strengthen relationships through meaningful action.",
+      "Create a Circle that aligns with your mission and give members practical ways to live your values: coordinating help, sharing resources, and building relationships through real action rather than announcements.",
   },
   {
     title: "Affiliates & Advocates",
     subtitle: "Local influencers, community advocates, brand ambassadors",
     description:
-      "Promote Tribes in your community and help new tribes form and thrive. Earn commissions for active members you recruit while building your local influence and making a real impact.",
+      "Spread the word where you already have a following and help the first Circles in your area get off the ground. We'll give you the material to do it and keep you close to what's coming next.",
   },
 ];
 
@@ -44,19 +44,19 @@ const caseStudies = [
     icon: "🏘️",
     title: "Neighborhood Associations",
     description:
-      "An HOA launched Tribes with 250 households and created sub-tribes for tool sharing, neighborhood watch, and social events. Within 30 days, they had 8 active tribes and tripled their newsletter engagement\u2014because they weren\u2019t just announcing, they were facilitating actual helping.",
+      "An HOA launched Tribes with 250 households and created sub-tribes for tool sharing, neighborhood watch, and social events. Within 30 days, they had 8 active tribes and tripled their newsletter engagement, because they weren\u2019t just announcing, they were facilitating actual helping.",
   },
   {
     icon: "⛪",
     title: "Faith Communities",
     description:
-      "A church created a Parish Care Tribe to coordinate meals, rides, and support for members in need. Members now build genuine relationships through service\u2014not just seeing each other on Sundays. They\u2019ve organized 23 meal trains and 15 coordinated rides in just 3 months.",
+      "A church created a Parish Care Tribe to coordinate meals, rides, and support for members in need. Members now build genuine relationships through service, not just seeing each other on Sundays. They\u2019ve organized 23 meal trains and 15 coordinated rides in just 3 months.",
   },
   {
     icon: "🌱",
     title: "Sustainability Groups",
     description:
-      "A sustainability organization launched a Tool Library Tribe and Zero Waste Tribe, helping members share equipment and reduce consumption. Members actively live sustainability values daily\u2014sharing, borrowing, and reducing waste together as a community.",
+      "A sustainability organization launched a Tool Library Tribe and Zero Waste Tribe, helping members share equipment and reduce consumption. Members actively live sustainability values daily: sharing, borrowing, and reducing waste together as a community.",
   },
 ];
 
@@ -70,7 +70,7 @@ const successStories = [
       { value: "3x", label: "Newsletter Engagement" },
     ],
     quote:
-      '"We launched Tribes with 250 households. Within 30 days, we had 8 active tribes. Our newsletter engagement tripled because we weren\'t just announcing\u2014we were facilitating actual helping." \u2014 Maria R., HOA President',
+      '"We launched Tribes with 250 households. Within 30 days, we had 8 active tribes. Our newsletter engagement tripled because we weren\'t just announcing, we were facilitating actual helping." (Maria R., HOA President)',
   },
   {
     icon: "⛪",
@@ -81,7 +81,7 @@ const successStories = [
       { value: "8", label: "Home Repairs" },
     ],
     quote:
-      '"We created a Parish Care Tribe to coordinate support for members in need. Our members are building genuine relationships through service, not just seeing each other on Sundays." \u2014 Pastor Michael T., Grace Community Church',
+      '"We created a Parish Care Tribe to coordinate support for members in need. Our members are building genuine relationships through service, not just seeing each other on Sundays." (Pastor Michael T., Grace Community Church)',
   },
   {
     icon: "📱",
@@ -92,7 +92,7 @@ const successStories = [
       { value: "5K", label: "Followers Reached" },
     ],
     quote:
-      '"As a local neighborhood blogger, I promoted Tribes to my 5,000 followers. The affiliate commissions are great, but what\'s better is watching tribes actually form and seeing my community get stronger." \u2014 Jennifer L., Community Advocate & Affiliate',
+      '"As a local neighborhood blogger, I promoted Tribes to my 5,000 followers. The affiliate commissions are great, but what\'s better is watching tribes actually form and seeing my community get stronger." (Jennifer L., Community Advocate & Affiliate)',
   },
 ];
 
@@ -100,27 +100,27 @@ const faqItems = [
   {
     question: "What's required from our team to launch Tribes?",
     answer:
-      "Minimal time investment from your team. We handle setup, training, and provide all promotional materials. You'll need to communicate the launch to residents (we provide templates) and designate 1-2 community moderators. Most communities are fully launched within 4 weeks.",
+      "Very little. Tribes is free for your members to download and use, so the main thing you provide is the invitation, telling your community it exists and getting the first handful of people listing. We'll help you plan that launch.",
   },
   {
     question: "How do we get residents or members to actually use it?",
     answer:
-      'We\'ve developed proven activation strategies: identify and activate community champions, create 3-5 "seed tribes" that solve real problems (tool sharing, parents, pets), incentivize early adopters, and maintain consistent communication. Communities that follow our playbook see 70-90% participation within 3 months.',
+      "The pattern that works is starting with supply: get a first group of members to list a few things they're Offering before you open it up, so nobody arrives to an empty marketplace. From there, matches do the work. People come back because Tribes told them a specific neighbor wants a specific thing they have.",
   },
   {
     question: "What's the cost for our community or organization?",
     answer:
-      "Pricing varies by community size and needs. Contact us for a customized quote. We offer tiered pricing that makes Tribes accessible for communities of all sizes. Individual residents and members always use Tribes for free.",
+      "Nothing today. Tribes is free for your members, and joining a Circle is free. Creating and running your own Circle is coming to Tribes Premium. Get in touch and we'll walk you through it before it launches.",
   },
   {
-    question: "How do affiliates earn commissions?",
+    question: "When can we create our own Circle?",
     answer:
-      "Affiliates earn commissions based on active users and service providers they recruit through unique referral links. We track signups and ongoing engagement, rewarding you for bringing valuable members to the platform. Details are provided when you join the affiliate program.",
+      "Circle creation is coming to Tribes Premium. Joining a Circle is free and available now, and we're onboarding a small number of founding communities by hand in the meantime. Get in touch and we'll set yours up with you.",
   },
   {
-    question: "Can Tribes integrate with our existing systems?",
+    question: "Does Tribes integrate with our existing systems?",
     answer:
-      "Yes. We can integrate with common management platforms, resident directories, and communication tools. We also provide APIs for custom integrations. During onboarding, we'll discuss your specific tech stack and integration needs.",
+      "Not yet. Tribes has no integrations or public API today. Members join a Circle with a link or a code, which works alongside whatever directory or mailing list you already run. Tell us what you use and we'll factor it into the roadmap.",
   },
 ];
 
@@ -135,16 +135,17 @@ export default function PartnersPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
                 <h1 className="font-heading text-3xl md:text-5xl font-bold text-firefly leading-tight mb-6 animate-hero-fade-up" style={{ animationDelay: "0.1s" }}>
-                  <span className="block">Build Tribes<sup>&#8482;</sup>.</span>
-                  <span className="block">Activate Communities.</span>
+                  <span className="block">Bring Your Community</span>
+                  <span className="block">onto Tribes<sup>&#8482;</sup>.</span>
                 </h1>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed animate-hero-fade-up" style={{ animationDelay: "0.25s" }}>
-                  Launch branded tribes, activate your members, and scale real
-                  community impact.
+                  Circles are private, invite-only groups inside Tribes: for a street,
+                  a congregation, a school or a club. Members trade with people they
+                  already know, and every match shows who they have in common.
                 </p>
                 <div className="flex justify-center md:justify-start animate-hero-fade-up" style={{ animationDelay: "0.4s" }}>
                   <Button href="#partner-cta" size="large">
-                    Join the Waitlist
+                    Talk to Us
                   </Button>
                 </div>
                 <p className="text-sm text-gray-500 mt-4 animate-hero-fade-up" style={{ animationDelay: "0.55s" }}>
@@ -272,17 +273,28 @@ export default function PartnersPage() {
           id="partner-cta"
           className="py-16 md:py-24 bg-firefly text-white"
         >
-          <div className="max-w-[600px] mx-auto px-4 text-center">
+          <div className="max-w-[920px] mx-auto px-4 text-center">
             <ScrollReveal>
-              <GHLForm />
+              <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-casablanca mb-4">
+                Bring Your Community Onto Tribes
+              </h2>
+              <p className="text-white/90 leading-relaxed mb-8">
+                Tell us about your community and we&rsquo;ll help you get the first
+                Circle off the ground. Tribes is free for your members today.
+              </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <p className="text-lg mt-8">
-                <span className="font-bold text-casablanca">
-                  Build movements
-                </span>{" "}
-                and activate communities at scale
-              </p>
+              <div className="text-left">
+                <WaitlistForm
+                  variant="light"
+                  defaultRole="partner"
+                  formName="partners_enquiry"
+                  submitLabel="Get in touch"
+                  successKicker="Message received"
+                  successHeading="Thanks, we'll be in touch."
+                  successBody="We'll reach out to talk through your community and how to get the first Circle off the ground."
+                />
+              </div>
             </ScrollReveal>
           </div>
         </section>

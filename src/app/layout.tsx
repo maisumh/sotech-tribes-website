@@ -14,8 +14,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://trytribes.com"),
   title: SITE.title,
   description: SITE.description,
+  // Self-canonicalise to the apex. ⚠️ Vercel currently 307s apex -> www, which
+  // is the opposite of what robots.ts/sitemap.ts/metadataBase declare. The real
+  // fix is one domain setting in Vercel (make trytribes.com primary); until that
+  // lands, search engines are told apex while being served www.
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Tribes™ | Share Resources & Build Community With Your Neighbors",
+    title: "Tribes™ | Trade What You Have for What You Need",
     description: SITE.description,
     url: SITE.url,
     siteName: "Tribes",
@@ -25,13 +32,13 @@ export const metadata: Metadata = {
         url: "/og-home.png",
         width: 1200,
         height: 630,
-        alt: "Tribes - Rediscover Your Neighborhood",
+        alt: "Tribes - trade what you have for what you need, with your neighbors",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tribes™ | Share Resources & Build Community",
+    title: "Tribes™ | Trade With Your Neighbors",
     description: SITE.description,
     images: ["/og-home.png"],
   },

@@ -56,7 +56,7 @@ export default function PrivacyPage() {
               className="text-xs uppercase tracking-[0.25em] text-firefly/50 animate-hero-fade-up"
               style={{ animationDelay: "0.35s" }}
             >
-              — Last updated {LAST_UPDATED}
+              · Last updated {LAST_UPDATED}
             </p>
           </div>
         </section>
@@ -135,16 +135,16 @@ export default function PrivacyPage() {
                 <h3>With our service providers (data processors)</h3>
                 <p>We rely on a small number of vendors to run the Service. They process your data only on our instructions:</p>
                 <ul>
-                  <li><strong>Supabase</strong> — database and authentication (United States).</li>
-                  <li><strong>Google Firebase</strong> — push notifications and product analytics (United States).</li>
-                  <li><strong>Twilio SendGrid</strong> — transactional and marketing email (United States).</li>
-                  <li><strong>Meta and Google</strong> — advertising measurement and attribution.</li>
-                  <li><strong>Vercel</strong> — website and API hosting (United States).</li>
+                  <li><strong>Supabase</strong>: database and authentication (United States).</li>
+                  <li><strong>Google Firebase</strong>: push notifications and product analytics (United States).</li>
+                  <li><strong>Twilio SendGrid</strong>: transactional and marketing email (United States).</li>
+                  <li><strong>Meta and Google</strong>: advertising measurement and attribution.</li>
+                  <li><strong>Vercel</strong>: website and API hosting (United States).</li>
                 </ul>
 
                 <h3>For advertising and measurement</h3>
                 <p>
-                  When we run ads on Meta or Google, we share limited event data (such as an install event or campaign identifier) with those platforms so they can measure campaign performance. Under California and some other state privacy laws, this type of sharing is treated as a &ldquo;sale&rdquo; or &ldquo;share&rdquo; of personal information even though no money changes hands. You can opt out at any time — see <a href="#your-rights">Your rights</a> below.
+                  When we run ads on Meta or Google, we share limited event data (such as an install event or campaign identifier) with those platforms so they can measure campaign performance. Under California and some other state privacy laws, this type of sharing is treated as a &ldquo;sale&rdquo; or &ldquo;share&rdquo; of personal information even though no money changes hands. You can opt out at any time. See <a href="#your-rights">Your rights</a> below.
                 </p>
 
                 <h3>For legal reasons or to protect the community</h3>
@@ -207,7 +207,7 @@ export default function PrivacyPage() {
                 <p>Tribes is operated from the United States and your information is processed here. If you access the Service from outside the US, you understand that your information will be transferred to, stored, and processed in the United States.</p>
 
                 <h2>11. Cookies and similar technologies on our website</h2>
-                <p>Our website uses a small number of essential first-party cookies needed to run the site, and <strong>Google Analytics 4</strong> to understand how visitors use the site so we can improve it. Google Analytics sets first-party cookies and processes a truncated (anonymized) IP address, the pages you view, and basic device and referral information. We use this only in aggregate to measure site traffic and the performance of our marketing — not to identify you personally. You can opt out by disabling cookies in your browser, by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>, or through a Global Privacy Control signal, which we honor as described above. If we later turn on advertising cookies (for example, the Meta Pixel or Google Ads tags, to measure our advertising), we&rsquo;ll update this policy before they start collecting data. The mobile app does not use web cookies.</p>
+                <p>Our website uses a small number of essential first-party cookies needed to run the site, and <strong>Google Analytics 4</strong> to understand how visitors use the site so we can improve it. Google Analytics sets first-party cookies and processes a truncated (anonymized) IP address, the pages you view, and basic device and referral information. We use this only in aggregate to measure site traffic and the performance of our marketing, not to identify you personally. You can opt out by disabling cookies in your browser, by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>, or through a Global Privacy Control signal, which we honor as described above. If we later turn on advertising cookies (for example, the Meta Pixel or Google Ads tags, to measure our advertising), we&rsquo;ll update this policy before they start collecting data. The mobile app does not use web cookies.</p>
 
                 <h2>12. Changes to this policy</h2>
                 <p>We&rsquo;ll update this page when our practices change. If the change is material, we&rsquo;ll notify you by email and inside the app at least 7 days before it takes effect. The &ldquo;Last updated&rdquo; date at the top of this page always reflects the current version.</p>

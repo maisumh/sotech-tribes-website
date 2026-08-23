@@ -19,7 +19,7 @@ const faqItems = [
   {
     question: "How does Tribes work?",
     answer:
-      "You list what you\u2019re Offering (stuff to lend, skills to share) and what you\u2019re Seeking (things you need, help you could use). Tribes matches you with neighbors nearby who are Offering what you\u2019re Seeking and Seeking what you\u2019re Offering. No money changes hands \u2014 it\u2019s a two-way trade.",
+      "You list what you\u2019re Offering (stuff to lend, skills to share) and what you\u2019re Seeking (things you need, help you could use). Tribes matches you with neighbors nearby who are Offering what you\u2019re Seeking and Seeking what you\u2019re Offering. No money changes hands. It\u2019s a two-way trade.",
   },
   {
     question: "How do I list an item or service?",
@@ -61,7 +61,7 @@ const faqItems = [
   {
     question: "Why does Tribes need my ZIP code?",
     answer:
-      "Tribes is hyperlocal \u2014 matches only work if we can figure out who\u2019s actually nearby. Your ZIP code lets us match you with neighbors in your area. We do not collect GPS or precise device location.",
+      "Tribes is hyperlocal, so matches only work if we can figure out who\u2019s actually nearby. Your ZIP code lets us match you with neighbors in your area. We do not collect GPS or precise device location.",
   },
   {
     question: "Can I use Tribes without sharing my phone number?",
@@ -121,7 +121,7 @@ export default function SupportPage() {
                   className="mt-8 max-w-xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-600 leading-[1.6] animate-hero-fade-up"
                   style={{ animationDelay: "0.3s" }}
                 >
-                  A simple question, a safety concern, or a bug — whatever it is, a real person on our team will read it and get back to you.
+                  A simple question, a safety concern, or a bug. Whatever it is, a real person on our team will read it and get back to you.
                 </p>
               </div>
 
@@ -163,7 +163,7 @@ export default function SupportPage() {
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-8 md:gap-12">
                 <div className="text-center md:text-left">
                   <div className="text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-firefly/50 mb-4">
-                    — Write to us directly
+                    · Write to us directly
                   </div>
                   <a
                     href={`mailto:${CONTACT_EMAIL}`}
@@ -219,7 +219,7 @@ export default function SupportPage() {
                   </h2>
                 </div>
                 <p className="text-gray-600 leading-[1.7] max-w-sm md:text-right md:self-end md:pb-2 mx-auto md:mx-0">
-                  Ten questions we get most often. If yours isn&rsquo;t here, scroll on — we&rsquo;ll read whatever you write.
+                  Ten questions we get most often. If yours isn&rsquo;t here, scroll on. We&rsquo;ll read whatever you write.
                 </p>
               </div>
             </ScrollReveal>
@@ -281,7 +281,7 @@ export default function SupportPage() {
             <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-8">
               <div>
                 <div className="text-[10px] uppercase tracking-[0.35em] text-firefly/40 mb-2">
-                  — Also
+                  · Also
                 </div>
                 <p className="text-firefly/70">
                   Looking for legal or policy details? We keep it short and plain.

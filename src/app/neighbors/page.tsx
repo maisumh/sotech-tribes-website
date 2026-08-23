@@ -3,7 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import Button from "@/components/ui/Button";
-import GHLForm from "@/components/ui/GHLForm";
+import StoreBadges from "@/components/ui/StoreBadges";
 import ClientFAQ from "@/components/ui/ClientFAQ";
 
 export const metadata: Metadata = {
@@ -84,7 +84,7 @@ const categories = [
 const steps = [
   {
     number: "1",
-    title: "List Your Haves and Wants",
+    title: "List Your Offerings and Seekings",
     description:
       "Add what you can offer - items to lend, help you can give, or services you provide. Post what you're looking for.",
   },
@@ -104,7 +104,7 @@ const steps = [
     number: "4",
     title: "Build Your Reputation",
     description:
-      "Complete exchanges, leave reviews, and become a trusted member of your neighborhood tribe.",
+      "Complete exchanges, leave reviews, and become a trusted member of your neighborhood.",
   },
 ];
 
@@ -141,9 +141,9 @@ const benefits = [
   },
   {
     icon: "🏘️",
-    title: "Join Your Tribe",
+    title: "Join a Circle",
     description:
-      "Find communities around shared interests - tool sharing, parents, pets, sustainability, and more.",
+      "Get invited into a private Circle for your street, church or school, and spot the neighbors you already know.",
   },
 ];
 
@@ -165,10 +165,10 @@ const testimonial = {
 
 const trustFeatures = [
   {
-    icon: "✓",
-    title: "Verified Neighbors",
+    icon: "📍",
+    title: "Neighbors Nearby",
     description:
-      "Address verification ensures everyone in your tribe actually lives in your community.",
+      "Your feed is sorted by distance, so the people you match with are genuinely local.",
   },
   {
     icon: "⭐",
@@ -194,7 +194,7 @@ const faqItems = [
   {
     question: "How much does it cost to use Tribes?",
     answer:
-      "Tribes is completely free for neighbors. There are no membership fees, subscription costs, or hidden charges. You can borrow, lend, help, and offer services without ever paying to use the platform.",
+      "Tribes is free for neighbors. Downloading the app, listing, matching, chatting and trading cost nothing. A Tribes Premium tier is coming later for people who want to create their own Circles. Joining a Circle stays free.",
   },
   {
     question:
@@ -220,7 +220,7 @@ const faqItems = [
   {
     question: "How do I know my neighbors are trustworthy?",
     answer:
-      "Every neighbor is address-verified to ensure they actually live in your community. Ratings and reviews from past exchanges help you see who's reliable. Start with lower-stakes exchanges to build trust, and check reviews before lending valuable items.",
+      "Every completed trade is rated, so reputations build up over time and you can see them before you commit. Your feed is sorted by distance so matches are genuinely local, and reporting or blocking someone is always one tap away. Start with lower-stakes trades to build trust, and check ratings before lending anything valuable.",
   },
 ];
 
@@ -239,16 +239,14 @@ export default function NeighborsPage() {
                   <span className="block">Tribes&#8482; Helps You Find It.</span>
                 </h1>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed animate-hero-fade-up" style={{ animationDelay: "0.25s" }}>
-                  Borrow, lend, help, hire, trade - connect with neighbors who
-                  have what you need and need what you have.
+                  List what you&rsquo;re Offering, post what you&rsquo;re Seeking, and Tribes
+                  matches you with the neighbor whose needs fit yours both ways.
                 </p>
-                <div className="flex justify-center md:justify-start animate-hero-fade-up" style={{ animationDelay: "0.4s" }}>
-                  <Button href="#neighbors-cta" size="large">
-                    Join the Waitlist
-                  </Button>
+                <div className="animate-hero-fade-up" style={{ animationDelay: "0.4s" }}>
+                  <StoreBadges location="neighbors_hero" />
                 </div>
-                <p className="text-sm text-gray-500 mt-4 animate-hero-fade-up" style={{ animationDelay: "0.55s" }}>
-                  500+ neighbors already building their tribes
+                <p className="text-sm text-gray-500 mt-6 animate-hero-fade-up" style={{ animationDelay: "0.55s" }}>
+                  Free on iOS and Android. Join 500+ neighbors on Tribes.
                 </p>
               </div>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl animate-hero-fade-up" style={{ animationDelay: "0.3s" }}>
@@ -468,17 +466,25 @@ export default function NeighborsPage() {
 
         {/* CTA */}
         <section
-          id="neighbors-cta"
+          id="get-the-app"
           className="py-16 md:py-24 bg-firefly text-white"
         >
           <div className="max-w-[600px] mx-auto px-4 text-center">
             <ScrollReveal>
-              <GHLForm />
+              <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-casablanca mb-4">
+                Get Tribes
+              </h2>
+              <p className="text-white/90 leading-relaxed mb-8">
+                Free on iOS and Android. Starting in Houston, growing block by block.
+              </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
+              <StoreBadges location="neighbors_cta" align="center" />
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
               <p className="text-lg mt-8">
                 <span className="font-bold text-casablanca">500+</span>{" "}
-                neighbors already building their tribes
+                neighbors already trading on Tribes
               </p>
             </ScrollReveal>
           </div>
