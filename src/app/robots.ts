@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       // Internal staff tool, API handlers, and unlinked demo/preview pages —
       // keep them out of search results.
-      disallow: ["/admin", "/api", "/home2", "/mvp", "/update", "/feedback"],
+      disallow: ["/admin", "/api", "/home2", "/mvp", "/update", "/feedback", "/costs"],
     },
     sitemap: `${BASE_URL}/sitemap.xml`,
     host: BASE_URL,
