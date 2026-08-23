@@ -13,8 +13,13 @@ import { GA_ID, track } from "@/lib/analytics";
  *   as production too, which is what lets us verify events before the DNS cutover.)
  * - Pageviews on first load + client-side route changes are handled by GA4
  *   Enhanced Measurement (history events), so we don't fire page_view manually.
- * - A single delegated click listener instruments every "Join Waitlist" CTA and
+ * - A single delegated click listener instruments every "Get the App" CTA and
  *   outbound link, so we don't have to touch each button component.
+ *
+ * ⚠️ The primary conversion event changed with the Aug 2026 launch pass:
+ *   join_waitlist_click -> get_app_click, plus download_click (fired by
+ *   StoreBadges with a platform param). GA4 Key events must be re-marked in
+ *   Admin -> Events; the old names stop receiving traffic.
  */
 export default function Analytics() {
   const pathname = usePathname();
@@ -31,16 +36,21 @@ export default function Analytics() {
       const href = anchor.getAttribute("href") || "";
       const linkText = (anchor.textContent || "").trim().slice(0, 60);
 
-      // Waitlist intent — any anchor pointing at the #final-cta signup section.
-      if (href === "#final-cta" || href.endsWith("#final-cta")) {
-        track("join_waitlist_click", { location: ctaLocation(anchor), link_text: linkText });
+      // App intent — any anchor pointing at the #get-the-app section.
+      if (href === "#get-the-app" || href.endsWith("#get-the-app")) {
+        track("get_app_click", { location: ctaLocation(anchor), link_text: linkText });
         return;
       }
 
       // Outbound links — anything leaving the origin.
       try {
         const url = new URL(href, window.location.origin);
-        if (url.origin !== window.location.origin) {
+        // Store links already report a richer download_click from StoreBadges —
+        // counting them twice would inflate outbound and blur the funnel.
+        const isStore =
+          url.hostname.endsWith("apps.apple.com") ||
+          url.hostname.endsWith("play.google.com");
+        if (url.origin !== window.location.origin && !isStore) {
           track("outbound_click", { url: url.href, link_text: linkText });
         }
       } catch {

@@ -3,18 +3,29 @@
 ## Project
 This repository contains three distinct surfaces that share a single codebase:
 
-1. **Marketing site** (`/`, `/neighbors`, `/partners`, `/feedback`, `/mvp`) — a Next.js 15 recreation of the Tribes landing page originally built with vanilla HTML/CSS/JS on GHL. Pixel-level fidelity with the original is the goal. Uses `GHLForm` iframe for waitlist capture.
+1. **Marketing site** (`/`, `/neighbors`, `/partners`, `/feedback`, `/mvp`) — a Next.js 15 recreation of the Tribes landing page originally built with vanilla HTML/CSS/JS on GHL. **Pixel-fidelity with the original is no longer the goal**: the original was a pre-launch waitlist page, and the August 2026 launch pass (below) deliberately diverged from it.
+
 2. **Editorial surface** (`/privacy`, `/terms`, `/support`, `/home2`) — App Store submission pages (April 2026) + a redesigned home preview. Editorial aesthetic: extralight display type, asymmetric layouts, fluid `clamp()` typography, casablanca italic accents, numbered sections. No emoji icons — typographic numbered prefixes instead.
 3. **Admin panel** (`/admin/*`) — an internal staff tool that replaced a legacy FlutterFlow admin in April 2026. Connects directly to the Tribes Supabase database. See [docs/admin-architecture.md](./docs/admin-architecture.md) before touching anything under `src/app/admin/` or `src/components/admin/`.
+
+### ⚠️ August 2026 launch pass — read before editing marketing copy
+
+The site advertised a "Launching Spring 2026" waitlist until 2026-08-23, six weeks after the app went public on both stores. The pass that fixed it established rules that are easy to undo by accident:
+
+- **The site is download-first.** Primary CTA everywhere is the App Store / Play badge pair (`src/components/ui/StoreBadges.tsx`, URLs in `src/lib/store.ts`). There is no waitlist gate — the app is public and **admission is decided in-app** by the rollout gate. Never reintroduce "Join the Waitlist" as the primary action.
+- **`GHLForm` is deleted.** It was a GoHighLevel iframe served from `link.thesocialtech.net` — **SoTech's** CRM, not the client's (verified: the form is not in Tribes' GHL location `U5e1EQQhkA9AaPpvfXQt`). Its leads never reached `v2_waitlist`, so they were invisible to `/admin/rollout`'s demand-by-ZIP map. Every form on the site now posts to `/api/waitlist`.
+- **Only shipped features may be described.** `Marketing/AppStore/aso-metadata-v2.md` is the positioning source of truth. The old copy advertised Tribe Feeds, Multi-Tribe Participation, address verification and a Founding Member programme — none of which exist. `FoundingMember.tsx` is deleted.
+- **A group is a "Circle", never a "tribe".** The company is Tribes; the sub-community feature is a Circle. Calling a group a "tribe" in copy sets an expectation the app breaks. Circle *creation* is behind the coming-soon Premium gate; *joining* is free — say both.
+- **Rollout language.** The site may say where we are *starting* ("Starting in Houston, growing block by block"). It must never say "invite only", never name a ZIP, and never imply a reader elsewhere is blocked — Dan reversed the invite-only model on 2026-08-14 precisely because that framing kills marketing.
+
+Full audit and the tiers of work behind this: `../docs/v2/website-audit-2026-08.md`.
 
 ## Stack
 - **Framework:** Next.js 15.5 (App Router, TypeScript)
 - **Styling:** Tailwind CSS 3.4 with custom colors (firefly, granny, casablanca, offwhite, ink)
 - **Animations:** CSS @keyframes for hero entrance, framer-motion ScrollReveal for scroll-triggered reveals
 - **Font:** Plus Jakarta Sans (via next/font/google) — used for both headings and body. The editorial surface leans heavily into `font-extralight` (200) for display type.
-- **Forms:**
-  - Marketing pages → `GHLForm` iframe (`src/components/ui/GHLForm.tsx`)
-  - Editorial surface → custom react-hook-form + zod forms (`SupportForm`, `WaitlistForm`) posting to `/api/support` (still stubbed) and `/api/waitlist` (wired to Supabase + GHL — see the API routes section below)
+- **Forms:** custom react-hook-form + zod throughout — `SupportForm` → `/api/support` (still stubbed) and `WaitlistForm` → `/api/waitlist` (wired to Supabase + Tribes' GHL — see the API routes section below). `WaitlistForm` takes `variant`, `defaultRole` and `formName` props so one component serves the home "not open yet" capture and the `/partners` enquiry. The `GHLForm` iframe was deleted in the August 2026 launch pass.
 - **Deployment:** Vercel (auto-deploys from main branch)
 
 ## Original Reference
@@ -44,11 +55,11 @@ Editorial (App Store submission + preview):
 - `/support` — Support URL for App Store (contact card + 10-item numbered FAQ + contact form)
 - `/delete-account` — account/data deletion steps (added 2026-07-07; the URL is DECLARED in Google Play's Data-safety form and will be reused in Apple's App Privacy label — don't remove or rename without updating both stores)
 - `/reset-password` — **the password-reset handler for the mobile app** (added 2026-08-09, noindex). Consumes a Supabase recovery link and sets the new password. `ResetPasswordForm` parses the recovery session out of the URL **fragment** (the mobile client is implicit-flow — no `flowType: 'pkce'` — so there is no code_verifier and the browser can finish the reset alone; a PKCE client would make this page impossible). It deliberately uses a **bare `@supabase/supabase-js` client with `persistSession: false`**, NOT `@/lib/supabase/client` — that one is cookie-backed via `@supabase/ssr`, and a recovery session for an ordinary user must never be written into cookies on the same origin as `/admin`. ⚠️ **Do not remove or rename**: this exact URL is the Supabase project's `site_url` and is on its redirect allow-list, so deleting it breaks password reset for every installed app. Background: `../tribes-app/docs/progress.md` → "Password reset repaired".
-- `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Uses custom `WaitlistForm` instead of the GHL iframe.
+- `/home2` — Editorial redesign preview (noindex). Unlinked from nav. Its hero copy was the model for the August 2026 home rewrite, so the two now agree on positioning; its layout is still the unpromoted editorial treatment.
 
 API routes:
 - `/api/support` — contact form handler (`SupportForm`). **Still a stub** (validates + `console.log`). TODO: wire to a sender to forward to info@trytribes.com. **Use the Tribes Resend account** set up 2026-08-09 (sending domain `auth.trytribes.com`, already DKIM/SPF-verified) rather than the older SendGrid plan — the account exists, is Tribes-owned, and the free tier covers this comfortably. Needs a send-only Resend key in Vercel env.
-- `/api/waitlist` — waitlist signup handler (`WaitlistForm`, used by `/home2`). **WIRED (2026-07-27).** Writes `v2_join_waitlist` in Supabase (source of truth, insert-only, ANON key — the RPC is granted to `anon` so no service role is needed; don't "upgrade" it to `createAdminClient()`), then mirrors the lead into GoHighLevel via `src/lib/ghl.ts`. The GHL step is **fail-open**: a CRM outage logs a warning and still returns `ok`, because the row is already safe in Supabase. Needs `TRIBES_GHL_PIT` + `TRIBES_GHL_LOCATION_ID` in the environment — see the ⚠️ in `.env.example` about why those names are namespaced.
+- `/api/waitlist` — waitlist signup handler (`WaitlistForm` — used by `/`, `/partners` and `/home2`). **WIRED (2026-07-27).** Writes `v2_join_waitlist` in Supabase (source of truth, insert-only, ANON key — the RPC is granted to `anon` so no service role is needed; don't "upgrade" it to `createAdminClient()`), then mirrors the lead into GoHighLevel via `src/lib/ghl.ts`. The GHL step is **fail-open**: a CRM outage logs a warning and still returns `ok`, because the row is already safe in Supabase. Needs `TRIBES_GHL_PIT` + `TRIBES_GHL_LOCATION_ID` in the environment — see the ⚠️ in `.env.example` about why those names are namespaced.
 - `/api/feedback` — the **web** F&F feedback handler (`FeedbackForm`, used by the noindexed `/feedback` page). Forwards to a GHL inbound webhook, but `GHL_FEEDBACK_WEBHOOK_URL` is unset in Vercel production, so it fail-opens and submissions from that page are discarded. Low impact — the page is `disallow`ed in `robots.ts` and was an F&F-wave artifact.
   ⚠️ **This is NOT the in-app feedback path and must not be confused with it.** Feedback from the mobile app goes `tribes-app/app/feedback.tsx` → `useSubmitFeedback` → `supabase.from('v2_feedback')` → surfaced at `/admin/feedback`. That path works and never touches GHL. If the web form is worth keeping at all, the consistent fix is to have it write to `v2_feedback` too, so all feedback lands in one place — not to wire up a second destination.
 
@@ -78,10 +89,10 @@ Static 1200x630 PNGs in `public/` — one per page (`og-home.png`, `og-neighbors
 - **GA4** via `@next/third-parties` — property `trytribes.com` (518241169), measurement ID `G-JDM03V14GB`. Loader is `src/components/analytics/Analytics.tsx`, mounted once in the root layout.
 - **Loads in production only** (`NODE_ENV === "production"`, which includes Vercel preview deploys) and **never on `/admin`** — so staff activity stays out of the marketing property. Dev (`next dev`) sends nothing.
 - Pageviews (initial + client-side route changes) are handled by GA4 **Enhanced Measurement** — we do not fire `page_view` manually (would double-count).
-- **Events** (`src/lib/analytics.ts` `track()` helper): `join_waitlist_click` (delegated listener on every `a[href="#final-cta"]`, with a `location` param), `waitlist_form_view` (GHL iframe scrolled into view), `outbound_click`, `generate_lead` (home2 native waitlist), `form_submit` (support + feedback). The GHL waitlist iframe is cross-origin, so the actual submit is recorded by GHL, not us — `waitlist_form_view` is the closest on-page signal.
-- To report conversions, mark `generate_lead` and `join_waitlist_click` as **Key events** in GA4 (Admin → Events) — not settable via API.
+- **Events** (`src/lib/analytics.ts` `track()` helper): **`download_click`** (fired by `StoreBadges` with `platform` = ios/android and a `location`) — this is the primary conversion now; **`get_app_click`** (delegated listener on every `a[href="#get-the-app"]`, with `location`); `outbound_click` (store hosts excluded, so downloads aren't double-counted); `generate_lead` (native waitlist forms, with `form_name`); `form_submit` (support + feedback).
+- ⚠️ **Renamed in the August 2026 launch pass**: `join_waitlist_click` → `get_app_click`, and `waitlist_form_view` is gone with the GHL iframe. **Re-mark Key events in GA4** (Admin → Events) as `download_click` + `generate_lead`; the old names receive no traffic.
 - `NEXT_PUBLIC_GA_ID` overrides the measurement ID per-deploy (e.g. a staging stream); defaults to the live ID so it can't silently break.
-- Canonical host is the **apex** `trytribes.com` (matches `metadataBase`, `robots.ts`, `sitemap.ts`); Vercel 308-redirects www → apex.
+- Canonical host is the **apex** `trytribes.com` (matches `metadataBase`, `robots.ts`, `sitemap.ts`, and the explicit `alternates.canonical` added in the launch pass). ⚠️ **Live behaviour disagrees**: Vercel currently 307s apex → **www**, the opposite direction. The fix is one domain setting in Vercel (make the apex primary), not a code change — until it lands, search engines are told apex while being served www.
 - `src/app/robots.ts` + `src/app/sitemap.ts` are App Router metadata routes. Robots blocks `/admin`, `/api`, and the demo/preview pages (`/home2`, `/mvp`, `/update`, `/feedback`); sitemap lists public pages only. GSC: `sc-domain:trytribes.com` (domain property, already verified — covers www + apex).
 
 ## Build & Dev

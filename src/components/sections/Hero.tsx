@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { HERO } from "@/lib/constants";
-import Button from "@/components/ui/Button";
+import StoreBadges from "@/components/ui/StoreBadges";
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -48,16 +48,14 @@ export default function Hero() {
               className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed animate-hero-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              Tribes<sup className="text-xs align-super">™</sup> makes it simple to connect with neighbors, share resources and skills, and build thriving communities.
+              List what you&rsquo;re <strong className="font-semibold text-firefly">Offering</strong>. Post what you&rsquo;re <strong className="font-semibold text-firefly">Seeking</strong>. Tribes<sup className="text-xs align-super">™</sup> finds the neighbor whose needs fit yours both ways &mdash; no money, no clutter, no waste.
             </p>
 
             <div
-              className="flex flex-col sm:flex-row gap-4 mb-8 justify-center md:justify-start animate-hero-fade-up"
+              className="mb-8 animate-hero-fade-up"
               style={{ animationDelay: "0.4s" }}
             >
-              <Button href="#final-cta" size="large">
-                {HERO.cta}
-              </Button>
+              <StoreBadges location="hero" />
             </div>
 
             <p

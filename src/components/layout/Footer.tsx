@@ -1,4 +1,5 @@
 import { FOOTER } from "@/lib/constants";
+import StoreBadges from "@/components/ui/StoreBadges";
 
 function SocialIcon({ type }: { type: string }) {
   if (type === "instagram") {
@@ -45,8 +46,30 @@ export default function Footer() {
           </ul>
         </div>
 
+        {/* Legal + support — these pages are linked from both app store
+            listings but nothing on the site pointed at them until now. */}
+        <div className="mb-6">
+          <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {FOOTER.links.legal.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  className="text-white/60 hover:text-casablanca transition-colors text-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Download */}
+        <div className="border-t border-white/10 pt-6 mb-2">
+          <StoreBadges location="footer" align="center" />
+        </div>
+
         {/* Contact */}
-        <div className="border-t border-white/10 py-4 text-sm text-white/80">
+        <div className="border-t border-white/10 mt-6 py-4 text-sm text-white/80">
           Questions?{" "}
           <a
             href={`mailto:${FOOTER.email}`}

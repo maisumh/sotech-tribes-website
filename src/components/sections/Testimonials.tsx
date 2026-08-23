@@ -7,7 +7,7 @@ export default function Testimonials() {
       <div className="max-w-[1200px] mx-auto px-4">
         <ScrollReveal>
           <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-firefly text-center mb-12">
-            Trusted by Local Leaders Building Tribes
+            What Neighbors Say About Tribes
           </h2>
         </ScrollReveal>
 

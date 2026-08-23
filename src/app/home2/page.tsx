@@ -14,7 +14,6 @@ import {
   TRIBE_TYPES,
   AUDIENCES,
   IMPACT,
-  FOUNDING_MEMBER,
   TESTIMONIALS,
   FAQ_ITEMS,
 } from "@/lib/constants";
@@ -115,7 +114,7 @@ export default function Home2() {
                   style={{ animationDelay: "0.45s" }}
                 >
                   <a
-                    href="#final-cta"
+                    href="#get-the-app"
                     className="group inline-flex items-center justify-center gap-3 bg-firefly text-white font-semibold px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] transition-all hover:bg-firefly-light hover:shadow-xl hover:shadow-firefly/20 hover:-translate-y-0.5"
                   >
                     Join the waitlist
@@ -484,42 +483,6 @@ export default function Home2() {
           </div>
         </section>
 
-        {/* ──────────────────────────── FOUNDING MEMBER ──────────────────────────── */}
-        <section className="py-24 md:py-32">
-          <div className="max-w-[1000px] mx-auto px-6 md:px-10 lg:px-12">
-            <ScrollReveal>
-              <div className="relative bg-firefly text-white p-10 md:p-16 rounded-[3px] shadow-[0_40px_80px_-20px_rgba(16,55,48,0.4)] text-center md:text-left">
-                <span aria-hidden="true" className="absolute -top-3 left-10 w-6 h-6 bg-casablanca" />
-                <span aria-hidden="true" className="absolute -bottom-3 right-10 w-6 h-6 bg-casablanca/60" />
-                <Kicker label="Founding member" num="010" tone="dark" />
-                <h2
-                  className="font-heading font-extralight leading-[1.04] tracking-[-0.02em] mb-12"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 4rem)" }}
-                >
-                  Shape your neighborhood&rsquo;s tribes <em className="font-light not-italic text-casablanca">from day one.</em>
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-12 max-w-xl mx-auto md:mx-0 md:max-w-none">
-                  {FOUNDING_MEMBER.benefits.map((b, i) => (
-                    <div key={b} className="flex items-start gap-4 text-white/85 text-left">
-                      <span className="text-casablanca font-semibold text-sm pt-0.5 tabular-nums">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span>{b}</span>
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="#final-cta"
-                  className="group inline-flex items-center gap-3 bg-casablanca text-firefly font-semibold px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-casablanca/30"
-                >
-                  {FOUNDING_MEMBER.cta}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-
         {/* ──────────────────────────── TESTIMONIALS ──────────────────────────── */}
         <section className="py-24 md:py-32 bg-gradient-to-b from-offwhite to-white border-t border-firefly/10">
           <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12">
@@ -592,7 +555,7 @@ export default function Home2() {
 
         {/* ──────────────────────────── FINAL CTA ──────────────────────────── */}
         <section
-          id="final-cta"
+          id="get-the-app"
           className="relative py-24 md:py-32 bg-firefly text-white overflow-hidden"
         >
           <div
