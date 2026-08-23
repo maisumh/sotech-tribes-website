@@ -113,11 +113,12 @@ const REVENUE = [
 const QUESTIONS = [
   { ask: "Which identity model, A through D?", lean: "C. A chosen display name, with verification free and badged." },
   { ask: "Do display names have to be unique?", lean: "No. Unique handles bring a squatting problem for no gain." },
-  { ask: "Does verification hand back a private first name?", lean: "Yes. Never displayed, shared only by choice before meeting." },
+  {
+    ask: "Should verification quietly store a real first name?",
+    lean: "Yes. Never shown on a profile, but there to share when two members agree to meet, and available to Tribes if something goes wrong.",
+  },
   { ask: "Inside a Circle, chosen names or real ones?", lean: "Open. Everyone there already knows each other. Your call." },
   { ask: "Five dollars a month, or ten?", lean: "Five, with an annual option and a locked founding price." },
-  { ask: "Business tier: separate, or a layer of Plus?", lean: "Separate. Different buyer, different price." },
-  { ask: "Who starts the Apple conversion, and when?", lean: "This week. It stands in front of every dollar here." },
 ];
 
 const LANES = [
@@ -578,7 +579,7 @@ export default function PlusPage() {
                 For the next call
               </span>
               <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-firefly mb-8">
-                Seven to decide.
+                Five to decide.
               </h2>
             </ScrollReveal>
 
