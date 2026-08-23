@@ -18,7 +18,7 @@ export default function ResetPasswordPage() {
         <section className="px-6 py-16 md:py-24">
           <div className="mx-auto max-w-xl">
             <p className="text-sm uppercase tracking-widest text-firefly/60">
-              — ACCOUNT · RESET
+              · ACCOUNT · RESET
             </p>
             <h1
               className="mt-4 font-extralight text-firefly"

@@ -194,7 +194,7 @@ const faqItems = [
   {
     question: "How much does it cost to use Tribes?",
     answer:
-      "Tribes is free for neighbors. Downloading the app, listing, matching, chatting and trading cost nothing. A Tribes Premium tier is coming later for people who want to create their own Circles — joining a Circle stays free.",
+      "Tribes is free for neighbors. Downloading the app, listing, matching, chatting and trading cost nothing. A Tribes Premium tier is coming later for people who want to create their own Circles. Joining a Circle stays free.",
   },
   {
     question:

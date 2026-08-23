@@ -26,7 +26,7 @@ import { FINAL_CTA } from "@/lib/constants";
 export default function FinalCTA() {
   return (
     <section id="get-the-app" className="py-16 md:py-24 bg-firefly text-white">
-      <div className="max-w-[720px] mx-auto px-4 text-center">
+      <div className="max-w-[920px] mx-auto px-4 text-center">
         <ScrollReveal>
           <h2 className="font-heading text-2xl md:text-[1.7rem] font-bold text-casablanca mb-4">
             {FINAL_CTA.heading}
@@ -50,7 +50,7 @@ export default function FinalCTA() {
 
         {/* Secondary path — area not open yet */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-14 pt-10 border-t border-white/15 text-left">
+          <div className="mt-12 pt-10 border-t border-white/15 text-left">
             <h3 className="font-heading text-lg font-semibold text-casablanca mb-2 text-center">
               {FINAL_CTA.waitlist.heading}
             </h3>

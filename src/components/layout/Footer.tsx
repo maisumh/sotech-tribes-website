@@ -64,12 +64,12 @@ export default function Footer() {
         </div>
 
         {/* Download */}
-        <div className="border-t border-white/10 pt-6 mb-2">
-          <StoreBadges location="footer" align="center" />
+        <div className="border-t border-white/10 pt-5">
+          <StoreBadges location="footer" align="center" compact />
         </div>
 
         {/* Contact */}
-        <div className="border-t border-white/10 mt-6 py-4 text-sm text-white/80">
+        <div className="border-t border-white/10 mt-5 py-4 text-sm text-white/80">
           Questions?{" "}
           <a
             href={`mailto:${FOOTER.email}`}

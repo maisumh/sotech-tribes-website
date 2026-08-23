@@ -48,7 +48,7 @@ export default function Hero() {
               className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed animate-hero-fade-up"
               style={{ animationDelay: "0.25s" }}
             >
-              List what you&rsquo;re <strong className="font-semibold text-firefly">Offering</strong>. Post what you&rsquo;re <strong className="font-semibold text-firefly">Seeking</strong>. Tribes<sup className="text-xs align-super">™</sup> finds the neighbor whose needs fit yours both ways &mdash; no money, no clutter, no waste.
+              List what you&rsquo;re <strong className="font-semibold text-firefly">Offering</strong>. Post what you&rsquo;re <strong className="font-semibold text-firefly">Seeking</strong>. Tribes<sup className="text-xs align-super">™</sup> finds the neighbor whose needs fit yours both ways. No money, no clutter, no waste.
             </p>
 
             <div

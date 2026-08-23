@@ -155,7 +155,7 @@ A mobile-responsive staff admin at `/admin/*` — separate surface from the mark
 
 **Every admin mutation writes a row to `public.admin_audit_log`** with a canonical action string. There are ~10 allowed action strings — see the architecture doc for the list.
 
-**Do NOT call `public.delete_want_have`** — it's a vulnerable SECURITY DEFINER RPC with EXECUTE granted to anon. We soft-delete via `UPDATE want_have SET is_deleted = true` through the service role client instead.
+**Do NOT call `public.delete_want_have`** — a SECURITY DEFINER RPC with no auth check that used to have EXECUTE granted to `anon` (an unauthenticated "delete any listing" hole). **Closed 2026-08-23** — EXECUTE revoked from `PUBLIC`/`anon`/`authenticated`, so it now returns 401. We soft-delete via `UPDATE want_have SET is_deleted = true` through the service role client instead.
 
 **Data quirks that look like bugs but aren't**:
 - `user_rattings` table — typo of "ratings", load-bearing (mobile app reads that name).

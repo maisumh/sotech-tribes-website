@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
   if (!webhookUrl) {
     console.warn(
-      "[feedback] GHL_FEEDBACK_WEBHOOK_URL is not set — accepting submission without forwarding.",
+      "[feedback] GHL_FEEDBACK_WEBHOOK_URL is not set; accepting submission without forwarding.",
       flat
     );
     return NextResponse.json({ ok: true, forwarded: false });

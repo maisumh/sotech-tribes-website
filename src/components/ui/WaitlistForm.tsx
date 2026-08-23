@@ -31,7 +31,7 @@ export default function WaitlistForm({
   submitLabel = "Notify me",
   submittingLabel = "Sending...",
   successKicker = "You're on the map",
-  successHeading = "Thanks — we've got your spot.",
+  successHeading = "Thanks, we've got your spot.",
   successBody = "We'll email you the moment Tribes opens near you. In the meantime the app is free to download, so you can set up your profile and be ready.",
 }: {
   /** "dark" sits on white card; "light" sits on firefly section */

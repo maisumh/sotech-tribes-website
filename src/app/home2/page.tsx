@@ -20,7 +20,7 @@ import {
 import HeroVideo from "./HeroVideo";
 
 export const metadata: Metadata = {
-  title: "Tribes™ — Editorial Preview | Home v2",
+  title: "Tribes™ | Editorial Preview, Home v2",
   description:
     "An editorial redesign of the Tribes home page. Same content, elevated typography and layout.",
   robots: { index: false, follow: false },
@@ -106,7 +106,7 @@ export default function Home2() {
                     fontSize: "clamp(1rem, 1.35vw, 1.375rem)",
                   }}
                 >
-                  A hyperlocal app where neighbors list what they&rsquo;re <em className="text-firefly not-italic font-semibold">Offering</em> and what they&rsquo;re <em className="text-firefly not-italic font-semibold">Seeking</em>. We match the two. No money, no feeds — just a two-way trade with people nearby.
+                  A hyperlocal app where neighbors list what they&rsquo;re <em className="text-firefly not-italic font-semibold">Offering</em> and what they&rsquo;re <em className="text-firefly not-italic font-semibold">Seeking</em>. We match the two. No money, no feeds, just a two-way trade with people nearby.
                 </p>
 
                 <div
@@ -204,7 +204,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <div className="bg-firefly h-full p-8 md:p-10">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")}
                     </div>
                     <div className="font-heading text-5xl md:text-6xl lg:text-7xl font-extralight leading-none tracking-[-0.03em] mb-6">
                       {stat.value}
@@ -470,7 +470,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <div className="border border-firefly/10 p-8 md:p-10 bg-offwhite relative">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")}
                     </div>
                     <div className="font-heading text-4xl md:text-5xl lg:text-6xl font-extralight text-firefly leading-none tracking-[-0.03em] mb-6">
                       {m.value}
@@ -502,7 +502,7 @@ export default function Home2() {
                 <ScrollReveal key={i} delay={i * 0.08}>
                   <figure className="h-full flex flex-col border-t border-firefly/20 pt-8">
                     <div className="text-[10px] uppercase tracking-[0.3em] text-casablanca mb-6">
-                      — {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
+                      · {String(i + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
                     </div>
                     <span
                       aria-hidden="true"

@@ -6,7 +6,7 @@ import FeedbackForm from "@/components/ui/FeedbackForm";
 
 export const metadata: Metadata = {
   title: "Share Feedback | Tribes",
-  description: "Tell us what you think — your feedback shapes Tribes.",
+  description: "Tell us what you think. Your feedback shapes Tribes.",
   robots: { index: false, follow: false },
 };
 
@@ -48,7 +48,7 @@ export default async function FeedbackPage({
             </h1>
             <p className="text-base md:text-lg text-white/80 leading-relaxed">
               Every answer you give lands in front of the team the same day.
-              Even "I don't get it" is gold — that's exactly why we're asking.
+              Even "I don't get it" is gold. That's exactly why we're asking.
             </p>
           </div>
 

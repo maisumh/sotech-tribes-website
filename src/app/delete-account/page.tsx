@@ -7,7 +7,7 @@ const CONTACT_EMAIL = "info@trytribes.com";
 export const metadata: Metadata = {
   title: "Delete Your Account | Tribes™",
   description:
-    "How to delete your Tribes account and associated data — in the app or by request.",
+    "How to delete your Tribes account and associated data, in the app or by request.",
   robots: { index: true, follow: true },
 };
 
@@ -19,7 +19,7 @@ export default function DeleteAccountPage() {
         <section className="px-6 py-16 md:py-24">
           <div className="mx-auto max-w-3xl">
             <p className="text-sm uppercase tracking-widest text-firefly/60 text-center md:text-left">
-              — ACCOUNT · DELETION
+              · ACCOUNT · DELETION
             </p>
             <h1
               className="mt-4 font-extralight text-firefly text-center md:text-left"

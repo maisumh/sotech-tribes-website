@@ -69,7 +69,7 @@ export const HERO = {
     "Build Your Tribe.",
   ],
   subheadline:
-    "List what you're Offering. Post what you're Seeking. Tribes finds the neighbor whose needs fit yours both ways — no money, no clutter, no waste.",
+    "List what you're Offering. Post what you're Seeking. Tribes finds the neighbor whose needs fit yours both ways. No money, no clutter, no waste.",
   cta: "Get the App",
   // Replaces "Launching Spring 2026 — early access opening soon". Names where we
   // are starting without implying anyone else is blocked (see the rollout note
@@ -84,7 +84,7 @@ export const HERO = {
 export const VALUE_PROP = {
   title: ["On Social Media You Scroll.", "On Tribes™, You Trade."],
   paragraphs: [
-    "Most marketplaces are built around cash. Tribes is built around your block. You list what you can share — a power drill, a spare bike, guitar lessons — and what you actually need. Our matching engine pairs your Offerings with a neighbor's Seekings, and theirs with yours.",
+    "Most marketplaces are built around cash. Tribes is built around your block. You list what you can share (a power drill, a spare bike, guitar lessons) and what you actually need. Our matching engine pairs your Offerings with a neighbor's Seekings, and theirs with yours.",
     "You get what you need. They get what they need. Nobody opens a wallet, and a little more of your neighborhood gets used instead of stored.",
   ],
 };
@@ -109,7 +109,7 @@ export const TRIBE_EXAMPLES = [
 export const NEIGHBORHOOD = {
   title: ["Your Neighborhood Has", "Everything You Need"],
   paragraphs: [
-    "Your block already has what you need: Someone has the ladder. You have the baby gear. Another neighbor has the skills your business needs. The problem isn't resources — it's connection. Tribes bridges that instantly.",
+    "Your block already has what you need: Someone has the ladder. You have the baby gear. Another neighbor has the skills your business needs. The problem isn't resources. It's connection. Tribes bridges that instantly.",
     "You don't know who has what. They don't know what you need. Tribes bridges that gap instantly.",
   ],
   stats: [
@@ -139,11 +139,11 @@ export const HOW_IT_WORKS = {
   steps: [
     {
       title: "List an Offering",
-      text: "Something you can share — a power drill, a sourdough starter, guitar lessons. Snap a photo and Tribes drafts the listing for you.",
+      text: "Something you can share: a power drill, a sourdough starter, guitar lessons. Snap a photo and Tribes drafts the listing for you.",
     },
     {
       title: "Post a Seeking",
-      text: "Something you actually need — a ladder, a babysitter, help moving boxes. Be as specific as you like.",
+      text: "Something you actually need: a ladder, a babysitter, help moving boxes. Be as specific as you like.",
     },
     {
       title: "Get Matched Automatically",
@@ -174,7 +174,7 @@ export const FEATURES = {
     {
       icon: "📷",
       title: "Snap and List",
-      text: "Take a photo and Tribes drafts the listing — title, description, the lot — so posting takes seconds.",
+      text: "Take a photo and Tribes drafts the listing for you, title and description included, so posting takes seconds.",
     },
     {
       icon: "🤝",
@@ -202,7 +202,7 @@ export const FEATURES = {
 export const OUR_PEOPLE = {
   title: "We All Need Our People",
   paragraphs: [
-    "Humans have always thrived in small, trusted groups. Modern life disconnected us — but the need never disappeared.",
+    "Humans have always thrived in small, trusted groups. Modern life disconnected us, but the need never disappeared.",
     "Tribes brings back that sense of belonging by helping you trade with the people who already live around you.",
     "Borrow the drill from the neighbor two doors down. Hand your outgrown baby gear to the family who needs it. Swap an afternoon of your skills for an afternoon of theirs.",
     "Join a Circle for your street, your church or your kids' school, and every match tells you who you already have in common.",
@@ -242,7 +242,7 @@ export const TRIBE_TYPES = {
     {
       icon: "🎨",
       title: "Everything Else",
-      text: "Books, sports gear, baking, music lessons — whatever your block has to offer.",
+      text: "Books, sports gear, baking, music lessons, whatever your block has to offer.",
     },
   ],
 };
@@ -255,7 +255,7 @@ export const AUDIENCES = {
       icon: "🏘️",
       title: "For Neighbors",
       subtitle:
-        "Borrow, lend, help, trade — use Tribes however fits your day.",
+        "Borrow, lend, help, trade. Use Tribes however fits your day.",
       benefits: [
         "Trade for what you need instead of buying it",
         "Put what you already own back to work",
@@ -299,7 +299,7 @@ export const IMPACT = {
 export const TESTIMONIALS = [
   {
     quote:
-      "Tribes helped us bring our neighborhood together — we finally have a practical way to share resources and build trust.",
+      "Tribes helped us bring our neighborhood together. We finally have a practical way to share resources and build trust.",
     name: "Sarah Martinez",
     title: "HOA President, Riverside Community",
   },
@@ -319,12 +319,12 @@ export const FAQ_ITEMS = [
   {
     question: "How does Tribes actually work?",
     answer:
-      "You list what you're Offering and what you're Seeking. Tribes looks for a neighbor whose Seekings match your Offerings — and whose Offerings match your Seekings — then notifies you both. You chat in the app, agree the trade, meet up, and rate each other.",
+      "You list what you're Offering and what you're Seeking. Tribes looks for a neighbor whose Seekings match your Offerings, and whose Offerings match your Seekings, then notifies you both. You chat in the app, agree the trade, meet up, and rate each other.",
   },
   {
     question: "Is Tribes available where I live?",
     answer:
-      "Tribes is free to download anywhere on iOS and Android. We're opening neighborhoods a few at a time, starting in Houston, so that nobody arrives to an empty marketplace. Download the app and it will tell you where your area stands — and let you know the moment it opens.",
+      "Tribes is free to download anywhere on iOS and Android. We're opening neighborhoods a few at a time, starting in Houston, so that nobody arrives to an empty marketplace. Download the app and it will tell you where your area stands, and let you know the moment it opens.",
   },
   {
     question: "Does it cost anything?",
@@ -334,7 +334,7 @@ export const FAQ_ITEMS = [
   {
     question: "Do I need money to trade?",
     answer:
-      "No. Tribes is built around two-way trades rather than cash — you and your neighbor agree what a fair swap looks like. There are no payments in the app at all.",
+      "No. Tribes is built around two-way trades rather than cash. You and your neighbor agree what a fair swap looks like. There are no payments in the app at all.",
   },
   {
     question: "What is a Circle?",
@@ -344,7 +344,7 @@ export const FAQ_ITEMS = [
   {
     question: "Can I create my own Circle?",
     answer:
-      "Not yet — Circle creation is coming to Tribes Premium. Joining a Circle someone invites you to is free and available now.",
+      "Not yet. Circle creation is coming to Tribes Premium. Joining a Circle someone invites you to is free and available now.",
   },
   {
     question: "How is Tribes different from Nextdoor or Facebook groups?",
@@ -354,7 +354,7 @@ export const FAQ_ITEMS = [
   {
     question: "Who can see what I post?",
     answer:
-      "Neighbors near you, sorted by distance — and if you scope a listing to a Circle, just that Circle. Conversations stay in the app, your phone number stays private, and you're always one tap from reporting or blocking.",
+      "Neighbors near you, sorted by distance. If you scope a listing to a Circle, only that Circle sees it. Conversations stay in the app, your phone number stays private, and you're always one tap from reporting or blocking.",
   },
   {
     question: "How old do I have to be?",
@@ -397,7 +397,7 @@ export const FOOTER = {
     ],
   },
   email: "info@trytribes.com",
-  copyright: `© ${new Date().getFullYear()} Tribes™ — All Rights Reserved`,
+  copyright: `© ${new Date().getFullYear()} Tribes™. All Rights Reserved.`,
   social: [
     { label: "Instagram", href: "https://www.instagram.com/trytribes", icon: "instagram" },
     { label: "TikTok", href: "https://www.tiktok.com/@trytribes", icon: "tiktok" },
